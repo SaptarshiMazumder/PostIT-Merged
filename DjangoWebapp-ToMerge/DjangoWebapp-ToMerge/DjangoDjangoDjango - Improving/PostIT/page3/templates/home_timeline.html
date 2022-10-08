@@ -64,7 +64,7 @@ Page3 Homepage
                                     <div>
                                         <div class="post-category-section">
                                             <i class="fa-solid fa-earth-oceania"></i>
-                                            <a class="post-category" >
+                                            <a class="post-category">
                                                 {{post.category}}</a> <small>
                                                 {{post.id}}</small>
                                         </div>
@@ -72,21 +72,50 @@ Page3 Homepage
                                         <section class="post-top-part">
                                             <div class="profile-pic">
                                                 {%if post.user_profile.profile_pic.name %}
-                                                <a href="{%url 'posts-by-user' post.author%}"><img src="{{ post.user_profile.profile_pic.url }}" width="500"></a>
+                                                <a href="{%url 'posts-by-user' post.author%}"><img
+                                                        src="{{ post.user_profile.profile_pic.url }}" width="500"></a>
                                                 {% endif %}
                                                 <!-- <img src="{{ post.user_profile.profile_pic.url }}" width="500"> -->
                                             </div>
 
-                                            <span class="author-date">{{post.author}} <span class="date">
+                                            <span class="post-header">{{post.author}} <span class="date">
                                                     {{post.post_date}}
                                                 </span> </span>
+
+                                            <span class="post-options-button" value="{{post.id}}">
+
+                                                <div class="post-options-list " id="post-options-list"
+                                                    value="{{post.id}}">
+                                                    <div class="blocker" id="blocker" value="{{post.id}}"></div>
+                                                    <div class="post-options-list-items">
+                                                        <button id="post-options-list-close"
+                                                            value="{{post.id}}">Close</button>
+                                                        <ul>
+                                                            <li>op1</li>
+                                                            <li>op2</li>
+                                                            <li>op2</li>
+                                                            <li>op2</li>
+                                                            <li>op2</li>
+                                                            <li>op2</li>
+                                                            <li>op2</li>
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                                <i class="fa-solid fa-ellipsis-vertical" id="three-dots"
+                                                    value="{{post.id}}"></i>
+                                            </span>
+
                                         </section>
                                         <a class="post-title" onclick="storeScroll()"
                                             href="{% url 'upload_reply' post.pk %}">
                                             {{post.body|safe}}</a>
+                                        <div class="post-tags">
                                             {%for t in post.get_Tag%}
-                                                {{t}}
+                                            {{t}}
                                             {%endfor%}
+                                        </div>
+
 
                                         {% if user.is_authenticated %}
                                         {% if user.id == post.author.id %}
@@ -349,6 +378,7 @@ Page3 Homepage
 
 </script>
 
+<script src="{% static 'PostIT/js/togglePostOptions.js'%}"></script>
 
 
 {% endblock content %}

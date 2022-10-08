@@ -14,11 +14,10 @@
         <!-- Google fonts -->
 
         <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Source+Sans+Pro&display=swap"
-            rel="stylesheet">
-
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
 
         <script src="https://unpkg.com/htmx.org@1.8.0"></script>
         <!-- Bootstrap CSS -->
@@ -92,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            
+
             {%endif%}
         </div>
 
@@ -102,13 +101,14 @@
     </body>
     <script src="{% static 'PostIT/js/jquery.waypoints.min.js' %}"></script>
     <script src="{% static 'PostIT/js/infinite.min.js'%}"></script>
-    
+
     <script>
-        $(document).on('submit', '#search-form', function(e) {
+        $(document).on('submit', '#search-form', function (e) {
             console.log($('.seach_query').val())
             $.ajax({
-                
+
             })
-        } )
+        })
     </script>
+
 </html>
