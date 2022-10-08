@@ -313,11 +313,32 @@ p::-webkit-scrollbar {
 .post-options-list.show {
     display: block;
     cursor: pointer;
+    z-index: 100;
 }
 
 .post-options-list-items {
     position: absolute;
-    left: -150px;
+    left: -250px;
+    background: #131212;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.post-options-list-items ul {
+    color: #fff;
+    text-decoration: none !important;
+    padding: 10px;
+}
+
+.post-options-list-items ul li {
+    padding: 10px;
+}
+
+.post-options-list-items ul li a {
+    color: #fff;
+    text-decoration: none !important;
 }
 
 .blocker {
@@ -330,6 +351,9 @@ p::-webkit-scrollbar {
     /* background: rgba(0, 0, 0, .5); */
 }
 
+.reply-button a {
+    text-decoration: none !important;
+}
 
 .page-contents {
     /* position: absolute; */

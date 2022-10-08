@@ -88,16 +88,30 @@ Page3 Homepage
                                                     value="{{post.id}}">
                                                     <div class="blocker" id="blocker" value="{{post.id}}"></div>
                                                     <div class="post-options-list-items">
-                                                        <button id="post-options-list-close"
-                                                            value="{{post.id}}">Close</button>
+                                                        <button id="post-options-list-close" value="{{post.id}}"><i
+                                                                class="fa-solid fa-xmark"></i></button>
                                                         <ul>
-                                                            <li>op1</li>
-                                                            <li>op2</li>
-                                                            <li>op2</li>
-                                                            <li>op2</li>
-                                                            <li>op2</li>
-                                                            <li>op2</li>
-                                                            <li>op2</li>
+                                                            {% if user.is_authenticated %}
+                                                            {% if user.id == post.author.id %}
+                                                            <!-- {% if post.has_video %}
+                                                                                                    <a href="{% url 'edit-video-post' post.pk %}">Edit</a>
+                                                                                                    {% elif post.has_images %}
+                                                                                                    <a href="{% url 'edit-image-post' post.pk %}">Edit</a>
+                                                                                                    {% else %}
+                                                                                                    <a href="{% url 'edit-post' post.pk %}">Edit</a>
+                                                                                                    {% endif %} -->
+
+                                                            <li><a href="{% url 'delete-post' post.pk %}">Delete</a>
+                                                            </li>
+                                                            <!-- <button id="like-button" value="{{ post.pk }}">Like</button> -->
+                                                            {% endif %}
+                                                            {% endif %}
+
+                                                            <li>Add to favorites</li>
+                                                            <li>Share</li>
+                                                            <li>Follow @{{post.author}}</li>
+                                                            <li>Block @{{post.author}}</li>
+                                                            <li>Report post</li>
                                                         </ul>
                                                     </div>
 
@@ -117,20 +131,6 @@ Page3 Homepage
                                         </div>
 
 
-                                        {% if user.is_authenticated %}
-                                        {% if user.id == post.author.id %}
-                                        <!-- {% if post.has_video %}
-                                        <a href="{% url 'edit-video-post' post.pk %}">Edit</a>
-                                        {% elif post.has_images %}
-                                        <a href="{% url 'edit-image-post' post.pk %}">Edit</a>
-                                        {% else %}
-                                        <a href="{% url 'edit-post' post.pk %}">Edit</a>
-                                        {% endif %} -->
-
-                                        <a href="{% url 'delete-post' post.pk %}">Delete</a>
-                                        <!-- <button id="like-button" value="{{ post.pk }}">Like</button> -->
-                                        {% endif %}
-                                        {% endif %}
 
 
                                         {% if post.image1 %}
@@ -168,11 +168,13 @@ Page3 Homepage
 
                                         <!-- <span id="like_count" type="hidden">{{ post.like_count}}</span> -->
                                         <button id="like-button" class="like-button" name="{{ post.like_count }}"
-                                            value="{{ post.id }}"><i class="fa-solid fa-heart"></i>
-                                            {{post.like_count}}</button>
+                                            value="{{ post.id }}">{{post.like_count}}<i class="fa-solid fa-heart"></i>
+                                        </button>
 
 
-                                        <a href="{% url 'upload_reply' post.pk %}" onclick="storeScroll()">Reply</a>
+                                        {{post.reply_count}}<a class="reply-button"
+                                            href="{% url 'upload_reply' post.pk %}" onclick="storeScroll()">
+                                            <i class="fa-solid fa-comment"></i></a>
 
                                         {% endif %}
 
@@ -202,6 +204,7 @@ Page3 Homepage
 
     function updateText(btn, no_of_likes) {
         console.log(btn)
+        //btn.element.innerHTML = "LIKED BY" + " " + no_of_likes + "lkl"
         btn.text("LIKED BY" + " " + no_of_likes)
     }
     $(document).on('click', '#like-button', function (e) {
@@ -288,7 +291,11 @@ Page3 Homepage
 
     })
     function updateText(btn, no_of_likes) {
-        btn.text("LIKED BY" + " " + no_of_likes)
+        //btn.element.innerHTML = "LIKED BY" + " " + no_of_likes + "lkl"
+        //btn.text("LIKED BY" + " " + no_of_likes + " <h1>JLO</h1>")
+        elem = "<i class='fa-solid fa-heart'></i>"
+        btn[0].innerHTML = no_of_likes + elem
+        console.log(btn[0].innerHTML)
     }
 
     window.addEventListener("pageshow", myfunction(event))
