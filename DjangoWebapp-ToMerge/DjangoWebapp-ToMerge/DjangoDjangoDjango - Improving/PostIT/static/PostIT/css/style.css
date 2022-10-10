@@ -13,6 +13,10 @@
     --post_bg_color: #131212;
 }
 
+a {
+    text-decoration: none !important;
+    color: inherit;
+}
 
 
 html {
@@ -45,6 +49,8 @@ li {
     top: 0;
     background-color: black;
     border-bottom: var(--grey_color) 1px solid;
+    pointer-events: all;
+    z-index: 1000;
 }
 
 .navbar-contents a {
@@ -54,6 +60,10 @@ li {
     padding: 10px 15px;
     position: relative;
 
+}
+
+.fa-bars {
+    display: none;
 }
 
 .navbar-contents a:hover {
@@ -66,7 +76,8 @@ li {
     position: fixed;
     overflow: hidden;
     top: 0px;
-    left: 100px;
+    left: 150px;
+    z-index: 3000;
 }
 
 .fa-circle-plus {
@@ -75,8 +86,12 @@ li {
     font-style: normal;
     position: relative;
     top: -5px;
+    color: #d46ed4;
     /* margin: auto 0; */
+    z-index: 60000;
 }
+
+
 
 .addpost-submenu {
     display: none;
@@ -175,6 +190,101 @@ i:hover {
 
 
 
+.sidebar-left {
+    padding-top: 100px !important;
+    color: #fff !important;
+    width: 300px !important;
+    margin-top: -1 rem;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    display: block;
+    background-color: rgb(37, 37, 37);
+    border-radius: 10px;
+    height: 100vh;
+
+}
+
+/* .sidebar-left.show {
+    display: block;
+
+} */
+
+.sidebar-top-section {
+    padding: 10px;
+}
+
+.bottom-sidebar {
+    position: absolute;
+    bottom: 10px;
+    /* padding-bottom: 50px; */
+    padding: 10px 10px 50px 10px;
+}
+
+.sidebar-profile-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidebar-profile-pic img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    overflow: hidden;
+    align-items: center;
+    margin: 10px;
+
+}
+
+
+
+.sidebar-profile-name {
+    position: relative;
+    top: 10px;
+    /* background-color: #d46ed4; */
+    /* color: #d46ed4; */
+}
+
+.sidebar-view-profile-button {
+    font-size: small;
+    color: #d46ed4;
+}
+
+.sidebar-profile-settings-button {
+    margin-left: auto;
+    position: relative;
+    align-items: flex-end;
+    top: 15px;
+    left: 70px;
+    cursor: pointer;
+}
+
+.sidebar-profile-settings-options {
+    position: absolute;
+    top: -100px;
+    left: 20px;
+    width: 300px;
+    float: left;
+    text-align: left;
+    border-radius: 5px;
+    background-color: rgb(37, 37, 37);
+    box-shadow: 0px 0px 2px 2px grey;
+    padding-top: 15px;
+    display: none;
+}
+
+.sidebar-list {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+}
+
+.sidebar-list-item {
+    display: flex;
+}
 
 .main-body {
 
@@ -189,7 +299,7 @@ i:hover {
 .post {
     text-align: start;
     background-color: var(--post_bg_color);
-    max-width: 500px;
+    max-width: 680px;
     margin: 0 auto;
     padding: 10px;
     border: 1px var(--grey_color) solid;
@@ -216,6 +326,7 @@ p::-webkit-scrollbar {
     overflow: hidden;
 
 }
+
 
 .post img {
     display: block;
@@ -351,6 +462,18 @@ p::-webkit-scrollbar {
     /* background: rgba(0, 0, 0, .5); */
 }
 
+.blocker-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    content: ' ';
+    display: none;
+
+    /* background: rgba(0, 0, 0, .5); */
+}
+
 .reply-button a {
     text-decoration: none !important;
 }
@@ -358,11 +481,18 @@ p::-webkit-scrollbar {
 .page-contents {
     /* position: absolute; */
     display: flex;
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     margin-top: 50px;
+    /* justify-content: center; */
 
 
+}
+
+.nav-sidebar {
+    margin-right: auto;
+    position: fixed;
+    padding: 50px;
 }
 
 .sidebar {
@@ -378,7 +508,7 @@ p::-webkit-scrollbar {
     border-radius: 10px;
     position: fixed;
     top: 90px;
-    left: 1100px;
+    left: 1500px;
     z-index: 990;
 }
 
@@ -550,3 +680,28 @@ button {
 }
 
 /* Modal end */
+
+
+.navbar-toggle {
+    display: none;
+}
+
+/* Media Queries */
+
+
+
+@media (max-width:500px) {
+    .sidebar-left {
+        display: none;
+    }
+
+
+
+
+}
+
+@media (max-width:500px) {
+    .navbar-toggle {
+        display: block;
+    }
+}

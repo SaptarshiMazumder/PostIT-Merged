@@ -6,15 +6,22 @@ Page3 Homepage
 
 {% block content %}
 
+{% include 'navbar.html' %}
+
 <div class="main-body">
+
+    {% include 'sidebar-left.html' %}
+
     <div id="myid">Replace me</div>
 
     <br /><br />
     <button class="scroll-to-last-viewed" onclick="scrollToPos()">Go to last browsed</button>
 
+
     <body onload="javascript:playPauseVideo()">
 
         <div class="page-contents">
+
             <div class="sidebar">
                 Logged in as {{ user.username }}
                 {%for game_profile in game_profiles%}
@@ -93,13 +100,6 @@ Page3 Homepage
                                                         <ul>
                                                             {% if user.is_authenticated %}
                                                             {% if user.id == post.author.id %}
-                                                            <!-- {% if post.has_video %}
-                                                                                                    <a href="{% url 'edit-video-post' post.pk %}">Edit</a>
-                                                                                                    {% elif post.has_images %}
-                                                                                                    <a href="{% url 'edit-image-post' post.pk %}">Edit</a>
-                                                                                                    {% else %}
-                                                                                                    <a href="{% url 'edit-post' post.pk %}">Edit</a>
-                                                                                                    {% endif %} -->
 
                                                             <li><a href="{% url 'delete-post' post.pk %}">Delete</a>
                                                             </li>
