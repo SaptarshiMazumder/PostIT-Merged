@@ -10,13 +10,15 @@
     --primary_color: #d46ed4;
     --grey_color: rgba(217, 216, 216, 0.6);
     --bg_color: #131212;
-    --post_bg_color: #131212;
+    --secondary_bg_color: rgb(37, 37, 37);
+    --post_bg_color: #1d1c1c;
 }
 
 a {
     text-decoration: none !important;
     color: inherit;
 }
+
 
 
 html {
@@ -199,7 +201,7 @@ i:hover {
     display: flex;
     flex-direction: column;
     display: block;
-    background-color: rgb(37, 37, 37);
+    background-color: rgb(24, 24, 24);
     border-radius: 10px;
     height: 100vh;
 
@@ -212,6 +214,7 @@ i:hover {
 
 .sidebar-top-section {
     padding: 10px;
+
 }
 
 .bottom-sidebar {
@@ -221,10 +224,27 @@ i:hover {
     padding: 10px 10px 50px 10px;
 }
 
+
 .sidebar-profile-section {
     display: flex;
     justify-content: space-between;
+
+    /* overflow: hidden; */
+    background-color: var(--secondary_bg_color);
+    border-radius: 50px;
+    width: 270px;
+    /* background-color: #333; */
+
 }
+
+.sidebar-profile-section:hover {
+    box-shadow: 0 2px 4px 0 rgba(212, 110, 212, 0.2), 0 3px 10px 0 rgba(212, 110, 212, 0.2);
+
+}
+
+/* .sidebar-profile-section:hover {
+    background-color: #444;
+} */
 
 .sidebar-profile-pic img {
     width: 50px;
@@ -242,22 +262,34 @@ i:hover {
 .sidebar-profile-name {
     position: relative;
     top: 10px;
+    left: -50px;
+
     /* background-color: #d46ed4; */
     /* color: #d46ed4; */
 }
 
+
 .sidebar-view-profile-button {
     font-size: small;
-    color: #d46ed4;
+    color: #d46ed4 !important;
+    text-decoration: none !important;
+}
+
+.sidebar-view-profile-button a {
+    color: inherit !important;
+    text-decoration: none;
 }
 
 .sidebar-profile-settings-button {
     margin-left: auto;
     position: relative;
     align-items: flex-end;
-    top: 15px;
-    left: 70px;
+    top: 20px;
+    left: -15px;
     cursor: pointer;
+    background: none;
+    padding: 0;
+    margin: 0;
 }
 
 .sidebar-profile-settings-options {
@@ -268,15 +300,15 @@ i:hover {
     float: left;
     text-align: left;
     border-radius: 5px;
-    background-color: rgb(37, 37, 37);
-    box-shadow: 0px 0px 2px 2px grey;
+    background-color: var(--secondary_bg_color);
+    box-shadow: 0 2px 4px 0 rgba(212, 110, 212, 0.2), 0 3px 10px 0 rgba(212, 110, 212, 0.2);
     padding-top: 15px;
     display: none;
 }
 
 .sidebar-list {
     margin: 0;
-    padding: 0;
+    padding: 10;
     display: flex;
     flex-direction: column;
     /* align-items: center; */
@@ -284,6 +316,14 @@ i:hover {
 
 .sidebar-list-item {
     display: flex;
+    padding: 10px;
+    font-size: large;
+    cursor: pointer;
+}
+
+.sidebar-list-item .fa-solid {
+    color: #fff;
+
 }
 
 .main-body {
@@ -299,12 +339,17 @@ i:hover {
 .post {
     text-align: start;
     background-color: var(--post_bg_color);
-    max-width: 680px;
+    width: 680px;
     margin: 0 auto;
     padding: 10px;
-    border: 1px var(--grey_color) solid;
+    /* border: 1px var(--grey_color) solid; */
     border-radius: 10px;
     margin-bottom: 10px;
+
+}
+
+.post:hover {
+    box-shadow: 0 4px 8px 0 rgba(212, 110, 212, 0.2), 0 6px 20px 0 rgba(212, 110, 212, 0.2);
 }
 
 .post-body {
@@ -353,15 +398,54 @@ p::-webkit-scrollbar {
 
 .post-category-section {
     display: flex;
+    font-size: small;
 }
 
 .post .post-category {
     text-decoration: none;
     background-color: var(--primary_color);
-    color: black;
+    color: rgb(255, 255, 255);
     padding: 2px 5px;
-    border-radius: 2px;
-    font-size: small;
+    border-radius: 10px;
+    font-size: x-small;
+    overflow: hidden;
+    margin: 5px;
+}
+
+.post .material-icons {
+    color: gray !important;
+    font-size: medium;
+    top: 5px;
+    position: relative;
+}
+
+.post .fa-puzzle-piece {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    top: 7px;
+}
+
+.post .fa-heart {
+    padding: 5px;
+    margin: 5px;
+}
+
+.post .fa-comment {
+    padding: 5px;
+    margin: 5px;
+}
+
+.post .like-button {
+    padding: 15px;
+}
+
+.post .reply-button {
+    padding: 15px;
+}
+
+.post a {
+    color: inherit;
 }
 
 .post-video {

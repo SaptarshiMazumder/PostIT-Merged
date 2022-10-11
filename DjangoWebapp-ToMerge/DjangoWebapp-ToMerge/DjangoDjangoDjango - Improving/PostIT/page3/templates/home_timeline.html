@@ -15,7 +15,7 @@ Page3 Homepage
     <div id="myid">Replace me</div>
 
     <br /><br />
-    <button class="scroll-to-last-viewed" onclick="scrollToPos()">Go to last browsed</button>
+    <!-- <button class="scroll-to-last-viewed" onclick="scrollToPos()">Go to last browsed</button> -->
 
 
     <body onload="javascript:playPauseVideo()">
@@ -70,10 +70,12 @@ Page3 Homepage
                                 <li class="post">
                                     <div>
                                         <div class="post-category-section">
-                                            <i class="fa-solid fa-earth-oceania"></i>
+                                            <!-- <i class="fa-solid fa-globe"></i> -->
+                                            <i class="fa-solid fa-puzzle-piece"></i>
+                                            <!-- <span class="material-icons post-topic-icon">&#xf1c8;</span> -->
                                             <a class="post-category">
-                                                {{post.category}}</a> <small>
-                                                {{post.id}}</small>
+                                                {{post.category}}</a>
+                                            {{post.id}}
                                         </div>
 
                                         <section class="post-top-part">
@@ -167,14 +169,15 @@ Page3 Homepage
                                         {% if user.is_authenticated %}
 
                                         <!-- <span id="like_count" type="hidden">{{ post.like_count}}</span> -->
+                                        <div class="post-interact"></div>
                                         <button id="like-button" class="like-button" name="{{ post.like_count }}"
                                             value="{{ post.id }}">{{post.like_count}}<i class="fa-solid fa-heart"></i>
                                         </button>
 
 
-                                        {{post.reply_count}}<a class="reply-button"
-                                            href="{% url 'upload_reply' post.pk %}" onclick="storeScroll()">
-                                            <i class="fa-solid fa-comment"></i></a>
+                                        <a class="reply-button" href="{% url 'upload_reply' post.pk %}"
+                                            onclick="storeScroll()">
+                                            {{post.reply_count}}<i class="fa-solid fa-comment"></i></a>
 
                                         {% endif %}
 
@@ -355,7 +358,7 @@ Page3 Homepage
         console.log("Scroll position Y: " + scrollPos)
     }
 
-    window.addEventListener("pageshow", scrollToPos);
+    //window.addEventListener("pageshow", scrollToPos);
 
     function scrollToPos() {
         //e.preventDefault()
