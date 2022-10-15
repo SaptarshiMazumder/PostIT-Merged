@@ -1,9 +1,8 @@
 
-from dataclasses import fields
-from email.mime import image
+
 from django.forms import ModelForm
 from matplotlib import widgets
-from .models import Post, Category, ImageFiles, GameProfile
+from .models import Post, Category, ImageFiles, GameProfile, Community
 from django import forms
 
 
@@ -113,7 +112,23 @@ class GameProfileForm(ModelForm):
         #     'category': forms.Select(choices=choice_list, attrs={'class': 'form-control'}),
         #     'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Write something here...'})
         # }
+
+
 class MatchmakingForm(ModelForm):
     class Meta:
-        model=GameProfile
+        model = GameProfile
         fields = ('game', 'server', 'rank')
+
+
+# Community
+
+class CreateCommunityForm(ModelForm):
+    class Meta:
+        model = Community
+        fields = ('name', 'bio', 'profile_pic')
+
+
+class JoinCommunity(ModelForm):
+    class Meta:
+        model = Community
+        fields = ('name', 'bio', 'profile_pic')

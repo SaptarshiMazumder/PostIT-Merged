@@ -2,6 +2,7 @@
 
 from cgitb import html, reset
 from dataclasses import fields
+from email import message
 from email.mime import image
 from ftplib import all_errors
 from multiprocessing import reduction
@@ -11,14 +12,15 @@ import re
 from telnetlib import GA
 from tkinter import Image
 from turtle import pos, title
+from unicodedata import name
 from unittest import result
 from urllib.request import Request
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse, HttpResponseNotAllowed
 from django.views.generic import ListView, DetailView
 from matplotlib.style import context
-from . models import GameProfile, Post, Replies, ImageFiles, Profile, Tags
-from . forms import EditPostForm, EditVideoPostForm, ImageForm, PostForm, PostImageForm, PostVideoForm, EditImagePostForm, GameProfileForm, MatchmakingForm
+from . models import Community, GameProfile, Post, Replies, ImageFiles, Profile, Tags
+from . forms import EditPostForm, EditVideoPostForm, ImageForm, PostForm, PostImageForm, PostVideoForm, EditImagePostForm, GameProfileForm, MatchmakingForm, CreateCommunityForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -54,6 +56,7 @@ def home_timeline(request, post_id=None):
 
     object_list = Post.objects.all().order_by('-post_datetime')
     game_profiles = GameProfile.objects.all()
+    communities = Community.objects.all()
     try:
         print(request.session['post_in_view'])
     except:
@@ -86,6 +89,7 @@ def home_timeline(request, post_id=None):
             'last_viewed': last_viewed,
             'has_images_to_show': has_images_to_show,
             'profile': profile,
+            'communities': communities,
         }
     except:
         context = {
@@ -96,6 +100,7 @@ def home_timeline(request, post_id=None):
             'has_images_to_show': has_images_to_show,
             'profiles': profiles,
             'game_profiles': game_profiles,
+            'communities': communities,
         }
     return render(request, 'home_timeline.html', context)
 
@@ -947,3 +952,73 @@ def search_results(request):
                                                                'search_query': og_search_query, 'profiles': profiles,
                                                                'people_list': people_list, 'image_list': image_list})
     return render(request, 'search_results.html')
+
+
+# Community
+
+# Create Community
+
+def create_community(request):
+    form = CreateCommunityForm()
+    message = ""
+    context = {
+        'user': request.user,
+        'form': form,
+        'message': message
+    }
+    if request.method == 'POST':
+        form = CreateCommunityForm(request.POST, request.FILES)
+        if form.is_valid():
+            # form.save()
+            # print("Name: ",)
+            instance = form.save(commit=False)
+            print("COMMUNITY NAME: ", instance.name)
+            existing_community = Community.objects.filter(name=instance.name)
+
+            print("EXISTING COMMUNITY: ", existing_community)
+            print(existing_community.count())
+            if existing_community.count() == 0:
+
+                instance.created_by = request.user
+
+                instance.save()
+            else:
+                message = "This community already exists! Try something else"
+                context['message'] = message
+                return render(request, 'create_community.html', context)
+            return redirect('home-page')
+
+    return render(request, 'create_community.html', context)
+
+
+def community_page(request, community_id):
+    community = Community.objects.get(id=community_id)
+    print(community)
+    context = {
+        'community': community
+    }
+    return render(request, 'community_page.html', context)
+
+
+@login_required
+@csrf_exempt
+def join_community(request):
+    if request.POST.get('action') == 'post':
+        result = ''
+        id = int(request.POST.get('community_id'))
+        community = get_object_or_404(Community, id=id)
+        print(id)
+        # print(community.like_count)
+        test = community.members.filter(id=request.user.id)
+        print(test)
+        # print(request.POST.get('elem'))
+        # request.session['post_in_view'] = id
+        if community.members.filter(id=request.user.id).exists():
+            print("Exists")
+            community.likes.remove(request.user)
+            community.save()
+        else:
+            print("Doesn't exist")
+            community.members.add(request.user)
+            community.save()
+        return JsonResponse({'result': "success", })

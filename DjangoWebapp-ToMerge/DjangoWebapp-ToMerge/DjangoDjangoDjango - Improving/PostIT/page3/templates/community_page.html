@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}
+Page3 - Community
+{% endblock title %}
+
+{% block content %}
+{{user}}
+{{message}}
+{% if user.is_authenticated %}
+
+{{ community }}
+
+{% else %}
+Login first!
+{% endif %}
+{% endblock content %}

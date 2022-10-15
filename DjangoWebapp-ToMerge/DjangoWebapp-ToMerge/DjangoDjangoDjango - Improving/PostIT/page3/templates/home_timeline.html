@@ -6,7 +6,7 @@ Page3 Homepage
 
 {% block content %}
 
-{% include 'navbar.html' %}
+{% include 'navbar-top.html' %}
 
 <div class="main-body">
 
@@ -51,6 +51,7 @@ Page3 Homepage
                     <div class="article-category">News</div>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit, numquam?</p>
                 </div>
+                {% include 'communities.html' %}
 
             </div>
 
@@ -62,7 +63,7 @@ Page3 Homepage
                     {% endif %}
 
 
-                    <div class="infinite-container" id="myDIV">
+                    <div class="infinite-container" style="background-color: #131212;" id="myDIV">
                         {% for post in objects %}
                         {% if not post.is_reply %}
                         <div class="infinite-item">

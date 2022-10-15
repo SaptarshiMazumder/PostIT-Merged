@@ -38,12 +38,22 @@ urlpatterns = [
     path('getPosts/<int:pk>/update', views.updatePost, name='update-post-rest'),
     path('getPosts/<int:pk>/delete', views.deletePost, name='delete-post-rest'),
 
+    #     Communities section
+    path('create_community', views.create_community, name='create-community'),
+    path('community/<int:community_id>',
+         views.community_page, name='community-page'),
+    path('join_community', views.join_community, name='join_community'),
+
 
     path('posts/<str:user>', views.posts_by_user, name="posts-by-user"),
-    path('create_gamer_profile/<str:user>', views.create_game_profile, name="create-gamer-profile"),
+    path('create_gamer_profile/<str:user>',
+         views.create_game_profile, name="create-gamer-profile"),
     path('matchmaking/<str:user>', views.MatchmakingHome, name="matchmaking-home"),
-    path('matchmaking_data/<str:user>', views.Matchmaking_Data, name="matchmaking-data"),
-    path('getgamerank_server/<str:game>', views.get_game_rank_server, name="get-game-rank-server"),
-    path('start_following/<str:who_to_follow>', views.start_following, name="start-following"),
+    path('matchmaking_data/<str:user>',
+         views.Matchmaking_Data, name="matchmaking-data"),
+    path('getgamerank_server/<str:game>',
+         views.get_game_rank_server, name="get-game-rank-server"),
+    path('start_following/<str:who_to_follow>',
+         views.start_following, name="start-following"),
     path('search', views.search_results, name='search')
 ]

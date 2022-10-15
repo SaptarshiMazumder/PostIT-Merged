@@ -1,0 +1,43 @@
+<div>
+    {%for community in communities %}
+    <a href="{% url 'community-page' community.id %}">{{community.id}}-{{ community }}</a>
+    <button id="join-community-button" value="{{community.id}}">Join</button>
+    <br />
+    {% endfor %}
+</div>
+
+<script>
+    $(document).on('click', '#join-community-button', function (e) {
+        e.preventDefault();
+
+        var this_ = $(this)
+        community_id = this_.attr("value").valueOf()
+
+        // var somevar = this_.attr()
+        $.ajax({
+            type: 'POST',
+            url: '{% url "join_community" %}',
+            data: {
+                community_id: community_id,
+                // postid: $('#like-button').val(),
+                action: 'post',
+                // postid: '{{ post.pk }}',
+            },
+            success: function (json) {
+
+                // this.getElementById("like-button").innerHTML = json['result']
+                // document.getElementsByTagName('{{post.id}}').innerHTML = json['result']
+
+                // document.getElementById("like_count").innerHTML = json['result'];
+                // no_of_likes = this_.attr("name").valueOf();
+                //no_of_likes = json['result'];
+                console.log(json)
+                //updateText(this_, no_of_likes)
+            },
+            error: function (xhr, errmsg, err) {
+
+            }
+        });
+    })
+
+</script>

@@ -14,6 +14,7 @@ import json
 
 # Create your models here.
 
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
     tags = models.CharField(
@@ -32,13 +33,15 @@ class Category(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    bio = models.TextField()
+    bio = models.TextField(blank=True, null=True)
     profile_pic = models.ImageField(
         null=True, blank=True, upload_to="images/profile")
     discord_link = models.CharField(max_length=255, null=True, blank=True)
     twitch_link = models.CharField(max_length=255, null=True, blank=True)
-    following= models.ManyToManyField(User, default=None, blank= True, related_name='following')
-    followers= models.ManyToManyField(User, default=None, blank= True, related_name='followers')
+    following = models.ManyToManyField(
+        User, default=None, blank=True, related_name='following')
+    followers = models.ManyToManyField(
+        User, default=None, blank=True, related_name='followers')
 
     def __str__(self):
         return str(self.user)
@@ -71,13 +74,13 @@ class Post(models.Model):
     body = RichTextField(blank=True, null=True)
 
     def set_Tag(self, lst):
-        self.tags=json.dumps(lst)
-    
+        self.tags = json.dumps(lst)
+
     def get_Tag(self):
         if self.tags:
             try:
-                
-                tag_list= json.loads(self.tags)
+
+                tag_list = json.loads(self.tags)
                 return tag_list
             except ValueError as e:
                 return ""
@@ -108,12 +111,31 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post-page', args=(str(self.post_id)))
 
+
+class Community(models.Model):
+    name = models.CharField(max_length=255)
+    bio = models.TextField(blank=True, null=True)
+    profile_pic = models.ImageField(
+        null=True, blank=True, upload_to="images/profile")
+    created_by = models.ForeignKey(
+        User, on_delete=models.DO_NOTHING, default=None)
+    members = models.ManyToManyField(
+        User, default=None, blank=True, related_name='members')
+    post = models.ManyToManyField(
+        Post, default=None, blank=True, related_name='community_posts')
+
+    def __str__(self):
+        return self.name
+
+
 class Tags(models.Model):
-    tag_name= models.CharField(max_length=50, null=True)    
-    post= models.ManyToManyField(Post, default=None, blank=True, related_name='tagged_posts')
-    
+    tag_name = models.CharField(max_length=50, null=True)
+    post = models.ManyToManyField(
+        Post, default=None, blank=True, related_name='tagged_posts')
+
     def __str__(self):
         return self.tag_name
+
 
 class Replies(models.Model):
     reply_to_post = models.ForeignKey(
@@ -139,85 +161,86 @@ LIKE_CHOICES = (
 
 
 class GameProfile(models.Model):
-    games_list=[('Valorant', 'Valorant'), ('Call of Duty', 'Call of Duty'),('League of Legends', 'League of Legends'), ('Counter Shit: GO', 'Counter Shit: GO')]
+    games_list = [('Valorant', 'Valorant'), ('Call of Duty', 'Call of Duty'),
+                  ('League of Legends', 'League of Legends'), ('Counter Shit: GO', 'Counter Shit: GO')]
 
     class ValorantServers(models.TextChoices):
-        APAC= 'APAC', 'Asia Pacific'
-        EMEA= 'EMEA', 'Europe'
-        NA= 'NA', 'North America(meaning shit)'
-        JA= 'JA', 'Japan'
-    
+        APAC = 'APAC', 'Asia Pacific'
+        EMEA = 'EMEA', 'Europe'
+        NA = 'NA', 'North America(meaning shit)'
+        JA = 'JA', 'Japan'
+
     class CODServers(models.TextChoices):
-        APAC= 'APAC', 'Asia Pacific'
-        EMEA= 'EMEA', 'Europe'
-        NA= 'NA', 'North America(meaning shit)'
-    
+        APAC = 'APAC', 'Asia Pacific'
+        EMEA = 'EMEA', 'Europe'
+        NA = 'NA', 'North America(meaning shit)'
+
     class LOLServers(models.TextChoices):
-        APAC= 'APAC', 'Asia Pacific'
-        EMEA= 'EMEA', 'Europe'
-        NA= 'NA', 'North America(meaning shit)'
-    
+        APAC = 'APAC', 'Asia Pacific'
+        EMEA = 'EMEA', 'Europe'
+        NA = 'NA', 'North America(meaning shit)'
+
     class CSServers(models.TextChoices):
-        EMEA= 'EMEA', 'Europe'
-        NA= 'NA', 'North America(meaning shit)'
+        EMEA = 'EMEA', 'Europe'
+        NA = 'NA', 'North America(meaning shit)'
 
     class ValorantRanks(models.TextChoices):
-        Iron= 'IRON', 'Iron :((('
-        Bronze= 'Bronze', 'Bronze :(('
-        Silver= 'Silver', 'Silver :('
-        Gold= 'Gold', 'Gold :('
-        Platinum= 'Platinum', 'Platinum '
-        Diamond= 'Diamond', 'Diamond :) '
-        Asencdant= 'Asencdant', 'Asencdant :)) '
-        Immortal= 'Immortal', 'Immortal >_< '
-        Radiant= 'Radiant', 'Radiant :> '
-    
+        Iron = 'IRON', 'Iron :((('
+        Bronze = 'Bronze', 'Bronze :(('
+        Silver = 'Silver', 'Silver :('
+        Gold = 'Gold', 'Gold :('
+        Platinum = 'Platinum', 'Platinum '
+        Diamond = 'Diamond', 'Diamond :) '
+        Asencdant = 'Asencdant', 'Asencdant :)) '
+        Immortal = 'Immortal', 'Immortal >_< '
+        Radiant = 'Radiant', 'Radiant :> '
+
     class LOLRanks(models.TextChoices):
-        Iron= 'IRON', 'Iron :((('
-        Bronze= 'Bronze', 'Bronze :(('
-        Silver= 'Silver', 'Silver :('
-        Gold= 'Gold', 'Gold :('
-        Platinum= 'Platinum', 'Platinum '
-        Diamond= 'Diamond', 'Diamond :) '
-        Master= 'Master', 'Master :)) '
-        Grandmaster= 'Grandmaster', 'Grandmaster >_< '
-        Challenger= 'Challenger', 'Challenger :> '
-    
+        Iron = 'IRON', 'Iron :((('
+        Bronze = 'Bronze', 'Bronze :(('
+        Silver = 'Silver', 'Silver :('
+        Gold = 'Gold', 'Gold :('
+        Platinum = 'Platinum', 'Platinum '
+        Diamond = 'Diamond', 'Diamond :) '
+        Master = 'Master', 'Master :)) '
+        Grandmaster = 'Grandmaster', 'Grandmaster >_< '
+        Challenger = 'Challenger', 'Challenger :> '
+
     class CODRanks(models.TextChoices):
-        Rookie= 'Rookie', 'Rookie :((('
-        Veteran= 'Veteran', 'Veteran :(('
-        Elite= 'Elite', 'Elite :('
-        Pro= 'Pro', 'Pro :('
-        Master= 'Master', 'Master '
-        Grandmaster= 'Grandmaster', 'Grandmaster :) '
-        Legendary= 'Legendary', 'Legendary :)) '
+        Rookie = 'Rookie', 'Rookie :((('
+        Veteran = 'Veteran', 'Veteran :(('
+        Elite = 'Elite', 'Elite :('
+        Pro = 'Pro', 'Pro :('
+        Master = 'Master', 'Master '
+        Grandmaster = 'Grandmaster', 'Grandmaster :) '
+        Legendary = 'Legendary', 'Legendary :)) '
 
     class CSRanks(models.TextChoices):
-        
-        Silver= 'Silver', 'Silver :('
-        Gold= 'Gold', 'Gold :('
-        Master_Guardian= 'Master Guardian', 'Master Guardian '
-        Distinguished_Master_Guardian= 'Distinguished Master Guardian', 'Distinguished Master Guardian :) '
-        Legendary= 'Legendary', 'Legendary :)) '
-        Elite= 'Elite', 'Elite >_< '
-        
+
+        Silver = 'Silver', 'Silver :('
+        Gold = 'Gold', 'Gold :('
+        Master_Guardian = 'Master Guardian', 'Master Guardian '
+        Distinguished_Master_Guardian = 'Distinguished Master Guardian', 'Distinguished Master Guardian :) '
+        Legendary = 'Legendary', 'Legendary :)) '
+        Elite = 'Elite', 'Elite >_< '
+
     class User_Status(models.TextChoices):
-        LFTeams= 'Looking for teams','Looking for teams' 
-        LFTalent= 'Looking for talent','Looking for talent' 
-        none= 'none', 'none'
+        LFTeams = 'Looking for teams', 'Looking for teams'
+        LFTalent = 'Looking for talent', 'Looking for talent'
+        none = 'none', 'none'
 
-
-    servers_list= [('Val', ValorantServers.choices), ('COD', CODServers.choices),
+    servers_list = [('Val', ValorantServers.choices), ('COD', CODServers.choices),
                     ('LOL', LOLServers.choices), ('CS', CSServers.choices)]
 
-    ranks_list=[('Val', ValorantRanks.choices), ('COD', CODRanks.choices),
-                    ('LOL', LOLRanks.choices), ('CS', CSRanks.choices)]
+    ranks_list = [('Val', ValorantRanks.choices), ('COD', CODRanks.choices),
+                  ('LOL', LOLRanks.choices), ('CS', CSRanks.choices)]
 
-    user=models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    game= models.CharField(max_length=50, choices=games_list)
-    server= models.CharField(max_length=50, choices=servers_list)
-    rank= models.CharField(max_length=50, choices=ranks_list, default="")
-    user_status= models.CharField(max_length=50, choices= User_Status.choices, default='none')
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    game = models.CharField(max_length=50, choices=games_list)
+    server = models.CharField(max_length=50, choices=servers_list)
+    rank = models.CharField(max_length=50, choices=ranks_list, default="")
+    user_status = models.CharField(
+        max_length=50, choices=User_Status.choices, default='none')
 
     def __str__(self):
-        return str(self.user)+ " | " + str(self.game) + " | " + str(self.server) + " | " + str(self.rank)
+        return str(self.user) + " | " + str(self.game) + " | " + str(self.server) + " | " + str(self.rank)

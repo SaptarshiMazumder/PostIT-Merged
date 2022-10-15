@@ -3,7 +3,9 @@
 
     <div class="navbar-contents">
         <div class="navbar-toggle"><i class="fa-solid fa-bars " id="navbar-toggle"></i></div>
-        <a class=" home" href="{% url 'home-page'%}"><i class="fa-solid fa-house"></i></a>
+
+        <a class=" home" href="{% url 'home-page'%}"><img src="{% static 'PostIT/images/PostIT.png' %}" width="70"><i
+                class="fa-solid fa-house"></i></a>
 
 
         {% if user.is_authenticated %}
@@ -59,7 +61,9 @@
             </div>
         </div>
     </div>
-
+    <!-- <div class="add-post-section">
+        <i class="fa-solid fa-plus">kl</i>
+    </div> -->
     {%endif%}
 </div>
 
