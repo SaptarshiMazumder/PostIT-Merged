@@ -4,13 +4,76 @@ Page3 - Community
 {% endblock title %}
 
 {% block content %}
-{{user}}
-{{message}}
-{% if user.is_authenticated %}
+{% include 'navbar-top.html' %}
+<div class="main-body">
+    <div class="page-contents">
+        <div class="sidebar">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit doloribus ipsa, vel suscipit
+            omnis quas cumque magnam deserunt accusamus neque tempora iusto, repellat cupiditate saepe totam sit natus,
+            alias fuga.
+        </div>
+        <div class="posts-timeline">
+            <br /><br /><br />
+            {{user}}
+            {{message}}
+            {% if user.is_authenticated %}
 
-{{ community }}
+            {{ community }}
 
-{% else %}
-Login first!
-{% endif %}
+            <div class="add-post-community-options" id="add-post-community-options">
+                <ul>
+
+                    <li class="add-post-community-option"><a class="create-post"
+                            href="{% url 'add-post-community' community.id %}"><i class="fa-solid fa-feather"></i>Text
+                            Post</a></li>
+                    <li class="add-post-community-option"><a href="{% url 'add-image-post-community' community.id %}"><i
+                                class="fa-regular fa-image "></i>Image Post</a>
+                    </li>
+                    <li class="add-post-community-option"><a href="{% url 'add-video-post-community' community.id %}"><i
+                                class="fa-solid fa-video "></i>Video Post</a></li>
+                </ul>
+            </div>
+            <div class="add-post-community-button" onclick="addPostCommunityOptionsToggle()">
+
+                <i class="fa-solid fa-plus"></i>
+
+            </div>
+            <div class="blocker-page-community" id="blocker-page-community"></div>
+            {% else %}
+            Login first!
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    function addPostCommunityOptionsToggle() {
+
+        var addPostCommunityOptions = document.getElementById("add-post-community-options")
+        var blockerPage = document.getElementById("blocker-page-community")
+
+
+
+        if (addPostCommunityOptions.style.display === "block") {
+            addPostCommunityOptions.style.display = "none"
+            blockerPage.style.display = "none"
+        }
+        else {
+            addPostCommunityOptions.style.display = "block"
+            blockerPage.style.display = "block"
+            blockerPage.style.pointerEvents = "auto"
+        }
+    }
+
+    $(document).on('click', '#blocker-page-community', function (e) {
+
+        var addPostCommunityOptions = document.getElementById("add-post-community-options")
+        var blockerPage = document.getElementById("blocker-page-community")
+
+        addPostCommunityOptions.style.display = "none"
+        blockerPage.style.display = "none"
+
+        blockerPage.style.pointerEvents = "none"
+
+    });
+</script>
 {% endblock content %}

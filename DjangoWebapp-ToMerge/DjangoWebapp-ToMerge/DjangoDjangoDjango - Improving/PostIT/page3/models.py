@@ -47,6 +47,22 @@ class Profile(models.Model):
         return str(self.user)
 
 
+class Community(models.Model):
+    name = models.CharField(max_length=255)
+    bio = models.TextField(blank=True, null=True)
+    profile_pic = models.ImageField(
+        null=True, blank=True, upload_to="images/profile")
+    created_by = models.ForeignKey(
+        User, on_delete=models.DO_NOTHING, default=None)
+    members = models.ManyToManyField(
+        User, default=None, blank=True, related_name='members')
+    # post = models.ManyToManyField(
+    #     Post, default=None, blank=True, related_name='community_posts')
+
+    def __str__(self):
+        return self.name
+
+
 class Post(models.Model):
     title = models.CharField(max_length=255, blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
@@ -72,6 +88,8 @@ class Post(models.Model):
     user_profile = models.ForeignKey(
         Profile, on_delete=models.DO_NOTHING, default=None, null=True, blank=True,)
     body = RichTextField(blank=True, null=True)
+    community = models.ForeignKey(
+        Community, on_delete=models.DO_NOTHING, default=None, null=True, blank=True)
 
     def set_Tag(self, lst):
         self.tags = json.dumps(lst)
@@ -110,22 +128,6 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-page', args=(str(self.post_id)))
-
-
-class Community(models.Model):
-    name = models.CharField(max_length=255)
-    bio = models.TextField(blank=True, null=True)
-    profile_pic = models.ImageField(
-        null=True, blank=True, upload_to="images/profile")
-    created_by = models.ForeignKey(
-        User, on_delete=models.DO_NOTHING, default=None)
-    members = models.ManyToManyField(
-        User, default=None, blank=True, related_name='members')
-    post = models.ManyToManyField(
-        Post, default=None, blank=True, related_name='community_posts')
-
-    def __str__(self):
-        return self.name
 
 
 class Tags(models.Model):

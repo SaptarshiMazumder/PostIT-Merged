@@ -1022,3 +1022,169 @@ def join_community(request):
             community.members.add(request.user)
             community.save()
         return JsonResponse({'result': "success", })
+
+
+def add_post_community(request, community_id):
+    form = PostForm()
+    community = None
+    try:
+        community = Community.objects.get(id=community_id)
+        print("COMMUNITY TO ADD POST TO: ", community)
+    except:
+        return redirect("home-page")
+
+    context = {
+        'form': form
+    }
+    if request.method == 'POST':
+        print(request.POST)
+        form = PostForm(request.POST, request.FILES)
+        tags = request.POST['tags']
+        if form.is_valid():
+            # form.save()
+            instance = form.save(commit=False)
+            instance.author = request.user
+            instance.user_profile = request.user.profile
+            if community:
+                instance.community = community
+            print("PRINTING PROFILE: ", request.user.profile)
+            instance.save()
+            if len(tags) > 0:
+                tags_list = tags.replace(' ', '').split(",")
+
+                for t in tags_list:
+                    if not(Tags.objects.filter(tag_name=t).exists()):
+
+                        new_tag = Tags(tag_name=t)
+                        new_tag.save()
+                        Tags.objects.get(id=new_tag.id).post.add(
+                            Post.objects.get(id=instance.id))
+
+                    else:
+                        print("MATCHED: ", Tags.objects.filter(tag_name=t))
+                        Tags.objects.get(tag_name=t).post.add(
+                            Post.objects.get(id=instance.id))
+
+                post_obj = Post.objects.get(id=instance.id)
+                post_obj.set_Tag(tags_list)
+                post_obj.save()
+            return redirect('home-page')
+        else:
+            return render(request, 'add_post.html', context)
+    else:
+        form = PostForm()
+
+    return render(request, 'add_post.html', context)
+
+
+def add_image_post_community(request, community_id):
+    form = PostImageForm()
+    community = None
+    try:
+        community = Community.objects.get(id=community_id)
+        print("COMMUNITY TO ADD POST TO: ", community)
+    except:
+        return redirect("home-page")
+    context = {
+        'form': form
+    }
+    if request.method == 'POST':
+        print(request.POST)
+        form = PostImageForm(request.POST)
+        files = request.FILES.getlist("image")
+        tags = request.POST['tags']
+        if form.is_valid():
+            # form.save()
+            instance = form.save(commit=False)
+            instance.author = request.user
+            instance.user_profile = request.user.profile
+            if files:
+                instance.has_images = True
+            else:
+                instance.has_images = False
+            if community:
+                instance.community = community
+            instance.save()
+            if len(tags) > 0:
+                tags_list = tags.replace(' ', '').split(",")
+
+                for t in tags_list:
+                    if not(Tags.objects.filter(tag_name=t).exists()):
+
+                        new_tag = Tags(tag_name=t)
+                        new_tag.save()
+                        Tags.objects.get(id=new_tag.id).post.add(
+                            Post.objects.get(id=instance.id))
+
+                    else:
+                        print("MATCHED: ", Tags.objects.filter(tag_name=t))
+                        Tags.objects.get(tag_name=t).post.add(
+                            Post.objects.get(id=instance.id))
+
+                post_obj = Post.objects.get(id=instance.id)
+                post_obj.set_Tag(tags_list)
+                post_obj.save()
+            for file in files:
+                ImageFiles.objects.create(post=instance, image=file)
+
+            return redirect('home-page')
+        else:
+            print(form.errors)
+    else:
+        form = PostImageForm()
+        imageform = ImageForm()
+
+    return render(request, 'add_image_post.html', {"form": form, "imageform": imageform})
+
+
+def add_video_post_community(request, community_id):
+    form = PostVideoForm()
+    community = None
+    try:
+        community = Community.objects.get(id=community_id)
+        print("COMMUNITY TO ADD POST TO: ", community)
+    except:
+        return redirect("home-page")
+    context = {
+        'form': form
+    }
+    if request.method == 'POST':
+        print(request.POST)
+        form = PostVideoForm(request.POST, request.FILES)
+        tags = request.POST['tags']
+        if form.is_valid():
+            # form.save()
+            instance = form.save(commit=False)
+            instance.author = request.user
+            instance.user_profile = request.user.profile
+            if request.FILES:
+                instance.has_video = True
+            if community:
+                instance.community = community
+            instance.save()
+            if len(tags) > 0:
+                tags_list = tags.replace(' ', '').split(",")
+
+                for t in tags_list:
+                    if not(Tags.objects.filter(tag_name=t).exists()):
+
+                        new_tag = Tags(tag_name=t)
+                        new_tag.save()
+                        Tags.objects.get(id=new_tag.id).post.add(
+                            Post.objects.get(id=instance.id))
+
+                    else:
+                        print("MATCHED: ", Tags.objects.filter(tag_name=t))
+                        Tags.objects.get(tag_name=t).post.add(
+                            Post.objects.get(id=instance.id))
+
+                post_obj = Post.objects.get(id=instance.id)
+                post_obj.set_Tag(tags_list)
+                post_obj.save()
+            return redirect('home-page')
+        else:
+            return render(request, 'add_video_post.html', context)
+    else:
+        form = PostVideoForm()
+
+    return render(request, 'add_video_post.html', context)

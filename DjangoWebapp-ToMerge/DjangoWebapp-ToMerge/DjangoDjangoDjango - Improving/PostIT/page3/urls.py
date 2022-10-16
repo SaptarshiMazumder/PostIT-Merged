@@ -43,6 +43,12 @@ urlpatterns = [
     path('community/<int:community_id>',
          views.community_page, name='community-page'),
     path('join_community', views.join_community, name='join_community'),
+    path('add_post_community/<int:community_id>',
+         views.add_post_community, name='add-post-community'),
+    path('add_image_post_community/<int:community_id>',
+         views.add_image_post_community, name='add-image-post-community'),
+    path('add_video_post_community/<int:community_id>',
+         views.add_video_post_community, name='add-video-post-community'),
 
 
     path('posts/<str:user>', views.posts_by_user, name="posts-by-user"),
