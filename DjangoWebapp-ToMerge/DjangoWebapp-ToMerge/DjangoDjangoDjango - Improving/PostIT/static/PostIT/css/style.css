@@ -605,7 +605,7 @@ p::-webkit-scrollbar {
     background-color: black;
 }
 
-.post .post-title {
+.post .post-body-section {
     text-decoration: none;
     font-size: medium;
     color: white;
@@ -690,25 +690,25 @@ p::-webkit-scrollbar {
     padding: 10px;
 }
 
-.post-top-part {
+.post-header-section {
     display: flex;
     align-items: center;
     margin-top: 10px;
 }
 
-.post-top-part .post-header {
+.post-header-section .post-profile-section {
     display: flex;
     flex-direction: column;
     font-size: medium;
 }
 
-.post-top-part .post-header .date {
+.post-header-section .post-profile-section .date {
     font-size: small;
     color: var(--grey_color)
 }
 
 
-.post-top-part .post-options-button {
+.post-header-section .post-options-button {
     color: #d46ed4;
     margin-left: auto;
     display: flex;
@@ -716,7 +716,7 @@ p::-webkit-scrollbar {
 
 }
 
-/* .post-top-part .post-options-button:hover>.post-options-list {
+/* .post-header-section .post-options-button:hover>.post-options-list {
     display: block;
 } */
 

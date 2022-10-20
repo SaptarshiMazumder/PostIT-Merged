@@ -13,81 +13,7 @@ Page3 - Add reply
     <div class="page-contents">
         <div class="sidebar" style="visibility: hidden !important;"></div>
         <div class="posts-timeline">
-            <div class="post">
-
-
-
-                <section class="post-top-part">
-                    <div class="profile-pic">
-                        {%if post.user_profile.profile_pic.name %}
-                        <img src="{{ post.user_profile.profile_pic.url }}" width="500">
-                        {% endif %}
-                        <!-- <img src="{{ post.user_profile.profile_pic.url }}" width="500"> -->
-                    </div>
-
-                    <span class="post-header">{{post.author}} <span class="date">
-                            {{post.post_date}}
-                        </span> </span>
-                </section>
-
-                {% if user.is_authenticated %}
-                Logged in as: {{user}} | {{user.id}}
-                {% if user.id == post.author.id %}
-                <h1>{{ post.title }}</h1><a href="{% url 'edit-post' post.pk %}">Edit</a><br />
-                {% endif %}
-                {% endif %}
-
-
-                <small>{{ post.author.username }}
-                    {{ post.post_date}} | {{post.pk}}</small><br />
-                <hr>
-                {{post.body}}
-                <br />
-                {% if post.has_images %}
-
-                {% for image in image_list %}
-                {% if image.post.id == post.id %}
-                <img src="{{ image.image.url}}" width="500">
-                {% endif %}
-                {% endfor %}
-                {{ post.imagefiles}}
-                {% endif %}
-
-                {% if post.video %}
-                <video width="500" controls autoplay>
-                    <source src="{{post.video.url}}" type="video/mp4">
-                </video>
-
-                {% endif %}
-                <br />
-                {% if user.is_authenticated %}
-
-                <!-- Modal start -->
-
-                <div class="reply-modal-container" id="reply-modal-container">
-                    <div class="modal-div">
-                        <h1>reply to</h1>
-                        {% include 'post_replies_form.html' %}
-                        <button id="close-modal">CLose modal</button>
-                    </div>
-                </div>
-
-                <!-- Modal end -->
-
-
-                {% if user.profile.id %}
-                <!-- <span id="like_count" type="hidden">{{ post.like_count}}</span> -->
-                <button id="like-button" class="like-button" name="{{ post.like_count }}" value="{{ post.pk }}">LIKED BY
-                    {{post.like_count}}</button>
-
-
-
-                <button id="open-reply-modal" value="{{post.pk}}">Reply</button>
-                {% endif %}
-
-                {% endif %}
-
-            </div>
+            {% include 'post_element_replies.html' %}
             <div id="replies-section">
                 {% include 'replies_list.html' %}
             </div>
@@ -98,8 +24,14 @@ Page3 - Add reply
 <!-- JS Scripts Here -->
 
 <script>
+
+
     function updateText(btn, no_of_likes) {
-        btn.text("LIKED BY" + " " + no_of_likes)
+        //btn.element.innerHTML = "LIKED BY" + " " + no_of_likes + "lkl"
+        //btn.text("LIKED BY" + " " + no_of_likes + " <h1>JLO</h1>")
+        elem = "<i class='fa-solid fa-heart'></i>"
+        btn[0].innerHTML = no_of_likes + elem
+        console.log(btn[0].innerHTML)
     }
     $(document).on('click', '#like-button', function (e) {
         e.preventDefault();
@@ -133,7 +65,11 @@ Page3 - Add reply
 
 <script>
     function updateText(btn, no_of_likes) {
-        btn.text("LIKED BY" + " " + no_of_likes)
+        //btn.element.innerHTML = "LIKED BY" + " " + no_of_likes + "lkl"
+        //btn.text("LIKED BY" + " " + no_of_likes + " <h1>JLO</h1>")
+        elem = "<i class='fa-solid fa-heart'></i>"
+        btn[0].innerHTML = no_of_likes + elem
+        console.log(btn[0].innerHTML)
     }
     function updateLikes() {
 
