@@ -12,10 +12,7 @@ Page3 Homepage
 
     {% include 'sidebar-left.html' %}
 
-    <div id="myid">Replace me</div>
 
-    <br /><br />
-    <!-- <button class="scroll-to-last-viewed" onclick="scrollToPos()">Go to last browsed</button> -->
 
 
     <body onload="javascript:playPauseVideo()">
@@ -68,7 +65,7 @@ Page3 Homepage
                         {% if not post.is_reply %}
                         <div class="infinite-item">
                             <div value="{{ post.id }}">
-                                {% include 'post_element_home_timeline.html' %}
+                                {% include 'post/postElement/post_element_home_timeline.html' %}
 
                             </div>
                         </div>

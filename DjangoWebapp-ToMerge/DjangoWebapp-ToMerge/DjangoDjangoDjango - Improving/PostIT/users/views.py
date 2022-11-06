@@ -3,9 +3,11 @@ from django.shortcuts import render, redirect
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth import authenticate, login
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from page3.models import Profile
+
 # from PostIT.page3.models import Profile
 
 from .forms import SignUpForm, EditProfileForm, PasswordChangingForm, ProfileForm
@@ -26,15 +28,26 @@ def register(request):
         print(request.POST)
         form = SignUpForm(request.POST)
         if form.is_valid():
+            data = form.cleaned_data
             form.save()
-
+            print(data['username'])
+            print(data['password1'])
             # print(form)
 
         else:
             data = form.cleaned_data
             return HttpResponse("<h1>Problem with password!</h1>")
-
-        return redirect('login')
+        user = authenticate(
+            request, username=data['username'], password=data['password1'])
+        if user is not None:
+            print("User is: ", user)
+            login(request, user)
+            return redirect("add-profile")
+            # return redirect("home-page")
+        # return redirect('login')
+        else:
+            # return redirect("add-profile")
+            return redirect("register")
     context = {
         'form': form,
         'success_url': reverse_lazy('login')

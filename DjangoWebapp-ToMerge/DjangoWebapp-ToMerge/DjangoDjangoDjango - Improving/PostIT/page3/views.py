@@ -997,6 +997,36 @@ def community_page(request, community_id):
     context = {
         'community': community
     }
+
+    # object_list = Post.objects.all().order_by('-post_datetime')
+    object_list = Post.objects.filter(
+        community=community).order_by('-post_datetime')
+    game_profiles = GameProfile.objects.all()
+    communities = Community.objects.all()
+
+    # Set up pagination
+    # request.session['loaded_posts'] = object_list
+    p = Paginator(object_list, 4)
+    # p = Paginator(Post.objects.all().order_by('-post_datetime'), 4)
+    page = request.GET.get('page')
+    objects = p.get_page(page)
+    a = 200
+    print("JJJJJJJJJJJJJJJJJJJJJJJ")
+    print(objects)
+    image_list = ImageFiles.objects.all()
+    profiles = Profile.objects.all()
+    has_images_to_show = False
+    context = {
+        'community': community,
+        'object_list': object_list,
+        'image_list': image_list,
+        'objects': objects,
+        'has_images_to_show': has_images_to_show,
+        'profiles': profiles,
+        'game_profiles': game_profiles,
+        'communities': communities,
+    }
+
     return render(request, 'community_page.html', context)
 
 
