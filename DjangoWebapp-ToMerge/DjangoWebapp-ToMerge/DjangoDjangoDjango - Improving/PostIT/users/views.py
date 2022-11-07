@@ -4,6 +4,7 @@ from django.views import generic
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from page3.models import Profile
@@ -50,9 +51,37 @@ def register(request):
             return redirect("register")
     context = {
         'form': form,
-        'success_url': reverse_lazy('login')
+        'success_url': reverse_lazy('login-user')
     }
     return render(request, 'registration/register.html', context)
+
+
+def login_user(request):
+    context = {
+        'result': ""
+    }
+    if request.method == 'POST':
+        print(request.POST)
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            try:
+                if(user.profile):
+                    print("My Profile: ", user.profile)
+                    return redirect('home-page')
+            except:
+                return redirect("add-profile")
+            return redirect('home-page')
+            # Redirect to a success page.
+            ...
+        else:
+            messages.success(request, ("There was an error loggin in"))
+            return redirect('login-user')
+            # Return an 'invalid login' error message.
+    else:
+        return render(request, 'registration/login_user.html', context)
 
 
 def update_user(request):

@@ -9,6 +9,7 @@ urlpatterns = [
     # path('register/', UserRegisterView.as_view(), name='register'),
     path('register/', views.register, name='register'),
     path('edit_profile/', views.update_user, name='edit-profile'),
+    path('login_user', views.login_user, name='login-user'),
     # path('password/', auth_views.PasswordChangeView.as_view(
     #     template_name='registration/change_password.html')),
     path('password/', views.PasswordsChangeView.as_view(

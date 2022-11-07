@@ -1,12 +1,34 @@
 <div>
+    {% if user.is_authenticated %}
     {%for community in communities %}
     <a href="{% url 'community-page' community.id %}">{{community.id}}-{{ community }}</a>
+
+    {% if community in joined_communities %}
+    <button id="join-community-button" value="{{community.id}}">Joined</button>
+    {% else %}
     <button id="join-community-button" value="{{community.id}}">Join</button>
+    {% endif %}
+
+
     <br />
     {% endfor %}
+    {% endif %}
+    <!-- {%for joined_community in joined_communities %}
+
+    {{joined_community.id}}
+    {% endfor %} -->
+
 </div>
 
 <script>
+    function updateCommunityButtonText(btn, buttonText) {
+        //btn.element.innerHTML = "LIKED BY" + " " + no_of_likes + "lkl"
+        //btn.text("LIKED BY" + " " + no_of_likes + " <h1>JLO</h1>")
+        //elem = "<i class='fa-solid fa-heart'></i>"
+        btn[0].innerHTML = buttonText
+        console.log(btn[0].innerHTML)
+    }
+
     $(document).on('click', '#join-community-button', function (e) {
         e.preventDefault();
 
@@ -30,9 +52,9 @@
 
                 // document.getElementById("like_count").innerHTML = json['result'];
                 // no_of_likes = this_.attr("name").valueOf();
-                //no_of_likes = json['result'];
+                buttonText = json['buttonText'];
                 console.log(json)
-                //updateText(this_, no_of_likes)
+                updateCommunityButtonText(this_, buttonText)
             },
             error: function (xhr, errmsg, err) {
 

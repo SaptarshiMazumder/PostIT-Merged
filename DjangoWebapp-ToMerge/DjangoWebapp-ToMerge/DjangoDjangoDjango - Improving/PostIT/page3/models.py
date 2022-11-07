@@ -31,22 +31,6 @@ class Category(models.Model):
         return reverse('home-page')
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    bio = models.TextField(blank=True, null=True)
-    profile_pic = models.ImageField(
-        null=True, blank=True, upload_to="images/profile")
-    discord_link = models.CharField(max_length=255, null=True, blank=True)
-    twitch_link = models.CharField(max_length=255, null=True, blank=True)
-    following = models.ManyToManyField(
-        User, default=None, blank=True, related_name='following')
-    followers = models.ManyToManyField(
-        User, default=None, blank=True, related_name='followers')
-
-    def __str__(self):
-        return str(self.user)
-
-
 class Community(models.Model):
     name = models.CharField(max_length=255)
     bio = models.TextField(blank=True, null=True)
@@ -61,6 +45,24 @@ class Community(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    bio = models.TextField(blank=True, null=True)
+    profile_pic = models.ImageField(
+        null=True, blank=True, upload_to="images/profile")
+    discord_link = models.CharField(max_length=255, null=True, blank=True)
+    twitch_link = models.CharField(max_length=255, null=True, blank=True)
+    following = models.ManyToManyField(
+        User, default=None, blank=True, related_name='following')
+    followers = models.ManyToManyField(
+        User, default=None, blank=True, related_name='followers')
+    communities = models.ManyToManyField(
+        Community, default=None, blank=True, related_name='followers')
+
+    def __str__(self):
+        return str(self.user)
 
 
 class Post(models.Model):

@@ -57,10 +57,11 @@ def home_timeline(request, post_id=None):
     object_list = Post.objects.all().order_by('-post_datetime')
     game_profiles = GameProfile.objects.all()
     communities = Community.objects.all()
+    # joined_communities = request.user.profile.communities.all()
     try:
-        print(request.session['post_in_view'])
+        joined_communities = request.user.profile.communities.all()
     except:
-        pass
+        joined_communities = ""
     # Set up pagination
     # request.session['loaded_posts'] = object_list
     p = Paginator(object_list, 4)
@@ -90,6 +91,7 @@ def home_timeline(request, post_id=None):
             'has_images_to_show': has_images_to_show,
             'profile': profile,
             'communities': communities,
+            'joined_communities': joined_communities,
         }
     except:
         context = {
@@ -101,6 +103,7 @@ def home_timeline(request, post_id=None):
             'profiles': profiles,
             'game_profiles': game_profiles,
             'communities': communities,
+            'joined_communities': joined_communities,
         }
     return render(request, 'home_timeline.html', context)
 
@@ -730,6 +733,10 @@ def category(request, cat):
     }
     return render(request, 'posts_by_category.html', context)
 
+
+def join_leave_community(request, community_id):
+    pass
+
 # REST API Views
 
 
@@ -1041,17 +1048,32 @@ def join_community(request):
         # print(community.like_count)
         test = community.members.filter(id=request.user.id)
         print(test)
+        buttonText = ""
+        # buttonColor =""
         # print(request.POST.get('elem'))
         # request.session['post_in_view'] = id
         if community.members.filter(id=request.user.id).exists():
             print("Exists")
-            community.likes.remove(request.user)
+            community.members.remove(request.user)
             community.save()
+            if(request.user.profile.communities.filter(id=id).exists()):
+                request.user.profile.communities.remove(community)
+                request.user.profile.save()
+            print("This user's communities: ",
+                  request.user.profile.communities.all())
+            buttonText = "Join"
+
         else:
             print("Doesn't exist")
             community.members.add(request.user)
             community.save()
-        return JsonResponse({'result': "success", })
+            if(not(request.user.profile.communities.filter(id=id).exists())):
+                request.user.profile.communities.add(community)
+                request.user.profile.save()
+            print("This user's communities: ",
+                  request.user.profile.communities.all())
+            buttonText = "Joined"
+        return JsonResponse({'result': "success", 'buttonText': buttonText})
 
 
 def add_post_community(request, community_id):
