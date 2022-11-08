@@ -1,19 +1,22 @@
 {% extends 'base/base.html' %}
-{% load static %}
 {% block title %}
-Page3 - Add Profile Page
+Page3 - Edit post
 {% endblock title %}
 
 {% block content %}
-<br />
+
+
+{% load crispy_forms_tags %}
 {% if user.is_authenticated %}
-{{ user }}
+{% if user.id == post.author.id %}
 <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.media }}
-    {{ form.as_p }}
+    {{ form|crispy }}
     <button type="submit">Post</button>
 </form>
 {% endif %}
-
+{% else %}
+Login first!
+{% endif %}
 {% endblock content %}

@@ -105,7 +105,7 @@ def home_timeline(request, post_id=None):
             'communities': communities,
             'joined_communities': joined_communities,
         }
-    return render(request, 'home_timeline.html', context)
+    return render(request, 'base/home_timeline.html', context)
 
 
 @csrf_exempt
@@ -256,7 +256,7 @@ def upload_reply(request, pk):
         form2 = PostVideoForm()
         imageform = ImageForm()
 
-    return render(request, 'replies_page.html', context)
+    return render(request, 'post/replies/replies_page.html', context)
 
 
 def is_parent_a_reply(id):
@@ -326,7 +326,8 @@ def update_replies_list(request, post_id, fetching_replies_to_post):
         }
         for p in profiles:
             print("PROFILE:: ", p)
-        html = render_to_string('replies_list.html', context, request=request)
+        html = render_to_string(
+            'post/replies/replies_list.html', context, request=request)
         # print("HTML: ", html)
 
         return JsonResponse({'replies_list': html, })
@@ -468,11 +469,11 @@ def add_post(request):
                 post_obj.save()
             return redirect('home-page')
         else:
-            return render(request, 'add_post.html', context)
+            return render(request, 'post/addPost/add_post.html', context)
     else:
         form = PostForm()
 
-    return render(request, 'add_post.html', context)
+    return render(request, 'post/addPost/add_post.html', context)
 
 
 def add_image_post(request):
@@ -524,7 +525,7 @@ def add_image_post(request):
         form = PostImageForm()
         imageform = ImageForm()
 
-    return render(request, 'add_image_post.html', {"form": form, "imageform": imageform})
+    return render(request, 'post/addPost/add_image_post.html', {"form": form, "imageform": imageform})
 
 
 def add_video_post(request):
@@ -565,11 +566,11 @@ def add_video_post(request):
                 post_obj.save()
             return redirect('home-page')
         else:
-            return render(request, 'add_video_post.html', context)
+            return render(request, 'post/addPost/add_video_post.html', context)
     else:
         form = PostVideoForm()
 
-    return render(request, 'add_video_post.html', context)
+    return render(request, 'post/addPost/add_video_post.html', context)
 
 
 def get_parent_post(parent_id, arr):
@@ -593,7 +594,7 @@ def edit_post(request, post_id):
     if form.is_valid():
         form.save()
         return redirect('home-page')
-    return render(request, 'update_post.html', context)
+    return render(request, 'post/addPost/update_post.html', context)
 
 
 def edit_image_post(request, post_id):
@@ -622,7 +623,7 @@ def edit_image_post(request, post_id):
 
         return redirect('home-page')
 
-    return render(request, 'update_image_post.html', context)
+    return render(request, 'post/addPost/update_image_post.html', context)
 
 
 def edit_video_post(request, post_id):
@@ -642,7 +643,7 @@ def edit_video_post(request, post_id):
 
         instance.save()
         return redirect('home-page')
-    return render(request, 'update_video_post.html', context)
+    return render(request, 'post/addPost/update_video_post.html', context)
 
 
 def delete_post(request, post_id):
@@ -726,12 +727,13 @@ def get_session_data(request):
 
 
 def category(request, cat):
+    print("CAT: ", cat)
     catrgory_posts = Post.objects.filter(tags=cat)
     context = {
         'cat': cat.title().replace('-', ' '),
         'catrgory_posts': catrgory_posts
     }
-    return render(request, 'posts_by_category.html', context)
+    return render(request, 'post/posts_by_category.html', context)
 
 
 def join_leave_community(request, community_id):
@@ -800,8 +802,8 @@ def posts_by_user(request, user):
 
         context = {'posts': posts, 'profile_owner': user,
                    'profile': profile, 'image_list': image_list}
-        return render(request, 'posts_by_user.html', context)
-    return render(request, 'posts_by_user.html')
+        return render(request, 'post/posts_by_user.html', context)
+    return render(request, 'post/posts_by_user.html')
 
 
 @api_view(['GET', 'POST'])
@@ -868,7 +870,7 @@ def MatchmakingHome(request, user):
     print(user)
     context = {'form': form}
 
-    return render(request, 'matchmaking.html', context)
+    return render(request, 'matchmaking/matchmaking.html', context)
 
 
 def Matchmaking_Data(request, user):
@@ -895,7 +897,7 @@ def Matchmaking_Data(request, user):
         context = {'profiles': proflies}
 
         html = render_to_string(
-            'matchmaking_found_list.html', context, request=request)
+            'matchmaking/matchmaking_found_list.html', context, request=request)
 
         return JsonResponse({"profiles": html})
 
@@ -955,10 +957,10 @@ def search_results(request):
 
         print(posts_list)
 
-        return render(request, 'search_results.html', context={'posts_list': posts_list,
-                                                               'search_query': og_search_query, 'profiles': profiles,
-                                                               'people_list': people_list, 'image_list': image_list})
-    return render(request, 'search_results.html')
+        return render(request, 'search/search_results.html', context={'posts_list': posts_list,
+                                                                      'search_query': og_search_query, 'profiles': profiles,
+                                                                      'people_list': people_list, 'image_list': image_list})
+    return render(request, 'search/search_results.html')
 
 
 # Community
@@ -992,10 +994,10 @@ def create_community(request):
             else:
                 message = "This community already exists! Try something else"
                 context['message'] = message
-                return render(request, 'create_community.html', context)
+                return render(request, 'community/create_community.html', context)
             return redirect('home-page')
 
-    return render(request, 'create_community.html', context)
+    return render(request, 'community/create_community.html', context)
 
 
 def community_page(request, community_id):
@@ -1034,7 +1036,7 @@ def community_page(request, community_id):
         'communities': communities,
     }
 
-    return render(request, 'community_page.html', context)
+    return render(request, 'community/community_page.html', context)
 
 
 @login_required
@@ -1122,11 +1124,11 @@ def add_post_community(request, community_id):
                 post_obj.save()
             return redirect('home-page')
         else:
-            return render(request, 'add_post.html', context)
+            return render(request, 'post/addPost/add_post.html', context)
     else:
         form = PostForm()
 
-    return render(request, 'add_post.html', context)
+    return render(request, 'post/addPost/add_post.html', context)
 
 
 def add_image_post_community(request, community_id):
@@ -1186,7 +1188,7 @@ def add_image_post_community(request, community_id):
         form = PostImageForm()
         imageform = ImageForm()
 
-    return render(request, 'add_image_post.html', {"form": form, "imageform": imageform})
+    return render(request, 'post/addPost/add_image_post.html', {"form": form, "imageform": imageform})
 
 
 def add_video_post_community(request, community_id):
@@ -1235,8 +1237,8 @@ def add_video_post_community(request, community_id):
                 post_obj.save()
             return redirect('home-page')
         else:
-            return render(request, 'add_video_post.html', context)
+            return render(request, 'post/addPost/add_video_post.html', context)
     else:
         form = PostVideoForm()
 
-    return render(request, 'add_video_post.html', context)
+    return render(request, 'post/addPost/add_video_post.html', context)
