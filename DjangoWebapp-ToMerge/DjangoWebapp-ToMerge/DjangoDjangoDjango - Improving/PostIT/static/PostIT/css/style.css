@@ -160,7 +160,7 @@ i:hover {
 
 .navbar-contents a {
     text-decoration: none;
-    font-size: x-large;
+    /* font-size: x-large; */
     color: var(--grey_color);
     padding: 10px 15px;
     position: relative;
@@ -406,7 +406,8 @@ i:hover {
     display: block;
     background-color: var(--post_bg_color);
     border-radius: 10px;
-    height: 100vh;
+    height: 100%;
+    /* size: 100%; */
 
 }
 
@@ -1020,6 +1021,11 @@ button {
     /* background: rgba(0, 0, 0, .5); */
 }
 
+.community-header {
+    background-color: var(--post_bg_color);
+    width: 680px;
+}
+
 /* Media Queries */
 
 
@@ -1029,13 +1035,31 @@ button {
         display: none;
     }
 
+    .navbar-toggle {
+        display: block;
+    }
 
 
 
 }
 
+/* 
 @media (max-width:500px) {
     .navbar-toggle {
         display: block;
+    }
+} */
+
+@media (min-width:501px) {
+    .navbar-contents a {
+        font-size: x-large;
+
+    }
+}
+
+@media (max-width:501px) {
+    .navbar-contents a {
+        color: aqua !important;
+
     }
 }

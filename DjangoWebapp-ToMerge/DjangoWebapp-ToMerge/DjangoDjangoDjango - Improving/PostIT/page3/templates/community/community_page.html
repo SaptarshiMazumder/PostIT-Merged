@@ -7,7 +7,9 @@ Page3 - Community
 {% block content %}
 {% include 'navigation/navbar-top.html' %}
 <div class="main-body">
-    {% include 'navigation/sidebar-left.html' %}
+    <!-- {% include 'navigation/sidebar-left.html' %} -->
+
+
     <div class="page-contents">
         <div class="sidebar">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit doloribus ipsa, vel suscipit
@@ -15,7 +17,9 @@ Page3 - Community
             alias fuga.
         </div>
         <div class="posts-timeline">
+
             <br /><br /><br />
+            {% include 'community/community_header.html' %}
             {{user}}
             {{message}}
             {% if user.is_authenticated %}
@@ -288,4 +292,6 @@ Page3 - Community
 
 
 </script>
+
+<script src="{% static 'PostIT/js/togglePostOptions.js'%}"></script>
 {% endblock content %}
