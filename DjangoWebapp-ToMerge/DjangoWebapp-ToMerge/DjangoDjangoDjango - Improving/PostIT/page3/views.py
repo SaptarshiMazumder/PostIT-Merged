@@ -27,6 +27,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.template.loader import render_to_string
 from django.db.models import Q
+from django.conf import settings
+from django.conf.urls.static import static
 # Create your views here.
 # Paginator stuff
 from django.core.paginator import Paginator
@@ -75,7 +77,8 @@ def home_timeline(request, post_id=None):
         last_viewed = request.session['post_in_view']
     except:
         last_viewed = ""
-    image_list = ImageFiles.objects.all()
+    # image_list = ImageFiles.objects.all()
+    image_list = ""
     profiles = Profile.objects.all()
     has_images_to_show = False
     try:
@@ -92,6 +95,7 @@ def home_timeline(request, post_id=None):
             'profile': profile,
             'communities': communities,
             'joined_communities': joined_communities,
+            'media_url': "127.0.0.1: 8000/media",
         }
     except:
         context = {
@@ -104,7 +108,9 @@ def home_timeline(request, post_id=None):
             'game_profiles': game_profiles,
             'communities': communities,
             'joined_communities': joined_communities,
+            'media_url': "127.0.0.1: 8000/media",
         }
+    # print("SETTINGS: ", static(settings.MEDIA_URL))
     return render(request, 'base/home_timeline.html', context)
 
 
@@ -197,7 +203,10 @@ def upload_reply(request, pk):
             instance.save()
 
             for file in image_files:
-                ImageFiles.objects.create(post=instance, image=file)
+                res = ImageFiles.objects.create(post=instance, image=file)
+                instance.images_ids_list.append(res.id)
+                instance.images_urls_list.append(res.image)
+                instance.save()
 
             for file in video_files:
                 print("VIDEO FILE: ", file)
@@ -516,7 +525,11 @@ def add_image_post(request):
                 post_obj.set_Tag(tags_list)
                 post_obj.save()
             for file in files:
-                ImageFiles.objects.create(post=instance, image=file)
+                res = ImageFiles.objects.create(post=instance, image=file)
+                print("RES: ", res.image)
+                instance.images_ids_list.append(res.id)
+                instance.images_urls_list.append(res.image)
+                instance.save()
 
             return redirect('home-page')
         else:

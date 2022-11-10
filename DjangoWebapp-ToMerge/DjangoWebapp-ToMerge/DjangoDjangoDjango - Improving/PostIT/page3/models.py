@@ -65,6 +65,9 @@ class Profile(models.Model):
         return str(self.user)
 
 
+empty_list = []
+
+
 class Post(models.Model):
     title = models.CharField(max_length=255, blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
@@ -92,6 +95,10 @@ class Post(models.Model):
     body = RichTextField(blank=True, null=True)
     community = models.ForeignKey(
         Community, on_delete=models.DO_NOTHING, default=None, null=True, blank=True)
+    images_ids_list = ArrayField(models.IntegerField(
+        null=True, blank=True, default=-1), blank=True, null=True, default=list)
+    images_urls_list = ArrayField(models.CharField(
+        max_length=500, null=True, blank=True, default=""), blank=True, null=True, default=list)
 
     def set_Tag(self, lst):
         self.tags = json.dumps(lst)
