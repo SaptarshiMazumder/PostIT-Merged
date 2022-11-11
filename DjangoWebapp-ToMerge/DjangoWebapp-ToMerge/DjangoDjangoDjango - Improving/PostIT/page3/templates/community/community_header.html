@@ -1,1 +1,44 @@
-<h1 style="color: #fff;" class="community-header">Community header</h1>
+{% load static %}
+
+
+
+<div style="color: #fff;" class="community-header">
+
+
+
+
+
+    <div class="community-header-profile">
+        {% if community.community_header_pic.name %}
+        <img class="community-header-img" src="{{ community.community_header_pic.url}}">
+        {% else %}
+        <img class="community-header-img" src=" {% static 'PostIT/images/profilepic.jpg' %}">
+        {% endif %}
+        <br />
+        {{community.name}}
+
+    </div>
+
+
+
+    <div class="add-post-community-options" id="add-post-community-options">
+        <ul>
+
+            <li class="add-post-community-option"><a class="create-post"
+                    href="{% url 'add-post-community' community.id %}"><i class="fa-solid fa-feather"></i>Text
+                    Post</a></li>
+            <li class="add-post-community-option"><a href="{% url 'add-image-post-community' community.id %}"><i
+                        class="fa-regular fa-image "></i>Image Post</a>
+            </li>
+            <li class="add-post-community-option"><a href="{% url 'add-video-post-community' community.id %}"><i
+                        class="fa-solid fa-video "></i>Video Post</a></li>
+        </ul>
+    </div>
+    <div class="add-post-community-button" onclick="addPostCommunityOptionsToggle()">
+
+        <i class="fa-solid fa-plus"></i>
+
+    </div>
+
+
+</div>

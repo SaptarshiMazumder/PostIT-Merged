@@ -1004,10 +1004,15 @@ def create_community(request):
                 instance.created_by = request.user
 
                 instance.save()
+
+                instance.community_admins.add(request.user)
+                instance.save()
+
             else:
                 message = "This community already exists! Try something else"
                 context['message'] = message
                 return render(request, 'community/create_community.html', context)
+
             return redirect('home-page')
 
     return render(request, 'community/create_community.html', context)
@@ -1033,9 +1038,9 @@ def community_page(request, community_id):
     page = request.GET.get('page')
     objects = p.get_page(page)
     a = 200
-    print("JJJJJJJJJJJJJJJJJJJJJJJ")
     print(objects)
-    image_list = ImageFiles.objects.all()
+    # image_list = ImageFiles.objects.all()
+    image_list = ""
     profiles = Profile.objects.all()
     has_images_to_show = False
     context = {
@@ -1192,7 +1197,12 @@ def add_image_post_community(request, community_id):
                 post_obj.set_Tag(tags_list)
                 post_obj.save()
             for file in files:
-                ImageFiles.objects.create(post=instance, image=file)
+                # ImageFiles.objects.create(post=instance, image=file)
+                res = ImageFiles.objects.create(post=instance, image=file)
+                print("RES: ", res.image)
+                instance.images_ids_list.append(res.id)
+                instance.images_urls_list.append(res.image)
+                instance.save()
 
             return redirect('home-page')
         else:

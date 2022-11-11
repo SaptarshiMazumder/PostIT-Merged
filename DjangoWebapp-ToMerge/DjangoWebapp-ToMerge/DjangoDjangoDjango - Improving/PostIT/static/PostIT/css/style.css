@@ -22,7 +22,7 @@ a {
 
 
 
-html {
+/* html {
     min-height: 100%;
     position: absolute;
     left: 0;
@@ -30,11 +30,13 @@ html {
     right: 0;
     bottom: 0;
     overflow: auto;
-}
+} */
 
 body {
     /* font-family: 'Varela Round', sans-serif !important; */
-    width: 100%;
+    min-width: fit-content;
+    /* background-color: pink !important; */
+    background-color: var(--bg_color) !important;
     /* height: auto; */
 }
 
@@ -553,10 +555,14 @@ i:hover {
 
     background-color: var(--bg_color);
     min-height: 100vh;
-    ;
     color: white;
-    max-width: 100vw;
+    min-width: fit-content;
     text-align: center;
+}
+
+.posts-timeline {
+    min-width: fit-content;
+    width: 100%;
 }
 
 .post {
@@ -1023,7 +1029,26 @@ button {
 
 .community-header {
     background-color: var(--post_bg_color);
-    width: 680px;
+    width: 100vw;
+
+    position: relative;
+    top: 65px;
+}
+
+.community-header-img {
+    display: block;
+
+}
+
+.community-header-profile {
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    padding: 10px;
+}
+
+.add-post-community-options {
+    display: none;
 }
 
 /* Media Queries */

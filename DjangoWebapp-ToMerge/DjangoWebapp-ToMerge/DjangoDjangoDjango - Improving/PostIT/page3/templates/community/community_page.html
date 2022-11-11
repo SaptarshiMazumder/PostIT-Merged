@@ -6,44 +6,30 @@ Page3 - Community
 
 {% block content %}
 {% include 'navigation/navbar-top.html' %}
+{% include 'community/community_header.html' %}
+
 <div class="main-body">
     <!-- {% include 'navigation/sidebar-left.html' %} -->
 
 
     <div class="page-contents">
-        <div class="sidebar">
+
+        <!-- <div class="sidebar">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit doloribus ipsa, vel suscipit
             omnis quas cumque magnam deserunt accusamus neque tempora iusto, repellat cupiditate saepe totam sit natus,
             alias fuga.
-        </div>
+        </div> -->
         <div class="posts-timeline">
 
             <br /><br /><br />
-            {% include 'community/community_header.html' %}
+
             {{user}}
             {{message}}
             {% if user.is_authenticated %}
 
             {{ community }}
 
-            <div class="add-post-community-options" id="add-post-community-options">
-                <ul>
 
-                    <li class="add-post-community-option"><a class="create-post"
-                            href="{% url 'add-post-community' community.id %}"><i class="fa-solid fa-feather"></i>Text
-                            Post</a></li>
-                    <li class="add-post-community-option"><a href="{% url 'add-image-post-community' community.id %}"><i
-                                class="fa-regular fa-image "></i>Image Post</a>
-                    </li>
-                    <li class="add-post-community-option"><a href="{% url 'add-video-post-community' community.id %}"><i
-                                class="fa-solid fa-video "></i>Video Post</a></li>
-                </ul>
-            </div>
-            <div class="add-post-community-button" onclick="addPostCommunityOptionsToggle()">
-
-                <i class="fa-solid fa-plus"></i>
-
-            </div>
             <div class="blocker-page-community" id="blocker-page-community"></div>
             {% else %}
             Login first!
