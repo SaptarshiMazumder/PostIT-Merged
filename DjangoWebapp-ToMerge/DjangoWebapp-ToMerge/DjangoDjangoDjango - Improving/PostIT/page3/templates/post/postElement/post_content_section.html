@@ -1,3 +1,4 @@
+{% load static %}
 <div class="post-category-section">
     <!-- <i class="fa-solid fa-globe"></i> -->
     <i class="fa-solid fa-puzzle-piece"></i>
@@ -71,14 +72,25 @@
 
 
 <div class="images">
+
     {% if post.has_images %}
 
-    {% for image in image_list %}
+    <!-- {% for image in image_list %}
     {% if image.post.id == post.id %}
     <img src="{{ image.image.url}}">
     {% endif %}
+    {% endfor %} -->
+    <!-- {{ post.imagefiles}} -->
+    <br />
+
+    {% for url in post.images_urls_list %}
+    <!-- http://127.0.0.1:8000/media/{{url }}<br /> -->
+    <!-- {% static media_url %} -->
+    <img src="http://127.0.0.1:8000/media/{{url }}" alt="Image">
+    <!-- <img src="{% static url %}" alt="My image"> -->
+
     {% endfor %}
-    {{ post.imagefiles}}
+
     {% endif %}
 </div>
 {% if post.video %}

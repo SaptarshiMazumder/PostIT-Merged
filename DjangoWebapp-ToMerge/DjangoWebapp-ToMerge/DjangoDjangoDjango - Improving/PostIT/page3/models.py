@@ -36,10 +36,19 @@ class Community(models.Model):
     bio = models.TextField(blank=True, null=True)
     profile_pic = models.ImageField(
         null=True, blank=True, upload_to="images/profile")
+    community_header_pic = models.ImageField(
+        null=True, blank=True, upload_to="images/profile")
     created_by = models.ForeignKey(
         User, on_delete=models.DO_NOTHING, default=None)
     members = models.ManyToManyField(
         User, default=None, blank=True, related_name='members')
+    is_private = models.BooleanField(null=True, blank=True, default=False)
+    community_admins = models.ManyToManyField(
+        User, default=None, blank=True, related_name='community_admins')
+
+    post_date = models.DateField(auto_now_add=True)
+    post_datetime = models.DateTimeField(auto_now_add=True)
+
     # post = models.ManyToManyField(
     #     Post, default=None, blank=True, related_name='community_posts')
 
@@ -63,6 +72,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+
+empty_list = []
 
 
 class Post(models.Model):
@@ -92,6 +104,10 @@ class Post(models.Model):
     body = RichTextField(blank=True, null=True)
     community = models.ForeignKey(
         Community, on_delete=models.DO_NOTHING, default=None, null=True, blank=True)
+    images_ids_list = ArrayField(models.IntegerField(
+        null=True, blank=True, default=-1), blank=True, null=True, default=list)
+    images_urls_list = ArrayField(models.CharField(
+        max_length=500, null=True, blank=True, default=""), blank=True, null=True, default=list)
 
     def set_Tag(self, lst):
         self.tags = json.dumps(lst)
