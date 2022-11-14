@@ -1,17 +1,44 @@
-<div>
+{% load static %}
+<div class="communities-section-sidebar">
     {% if user.is_authenticated %}
-    {%for community in communities %}
-    <a href="{% url 'community-page' community.id %}">{{community.id}}-{{ community }}</a>
+    <div class="communities-section-sidebar-header">
+        Featured communities
+        <hr>
+    </div>
 
-    {% if community in joined_communities %}
-    <button id="join-community-button" value="{{community.id}}">Joined</button>
-    {% else %}
-    <button id="join-community-button" value="{{community.id}}">Join</button>
-    {% endif %}
+    <table class="community-table-sidebar">
+        {%for community in communities %}
+        <tr class="community-item-sidebar">
+            <td class="community-profile-pic-sidebar">
+                {% if community.profile_pic.name %}
+                <a href="{% url 'community-page' community.id %}"><img src="{{ community.profile_pic.url}}"></a>
+
+                {% else %}
+                <a href="{% url 'community-page' community.id %}">
+                    <img src="{% static 'PostIT/images/profilepic.jpg' %}"></a>
+                {% endif %}
+            </td>
+            <td class="community-name-sidebar">
+                <a href="{% url 'community-page' community.id %}">
+                    {{ community }}</a>
+            </td>
+            <td>
+                {% if community in joined_communities %}
+
+                <b><button class="button" id="join-community-button" value="{{community.id}}"><b>Joined</b></button></b>
+                {% else %}
+                <b><button class="button" id="join-community-button" value="{{community.id}}"><b>Join</b></button></b>
+                {% endif %}
+            </td>
+
+        </tr>
 
 
+        <!-- <br /> -->
+        {% endfor %}
+    </table>
     <br />
-    {% endfor %}
+    <button><b>View All</b></button>
     {% endif %}
     <!-- {%for joined_community in joined_communities %}
 
@@ -25,7 +52,7 @@
         //btn.element.innerHTML = "LIKED BY" + " " + no_of_likes + "lkl"
         //btn.text("LIKED BY" + " " + no_of_likes + " <h1>JLO</h1>")
         //elem = "<i class='fa-solid fa-heart'></i>"
-        btn[0].innerHTML = buttonText
+        btn[0].innerHTML = "<b>" + buttonText + "</b>"
         console.log(btn[0].innerHTML)
     }
 

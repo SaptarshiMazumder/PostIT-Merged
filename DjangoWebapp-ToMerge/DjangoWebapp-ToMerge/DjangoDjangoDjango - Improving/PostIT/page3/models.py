@@ -68,7 +68,9 @@ class Profile(models.Model):
     followers = models.ManyToManyField(
         User, default=None, blank=True, related_name='followers')
     communities = models.ManyToManyField(
-        Community, default=None, blank=True, related_name='followers')
+        Community, default=None, blank=True, related_name='communities')
+    featured_communities = models.ManyToManyField(
+        Community, default=None, blank=True, related_name='featuredCommunities')
 
     def __str__(self):
         return str(self.user)

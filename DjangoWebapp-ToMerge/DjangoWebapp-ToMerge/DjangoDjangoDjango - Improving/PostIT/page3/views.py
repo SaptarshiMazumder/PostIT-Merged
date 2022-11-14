@@ -58,7 +58,7 @@ def home_timeline(request, post_id=None):
 
     object_list = Post.objects.all().order_by('-post_datetime')
     game_profiles = GameProfile.objects.all()
-    communities = Community.objects.all()
+    communities = Community.objects.all()[:5]
     # joined_communities = request.user.profile.communities.all()
     try:
         joined_communities = request.user.profile.communities.all()
