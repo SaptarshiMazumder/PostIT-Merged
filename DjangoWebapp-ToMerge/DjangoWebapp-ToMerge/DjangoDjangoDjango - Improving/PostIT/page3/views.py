@@ -67,10 +67,12 @@ def home_timeline(request, post_id=None):
     # Set up pagination
     # request.session['loaded_posts'] = object_list
     p = Paginator(object_list, 4)
+
     # p = Paginator(Post.objects.all().order_by('-post_datetime'), 4)
     page = request.GET.get('page')
     objects = p.get_page(page)
     a = 200
+    # printing
     print(objects)
     try:
 
@@ -842,13 +844,14 @@ def create_game_profile(request, user):
     if(user != 'favicon.png'):
         user = User.objects.get(username=user)
         print(user.username)
-        if(GameProfile.objects.filter(user=user.id)):
-            print("Profile already exists")
+        # if(GameProfile.objects.filter(user=user.id)):
+        #     print("Profile already exists")
 
         if(request.method == 'POST'):
-            if(GameProfile.objects.filter(user=user.id)):
-                GameProfile.objects.filter(user=user.id).update(game=request.POST['game'],
-                                                                server=request.POST['server'], rank=request.POST['rank'])
+            if(GameProfile.objects.filter(user=user.id, game=request.POST['game'])):
+                print("Profile already exists")
+                GameProfile.objects.filter(user=user.id,
+                                           game=request.POST['game']).update(server=request.POST['server'], rank=request.POST['rank'])
 
                 if len(request.POST['body']) > 1:
                     print(request.POST['body'])

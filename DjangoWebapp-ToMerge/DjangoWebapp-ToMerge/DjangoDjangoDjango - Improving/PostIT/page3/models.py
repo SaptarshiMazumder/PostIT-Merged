@@ -257,7 +257,7 @@ class GameProfile(models.Model):
     ranks_list = [('Val', ValorantRanks.choices), ('COD', CODRanks.choices),
                   ('LOL', LOLRanks.choices), ('CS', CSRanks.choices)]
 
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     game = models.CharField(max_length=50, choices=games_list)
     server = models.CharField(max_length=50, choices=servers_list)
     rank = models.CharField(max_length=50, choices=ranks_list, default="")
