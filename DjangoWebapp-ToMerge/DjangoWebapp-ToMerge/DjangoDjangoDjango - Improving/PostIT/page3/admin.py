@@ -1,6 +1,6 @@
 
 from django.contrib import admin
-from . models import Post, Category, Profile, Replies, ImageFiles, GameProfile, Tags, Community
+from . models import Post, Category, Profile, Replies, ImageFiles, GameProfile, Tags, Community, Main_Profile
 
 # Register your models here.
 
@@ -12,3 +12,4 @@ admin.site.register(ImageFiles)
 admin.site.register(GameProfile)
 admin.site.register(Tags)
 admin.site.register(Community)
+admin.site.register(Main_Profile)

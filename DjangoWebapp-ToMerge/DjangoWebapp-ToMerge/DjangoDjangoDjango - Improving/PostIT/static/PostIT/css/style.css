@@ -357,6 +357,7 @@ i:hover {
     margin: auto 0;
     padding: 5px;
     border-radius: 5px;
+    z-index: 100000;
 }
 
 .profile a {
@@ -409,7 +410,7 @@ i:hover {
     background-color: var(--post_bg_color);
     border-radius: 10px;
     height: 100%;
-    z-index: 10000;
+    z-index: 100;
     /* size: 100%; */
 
 }

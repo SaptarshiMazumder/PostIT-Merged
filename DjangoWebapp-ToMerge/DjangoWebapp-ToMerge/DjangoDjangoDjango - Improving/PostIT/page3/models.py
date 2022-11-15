@@ -57,6 +57,7 @@ class Community(models.Model):
 
 
 class Profile(models.Model):
+    # This is User profile
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     bio = models.TextField(blank=True, null=True)
     profile_pic = models.ImageField(
@@ -183,6 +184,7 @@ LIKE_CHOICES = (
 
 
 class GameProfile(models.Model):
+    # This is User Game profile
     games_list = [('Valorant', 'Valorant'), ('Call of Duty', 'Call of Duty'),
                   ('League of Legends', 'League of Legends'), ('Counter Shit: GO', 'Counter Shit: GO')]
 
@@ -266,3 +268,13 @@ class GameProfile(models.Model):
 
     def __str__(self):
         return str(self.user) + " | " + str(self.game) + " | " + str(self.server) + " | " + str(self.rank)
+
+
+class Main_Profile(models.Model):
+    # This is User main game profile
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
+    main_gamer_profile = models.OneToOneField(
+        GameProfile, on_delete=models.CASCADE,  default=None)
+
+    def __str__(self):
+        return str(self.user) + " | " + self.main_gamer_profile.game
