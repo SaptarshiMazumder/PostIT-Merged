@@ -2,7 +2,7 @@
 
 from django.forms import ModelForm
 from matplotlib import widgets
-from .models import Post, Category, ImageFiles, GameProfile, Community
+from .models import Post, Category, ImageFiles, GameProfile, Community, User
 from django import forms
 
 
@@ -122,10 +122,20 @@ class MatchmakingForm(ModelForm):
 
 # Community
 
+# all_users = User.objects.all().values_list('username', 'username')
+# users_list = []
+
+# for item in all_users:
+#     users_list.append(item)
+
+
 class CreateCommunityForm(ModelForm):
     class Meta:
         model = Community
         fields = ('name', 'bio', 'profile_pic')
+        # widgets = {
+        #     'community_admins': forms.Select(choices=all_users, attrs={'class': 'form-control'}),
+        # }
 
 
 class JoinCommunity(ModelForm):

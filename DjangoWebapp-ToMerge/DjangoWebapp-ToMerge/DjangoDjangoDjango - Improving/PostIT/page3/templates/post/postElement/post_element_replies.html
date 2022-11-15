@@ -14,7 +14,7 @@
         <div class="reply-modal-container" id="reply-modal-container">
             <div class="modal-div">
                 <h1>reply to</h1>
-                {% include 'post_replies_form.html' %}
+                {% include 'post/post_replies_form.html' %}
                 <button id="close-modal">CLose modal</button>
             </div>
         </div>
@@ -29,7 +29,7 @@
         <a class="reply-button" href="{% url 'upload_reply' post.pk %}" onclick="storeScroll()">
             {{post.reply_count}}<i class="fa-solid fa-comment"></i></a> -->
         {%if post.user_profile %}
-        {{post.user_profile}}
+        <!-- {{post.user_profile}} -->
         <button id="open-reply-modal" class="reply-button" value="{{post.pk}}">{{post.reply_count}}<i
                 class="fa-solid fa-comment"></i></button>
         {%endif %}

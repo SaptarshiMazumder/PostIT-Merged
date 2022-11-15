@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base/base.html' %}
 {% load static %}
 {% block title %}
 Create Gamer Profile
@@ -17,13 +17,13 @@ Create Gamer Profile
     </div>
     <button type="submit">Post</button>
     {{user.username}}
-    
+
 </form>
 
 <input type="checkbox" name="is_post" id="is_post">Post it for your followers to see!
 
 
-    <!-- <form  action="" method="POST" enctype="multipart/form-data">
+<!-- <form  action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         
         
@@ -38,11 +38,11 @@ Login first!
 
 <script>
     $(".post_form").hide();
-    $("#is_post").click(function(){
-        if($(this).is(":checked")){
+    $("#is_post").click(function () {
+        if ($(this).is(":checked")) {
             $(".post_form").show();
         }
-        else{
+        else {
             $(".post_form").hide();
         }
     })
