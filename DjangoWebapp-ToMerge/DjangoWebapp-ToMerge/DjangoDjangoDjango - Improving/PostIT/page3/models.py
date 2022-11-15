@@ -186,27 +186,27 @@ LIKE_CHOICES = (
 class GameProfile(models.Model):
     # This is User Game profile
     games_list = [('Valorant', 'Valorant'), ('Call of Duty', 'Call of Duty'),
-                  ('League of Legends', 'League of Legends'), ('Counter Shit: GO', 'Counter Shit: GO')]
+                  ('League of Legends', 'League of Legends'), ('Counter Strike: GO', 'Counter Strike: GO')]
 
     class ValorantServers(models.TextChoices):
         APAC = 'APAC', 'Asia Pacific'
         EMEA = 'EMEA', 'Europe'
-        NA = 'NA', 'North America(meaning shit)'
+        NA = 'NA', 'North America'
         JA = 'JA', 'Japan'
 
     class CODServers(models.TextChoices):
         APAC = 'APAC', 'Asia Pacific'
         EMEA = 'EMEA', 'Europe'
-        NA = 'NA', 'North America(meaning shit)'
+        NA = 'NA', 'North America'
 
     class LOLServers(models.TextChoices):
         APAC = 'APAC', 'Asia Pacific'
         EMEA = 'EMEA', 'Europe'
-        NA = 'NA', 'North America(meaning shit)'
+        NA = 'NA', 'North America'
 
     class CSServers(models.TextChoices):
         EMEA = 'EMEA', 'Europe'
-        NA = 'NA', 'North America(meaning shit)'
+        NA = 'NA', 'North America'
 
     class ValorantRanks(models.TextChoices):
         Iron = 'IRON', 'Iron :((('
