@@ -59,6 +59,12 @@ def home_timeline(request, post_id=None):
     object_list = Post.objects.all().order_by('-post_datetime')
     game_profiles = GameProfile.objects.all()
     communities = Community.objects.all()[:5]
+    try:
+        main_game_profile = Main_Profile.objects.get(user=request.user)
+        print("MAIN GAME PROFILE: ", main_game_profile)
+    except:
+        main_game_profile = None
+        print("MAIN GAME PROFILE: ", main_game_profile)
     # joined_communities = request.user.profile.communities.all()
     try:
         joined_communities = request.user.profile.communities.all()
@@ -98,6 +104,7 @@ def home_timeline(request, post_id=None):
             'communities': communities,
             'joined_communities': joined_communities,
             'media_url': "127.0.0.1: 8000/media",
+            'main_game_profile': main_game_profile,
         }
     except:
         context = {
@@ -111,6 +118,7 @@ def home_timeline(request, post_id=None):
             'communities': communities,
             'joined_communities': joined_communities,
             'media_url': "127.0.0.1: 8000/media",
+            'main_game_profile': main_game_profile,
         }
     # print("SETTINGS: ", static(settings.MEDIA_URL))
     return render(request, 'base/home_timeline.html', context)

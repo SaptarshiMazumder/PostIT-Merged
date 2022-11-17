@@ -2,18 +2,28 @@
 
 
 
-    {%for game_profile in game_profiles%}
+    <!-- {%for game_profile in game_profiles%}
     {%if game_profile.user == user%}
     <div class="gamer_profile">
         <p>{{game_profile.game}}</p>
         <p>{{game_profile.rank}}</p>
         <p>Location: {{game_profile.server}}</p>
     </div>
+   
+    {%endif%}
+    {%endfor%} -->
+
+    {%if main_game_profile %}
+    MAIN PROFILE:
+    {{main_game_profile.main_gamer_profile.game}}
+    -{{main_game_profile.main_gamer_profile.server}}
+    -{{main_game_profile.main_gamer_profile.rank}}
+
+    {%endif%}
+
     <div class="matchmaking">
         <a href="{% url 'matchmaking-home' user%}">Matchmaking</a>
     </div>
-    {%endif%}
-    {%endfor%}
 
 
     {% if user.is_authenticated %}

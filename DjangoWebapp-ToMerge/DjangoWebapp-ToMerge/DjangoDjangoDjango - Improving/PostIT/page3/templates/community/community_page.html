@@ -5,14 +5,13 @@ Page3 - Community
 {% endblock title %}
 
 {% block content %}
-{% include 'navigation/navbar-top.html' %}
 {% include 'community/community_header.html' %}
 
 <div class="main-body">
     <!-- {% include 'navigation/sidebar-left.html' %} -->
 
 
-    <div class="page-contents">
+    <div class="page-contents community-page-contents">
 
 
         <div class="posts-timeline">
@@ -21,6 +20,68 @@ Page3 - Community
 
             {{user}}
             {{message}} -->
+            <div class="community-profile-info-holder">
+                <div class="community-profile-info">
+                    <div class="community-profile-pic">
+                        {% if community.profile_pic.name %}
+                        <img src="{{ community.profile_pic.url}}">
+                        {% else %}
+                        <img src=" {% static 'PostIT/images/profilepic.jpg' %}">
+                        {% endif %}
+
+
+                    </div>
+                    <div class="community-profile-info-menu">
+                        <div class="community-profile-info-menu-left">
+                            <div class="community-name">
+                                <h5><b>{{ community.name }}</b></h5>
+                            </div>
+                            <div>Joined</div>
+                        </div>
+                        <div class="community-profile-info-menu-right">
+                            <div> Add Post Button</div>
+                            <div> 120.2k Members</div>
+                            <div> 3.5k Online</div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="community-profile-info-tabs">
+                    <div class="item selected-tab">
+                        Posts
+                    </div>
+                    <div class="item">Members</div>
+                    <div class="item">Rules</div>
+                    <div class="item">Discord</div>
+                    <div class="add-post-community-button" onclick="addPostCommunityOptionsToggle()">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                    </div>
+                    <div class="add-post-community-options-holder">
+                        <div class="add-post-community-options" id="add-post-community-options">
+                            <ul>
+
+                                <li class="add-post-community-option"><a class="create-post"
+                                        href="{% url 'add-post-community' community.id %}"><i
+                                            class="fa-solid fa-feather"></i>Text
+                                        Post</a></li>
+                                <li class="add-post-community-option"><a
+                                        href="{% url 'add-image-post-community' community.id %}"><i
+                                            class="fa-regular fa-image "></i>Image Post</a>
+                                </li>
+                                <li class="add-post-community-option"><a
+                                        href="{% url 'add-video-post-community' community.id %}"><i
+                                            class="fa-solid fa-video "></i>Video Post</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
             {% if user.is_authenticated %}
 
 
@@ -54,7 +115,7 @@ Page3 - Community
             </ul>
         </div>
 
-        <div class="sidebar">
+        <div class="sidebar community-sidebar">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit doloribus ipsa, vel suscipit
             omnis quas cumque magnam deserunt accusamus neque tempora iusto, repellat cupiditate saepe totam sit natus,
             alias fuga.
@@ -74,13 +135,13 @@ Page3 - Community
 
 
 
-        if (addPostCommunityOptions.style.display === "block") {
+        if (addPostCommunityOptions.style.display === "flex") {
             addPostCommunityOptions.style.display = "none"
             blockerPage.style.display = "none"
         }
         else {
-            addPostCommunityOptions.style.display = "block"
-            blockerPage.style.display = "block"
+            addPostCommunityOptions.style.display = "flex"
+            blockerPage.style.display = "flex"
             blockerPage.style.pointerEvents = "auto"
         }
     }

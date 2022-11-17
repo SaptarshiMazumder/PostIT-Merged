@@ -5,11 +5,39 @@
         <div class="sidebar-list">
 
             <ul>
-                <li class="sidebar-list-item"> <i class="fa-solid fa-hashtag"></i>Explore</li>
-                <li class="sidebar-list-item"><i class="fa-solid fa-bookmark"></i>Bookmarks</li>
-                <li class="sidebar-list-item"><i class="fa-solid fa-magnifying-glass"></i></i>Discover</li>
-                <li class="sidebar-list-item"><i class="fa-solid fa-newspaper"></i></i></i>Latest News</li>
-                <li class="sidebar-list-item"><i class="fa-solid fa-users-viewfinder"></i>Matchmaking</li>
+
+                <li><a href="#">
+                        <div class="sidebar-list-item">
+                            <i class="fa-solid fa-hashtag"></i>Explore
+                        </div>
+                    </a></li>
+                <li><a href="#">
+                        <div class="sidebar-list-item">
+                            <i class="fa-solid fa-bookmark"></i>Bookmarks
+                        </div>
+                    </a></li>
+                <li><a href="#">
+                        <div class="sidebar-list-item">
+                            <i class="fa-solid fa-magnifying-glass"></i>Discover
+                        </div>
+                    </a></li>
+                <li><a href="#">
+                        <div class="sidebar-list-item">
+                            <i class="fa-solid fa-newspaper"></i>Latest News
+                        </div>
+                    </a></li>
+
+                <li><a href="{% url 'matchmaking-home' user%}">
+                        <div class="sidebar-list-item">
+                            <i class="fa-solid fa-users-viewfinder"></i>Matchmaking
+                        </div>
+
+                    </a></li>
+                <li><a href="{%url 'posts-by-user' user %}">
+                        <div class="sidebar-list-item">
+                            <i class="fa-solid fa-user"></i>Profile
+                        </div>
+                    </a></li>
             </ul>
         </div>
 
@@ -42,9 +70,14 @@
             <div class="blocker-page" id="blocker-page"></div>
             <div class="sidebar-profile-settings-options" id="sidebar-profile-settings-options">
                 <ul>
-                    <li class="sidebar-profile-settings-option">Edit Profile</li>
-                    <li class="sidebar-profile-settings-option">Create new Profile</li>
-                    <li class="sidebar-profile-settings-option">Logout</li>
+                    <li class="sidebar-profile-settings-option"><a
+                            href="{% url 'edit-user-profile-page' user.profile.id %}"><i
+                                class="fa-solid fa-pen-to-square"></i>Edit Profile</a></li>
+                    <li class="sidebar-profile-settings-option"><a href="{% url 'register' %}"><i
+                                class="fa-solid fa-user-plus"></i>Create new account</a>
+                    </li>
+                    <li class="sidebar-profile-settings-option"><a href="{% url 'logout' %}"><i
+                                class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
                 </ul>
             </div>
             <div class="sidebar-profile-settings-button" onclick="navbarProfileSettingsToggle()">

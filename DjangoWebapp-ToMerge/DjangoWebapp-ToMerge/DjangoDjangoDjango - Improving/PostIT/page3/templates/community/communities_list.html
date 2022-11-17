@@ -9,28 +9,31 @@
     <table class="community-table-sidebar">
         {%for community in communities %}
         <tr class="community-item-sidebar">
-            <td class="community-profile-pic-sidebar">
-                {% if community.profile_pic.name %}
-                <a href="{% url 'community-page' community.id %}"><img src="{{ community.profile_pic.url}}"></a>
+            <div class="community-item-sidebar-row">
+                <td class="community-profile-pic-sidebar">
+                    {% if community.profile_pic.name %}
+                    <a href="{% url 'community-page' community.id %}"><img src="{{ community.profile_pic.url}}"></a>
 
-                {% else %}
-                <a href="{% url 'community-page' community.id %}">
-                    <img src="{% static 'PostIT/images/profilepic.jpg' %}"></a>
-                {% endif %}
-            </td>
-            <td class="community-name-sidebar">
-                <a href="{% url 'community-page' community.id %}">
-                    {{ community }}</a>
-            </td>
-            <td>
-                {% if community in joined_communities %}
+                    {% else %}
+                    <a href="{% url 'community-page' community.id %}">
+                        <img src="{% static 'PostIT/images/profilepic.jpg' %}"></a>
+                    {% endif %}
+                </td>
+                <td class="community-name-sidebar">
+                    <a href="{% url 'community-page' community.id %}">
+                        {{ community }}</a>
+                </td>
+                <td>
+                    {% if community in joined_communities %}
 
-                <b><button class="button" id="join-community-button" value="{{community.id}}"><b>Joined</b></button></b>
-                {% else %}
-                <b><button class="button" id="join-community-button" value="{{community.id}}"><b>Join</b></button></b>
-                {% endif %}
-            </td>
-
+                    <b><button class="button" id="join-community-button"
+                            value="{{community.id}}"><b>Joined</b></button></b>
+                    {% else %}
+                    <b><button class="button" id="join-community-button"
+                            value="{{community.id}}"><b>Join</b></button></b>
+                    {% endif %}
+                </td>
+            </div>
         </tr>
 
 
