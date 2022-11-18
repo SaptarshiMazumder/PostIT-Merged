@@ -1,43 +1,24 @@
 {% load static %}
 
 <nav id="main-nav">
-    <ul>
-        <li>
-            <div class="navbar-toggle"><i class="fa-solid fa-bars " id="navbar-toggle"></i></div>
-        </li>
-        <li class="nav-logo">
+    <div class="nav-fixed-elements">
+        <div class="navbar-toggle"><i class="fa-solid fa-bars " id="navbar-toggle"></i></div>
+        <div class="nav-logo">
             <a class=" home" href="{% url 'home-page'%}"><img src="{% static 'PostIT/images/PostIT.png' %}"
                     width="70"></a>
 
-        </li>
-        <!-- <li>
-            <a class=" home" href="{% url 'home-page'%}"><i class="fa-solid fa-house"></i></a>
+        </div>
+    </div>
+    <ul class="nav-left-ul">
 
-        </li> -->
-        {% if user.is_authenticated %}
+
+        <!-- {% if user.is_authenticated %}
         {% if user.profile.id %}
-        <!-- <li>
-            <a class="add-post-button" href="#">
-                Add Post
-            </a>
-            <ul class="submenu">
 
-                <li>
-                    <a class="create-post" href="{% url 'add-post' %}"><i class="fa-solid fa-feather"></i>Text Post</a>
-                </li>
-                <li>
-                    <a href="{% url 'add-image-post' %}"><i class="fa-regular fa-image "></i>Image Post</a>
-                </li>
-                <li>
-                    <a href="{% url 'add-video-post' %}"><i class="fa-solid fa-video "></i>Video Post</a>
-                </li>
-
-            </ul>
-        </li> -->
         {% else %}
-        <li><a href="{% url 'add-profile' %}">Add Profile</a></li>
+        <li><a href="{% url 'add-profile' %}"><i class="fa-solid fa-user-plus"></i>Add Profile</a></li>
         {% endif %}
-        {% endif %}
+        {% endif %} -->
 
 
         <li class="nav-search-bar">
@@ -47,8 +28,46 @@
                 <button id="search_btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
         </li>
+
+    </ul>
+    <ul class="nav-right-ul">
         {% if user.is_authenticated %}
         {% if user.profile.id %}
+        <li class="nav-add-post">
+            <a href=""><i class="fa-solid fa-plus"></i><br />Add Post
+                <span class="arrow">&#x25BC;</span>
+            </a>
+
+
+            <ul class="submenu">
+
+                <li>
+                    <a href="{% url 'add-post' %}"><i class="fa-solid fa-feather"></i>Text</a>
+                </li>
+                <li>
+                    <a href="{% url 'add-image-post' %}"><i class="fa-solid fa-image"></i>Image Post</a>
+                </li>
+                <li>
+                    <a href="{% url 'add-video-post' %}"><i class="fa-solid fa-video"></i>Video Post</a>
+                </li>
+            </ul>
+            <!-- <div class="add-post-options-holder">
+                        <div class="add-post-options" id="add-post-options">
+                            <ul>
+        
+                                <li class="add-post-option"><a class="create-post" href="{% url 'add-post' %}"><i
+                                            class="fa-solid fa-feather"></i>Text
+                                        Post</a></li>
+                                <li class="add-post-option"><a href="{% url 'add-image-post' %}"><i
+                                            class="fa-regular fa-image "></i>Image Post</a>
+                                </li>
+                                <li class="add-post-option"><a href="{% url 'add-video-post' %}"><i
+                                            class="fa-solid fa-video "></i>Video Post</a></li>
+                            </ul>
+                        </div> -->
+
+            </div>
+        </li>
         <li>
             <a href="#"><i class="fa-solid fa-user"></i><br />Profile
                 <span class="arrow">&#x25BC;</span>
@@ -69,13 +88,13 @@
             </ul>
         </li>
         {% else %}
-        <li>Add profile</li>
+        <li><a href="{% url 'add-profile' %}"><i class="fa-solid fa-user-plus"></i><br />Add profile</a></li>
         {% endif %}
 
         {% else %}
-        <li><a href="{% url 'register' %}">Register</a></li>
+        <li><a href="{% url 'register' %}"><i class="fa-solid fa-arrow-up-right-from-square"></i><br />Register</a></li>
         <!-- <li><a href="{% url 'login' %}">Login</a></li> -->
-        <li><a href="{% url 'login-user' %}">Login</a></li>
+        <li><a href="{% url 'login-user' %}"><i class="fa-solid fa-right-to-bracket"></i><br />Login</a></li>
         {% endif %}
 
         <li>
@@ -85,41 +104,10 @@
             <a href="{% url 'create-community' %}"><i class="fa-solid fa-users-between-lines"></i><br />Create
                 Community</a>
         </li>
-        <li class="nav-add-post">
-            <a href=""><i class="fa-solid fa-plus"></i><br />Add Post
-                <span class="arrow">&#x25BC;</span>
-            </a>
-
-
-            <ul class="submenu">
-
-                <li>
-                    <a href="{% url 'add-post' %}"><i class="fa-solid fa-feather"></i>Text</a>
-                </li>
-                <li>
-                    <a href="{% url 'add-image-post' %}"><i class="fa-solid fa-image"></i>Image Post</a>
-                </li>
-                <li>
-                    <a href="{% url 'add-video-post' %}"><i class="fa-solid fa-video"></i>Video Post</a>
-                </li>
-            </ul>
-            <!-- <div class="add-post-options-holder">
-                <div class="add-post-options" id="add-post-options">
-                    <ul>
-
-                        <li class="add-post-option"><a class="create-post" href="{% url 'add-post' %}"><i
-                                    class="fa-solid fa-feather"></i>Text
-                                Post</a></li>
-                        <li class="add-post-option"><a href="{% url 'add-image-post' %}"><i
-                                    class="fa-regular fa-image "></i>Image Post</a>
-                        </li>
-                        <li class="add-post-option"><a href="{% url 'add-video-post' %}"><i
-                                    class="fa-solid fa-video "></i>Video Post</a></li>
-                    </ul>
-                </div> -->
-
-            </div>
+        <li>
+            <a href="{% url 'create-community' %}"><i class="fa-solid fa-bell"></i><br />Notifications</a>
         </li>
+
     </ul>
 </nav>
 <div class="blocker-navbar" id="blocker-navbar"></div>
