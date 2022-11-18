@@ -5,7 +5,7 @@
         <li>
             <div class="navbar-toggle"><i class="fa-solid fa-bars " id="navbar-toggle"></i></div>
         </li>
-        <li>
+        <li class="nav-logo">
             <a class=" home" href="{% url 'home-page'%}"><img src="{% static 'PostIT/images/PostIT.png' %}"
                     width="70"></a>
 
@@ -16,11 +16,12 @@
         </li> -->
         {% if user.is_authenticated %}
         {% if user.profile.id %}
-        <li>
-            <a class="add-post-button" href="#"><i class="fa-solid fa-plus"></i>
-                <span class="arrow">&#x25BC;</span>
+        <!-- <li>
+            <a class="add-post-button" href="#">
+                Add Post
             </a>
             <ul class="submenu">
+
                 <li>
                     <a class="create-post" href="{% url 'add-post' %}"><i class="fa-solid fa-feather"></i>Text Post</a>
                 </li>
@@ -32,14 +33,14 @@
                 </li>
 
             </ul>
-        </li>
+        </li> -->
         {% else %}
         <li><a href="{% url 'add-profile' %}">Add Profile</a></li>
         {% endif %}
         {% endif %}
 
 
-        <li>
+        <li class="nav-search-bar">
             <form action="{% url 'search'  %}" method="POST" enctype="multipart/form-data" id="search-form">
                 {% csrf_token %}
                 <input class="search-bar" name="search_query" type="text" placeholder="Search PostIT ">
@@ -49,10 +50,11 @@
         {% if user.is_authenticated %}
         {% if user.profile.id %}
         <li>
-            <a href="#"><i class="fa-solid fa-user"></i>Profile
+            <a href="#"><i class="fa-solid fa-user"></i><br />Profile
                 <span class="arrow">&#x25BC;</span>
             </a>
             <ul class="submenu">
+
                 <li>
                     <a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
                 </li>
@@ -77,12 +79,81 @@
         {% endif %}
 
         <li>
-            <a href="#"><i class="fa-solid fa-envelope"></i> Messages</a>
+            <a href="#"><i class="fa-solid fa-envelope"></i> <br />Messages</a>
         </li>
         <li>
-            <a href="{% url 'create-community' %}">Create Community</a>
+            <a href="{% url 'create-community' %}"><i class="fa-solid fa-users-between-lines"></i><br />Create
+                Community</a>
+        </li>
+        <li class="nav-add-post">
+            <a href=""><i class="fa-solid fa-plus"></i><br />Add Post
+                <span class="arrow">&#x25BC;</span>
+            </a>
+
+
+            <ul class="submenu">
+
+                <li>
+                    <a href="{% url 'add-post' %}"><i class="fa-solid fa-feather"></i>Text</a>
+                </li>
+                <li>
+                    <a href="{% url 'add-image-post' %}"><i class="fa-solid fa-image"></i>Image Post</a>
+                </li>
+                <li>
+                    <a href="{% url 'add-video-post' %}"><i class="fa-solid fa-video"></i>Video Post</a>
+                </li>
+            </ul>
+            <!-- <div class="add-post-options-holder">
+                <div class="add-post-options" id="add-post-options">
+                    <ul>
+
+                        <li class="add-post-option"><a class="create-post" href="{% url 'add-post' %}"><i
+                                    class="fa-solid fa-feather"></i>Text
+                                Post</a></li>
+                        <li class="add-post-option"><a href="{% url 'add-image-post' %}"><i
+                                    class="fa-regular fa-image "></i>Image Post</a>
+                        </li>
+                        <li class="add-post-option"><a href="{% url 'add-video-post' %}"><i
+                                    class="fa-solid fa-video "></i>Video Post</a></li>
+                    </ul>
+                </div> -->
+
+            </div>
         </li>
     </ul>
 </nav>
+<div class="blocker-navbar" id="blocker-navbar"></div>
 
 <script src="{% static 'PostIT/js/navbar.js'%}"></script>
+
+<script>
+    function addPostOptionsToggle() {
+
+        var addPostOptions = document.getElementById("add-post-options")
+        var blockerPage = document.getElementById("blocker-navbar")
+
+
+
+        if (addPostOptions.style.display === "flex") {
+            addPostOptions.style.display = "none"
+            blockerPage.style.display = "none"
+        }
+        else {
+            addPostOptions.style.display = "flex"
+            blockerPage.style.display = "flex"
+            blockerPage.style.pointerEvents = "auto"
+        }
+    }
+
+    $(document).on('click', '#blocker-navbar', function (e) {
+
+        var addPostOptions = document.getElementById("add-post-options")
+        var blockerPage = document.getElementById("blocker-navbar")
+
+        addPostOptions.style.display = "none"
+        blockerPage.style.display = "none"
+
+        blockerPage.style.pointerEvents = "none"
+
+    });
+</script>

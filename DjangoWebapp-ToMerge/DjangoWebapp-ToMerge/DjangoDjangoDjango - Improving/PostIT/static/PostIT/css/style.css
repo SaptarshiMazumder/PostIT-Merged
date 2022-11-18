@@ -198,7 +198,7 @@ i:hover {
 /* nav-top */
 #main-nav a {
     color: #f6f7f8;
-    height: 50;
+    /* height: 30px; */
     text-decoration: none;
     transition: background 0.4s;
 }
@@ -212,26 +212,39 @@ i:hover {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    /* height: 60px; */
+    height: 50px;
     position: fixed;
-    top: 0;
+    top: 0px;
     color: #fff;
     background-color: var(--post_bg_color);
     pointer-events: all;
     z-index: 1000;
     box-shadow: 0 2px 2px 0 rgba(212, 110, 212, 0.2), 0 1.5px 5px 0 rgba(212, 110, 212, 0.2);
-    /* overflow: hidden; */
+
+    /* padding-top: 30px;
+    padding-bottom: 15px; */
 }
 
 #main-nav ul {
     list-style: none;
     display: flex;
+    margin: auto 0;
 }
 
 #main-nav li {
     text-align: center;
     position: relative;
-    padding: 10px;
+    padding: 0 10px;
+    font-size: small;
+    font-weight: bold;
+}
+
+#main-nav li:hover {
+    color: var(--primary_color);
+}
+
+#main-nav li a {
+    color: var(--text-secondary-color);
 }
 
 #main-nav li:hover .submenu>li {
@@ -252,13 +265,18 @@ i:hover {
 
 
 #main-nav .submenu {
-
+    top: 30px;
     display: none;
     flex-direction: column;
     position: absolute;
     background-color: var(--post_bg_color);
+    z-index: 1;
 
     box-shadow: 0 2px 4px 0 rgba(212, 110, 212, 0.2), 0 3px 10px 0 rgba(212, 110, 212, 0.2);
+}
+
+#main-nav .submenu li {
+    padding: 9px 5px;
 }
 
 #main-nav li:hover .submenu {
@@ -274,6 +292,18 @@ i:hover {
 #main-nav li:hover .arrow {
     color: var(--primary_color);
 
+}
+
+#main-nav .nav-search-bar {
+    /* background-color: red; */
+    height: 100%;
+    position: relative;
+    top: 3px;
+}
+
+#main-nav .nav-logo {
+    position: relative;
+    top: 10px;
 }
 
 .submenu li {
@@ -314,10 +344,10 @@ i:hover {
 }
 
 .add-post-button {
-    background-color: var(--tertiary1_bg_color);
+    /* background-color: var(--tertiary1_bg_color);
     padding: 7px;
-    border-radius: 20px;
-    /* margin: 5px; */
+    border-radius: 20px; */
+
 }
 
 .add-post-button:hover .arrow {
@@ -329,14 +359,59 @@ i:hover {
 }
 
 .search-bar {
-    width: 300px;
-    height: 30px;
+    width: 500px;
+    height: 35px;
     border-radius: 25px;
     font-size: medium;
     background-color: #444;
     border: none;
     color: #fff;
     padding-left: 20px;
+}
+
+
+/* add post navbar */
+
+.add-post-options-holder {
+    position: relative;
+}
+
+.add-post-options {
+    width: 200px;
+    height: auto;
+    position: absolute;
+    display: none;
+    /* flex-direction: row; */
+    /* justify-content: flex-start; */
+    /* align-items: flex-start; */
+    z-index: 4;
+    border: 3px solid green;
+
+    /* float: left; */
+
+
+}
+
+.add-post-options ul {
+    padding-left: 0;
+}
+
+.add-post-options li:hover {
+    color: red;
+
+}
+
+.blocker-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    content: ' ';
+    display: none;
+    z-index: 3;
+
+    /* background: rgba(0, 0, 0, .5); */
 }
 
 
