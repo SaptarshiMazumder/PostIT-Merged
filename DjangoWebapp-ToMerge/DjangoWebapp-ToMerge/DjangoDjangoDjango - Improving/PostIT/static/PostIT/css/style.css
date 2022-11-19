@@ -679,6 +679,7 @@ i:hover {
     /* border: 1px var(--grey_color) solid; */
     border-radius: 10px;
     margin-bottom: 10px;
+    border: 0.5px var(--text-secondary-color);
 
 }
 
