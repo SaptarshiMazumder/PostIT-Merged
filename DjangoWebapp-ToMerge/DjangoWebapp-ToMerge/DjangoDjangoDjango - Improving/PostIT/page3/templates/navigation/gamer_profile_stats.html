@@ -1,0 +1,16 @@
+<div class="gamer_profle_info">
+    {%if selected_gamer_profiles%}
+    {%for g in selected_gamer_profiles%}
+
+    <div class="game_name">{{g.game}}</div>
+    <div class="game_rank">{{g.rank}}</div>
+    <div class="game_server">{{g.server}}</div>
+
+    {%endfor%}
+
+    {%else%}
+    <div class="game_name">{{main_game_profile.main_gamer_profile.game}}</div>
+    <div class="game_rank">{{main_game_profile.main_gamer_profile.rank}}</div>
+    <div class="game_server">{{main_game_profile.main_gamer_profile.server}}</div>
+    {%endif%}
+</div>

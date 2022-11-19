@@ -61,5 +61,7 @@ urlpatterns = [
          views.get_game_rank_server, name="get-game-rank-server"),
     path('start_following/<str:who_to_follow>',
          views.start_following, name="start-following"),
-    path('search', views.search_results, name='search')
+    path('search', views.search_results, name='search'),
+    path('get_gamer_profile_stats/<str:user>',
+         views.Gamer_Profile_Data, name="get-gamer-profile-data")
 ]

@@ -57,11 +57,12 @@ def home(request):
 def home_timeline(request, post_id=None):
 
     object_list = Post.objects.all().order_by('-post_datetime')
-    game_profiles = GameProfile.objects.all()
     communities = Community.objects.all()[:5]
     try:
         main_game_profile = Main_Profile.objects.get(user=request.user)
-        print("MAIN GAME PROFILE: ", main_game_profile)
+
+        gamer_profiles = GameProfile.objects.filter(user=request.user)
+        print("User's GAME PROFILES: ", gamer_profiles)
     except:
         main_game_profile = None
         print("MAIN GAME PROFILE: ", main_game_profile)
@@ -114,11 +115,11 @@ def home_timeline(request, post_id=None):
             'last_viewed': last_viewed,
             'has_images_to_show': has_images_to_show,
             'profiles': profiles,
-            'game_profiles': game_profiles,
             'communities': communities,
             'joined_communities': joined_communities,
             'media_url': "127.0.0.1: 8000/media",
             'main_game_profile': main_game_profile,
+            'gamer_profiles': gamer_profiles,
         }
     # print("SETTINGS: ", static(settings.MEDIA_URL))
     return render(request, 'base/home_timeline.html', context)
@@ -945,6 +946,17 @@ def Matchmaking_Data(request, user):
             'matchmaking/matchmaking_found_list.html', context, request=request)
 
         return JsonResponse({"profiles": html})
+
+
+def Gamer_Profile_Data(request, user):
+
+    print(request.POST['game'])
+    gamer_profiles = GameProfile.objects.filter(
+        user=User.objects.get(username=user), game=request.POST['game'])
+    context = {'selected_gamer_profiles': gamer_profiles}
+    html = render_to_string(
+        'navigation/gamer_profile_stats.html', context, request=request)
+    return JsonResponse({"gamer_profile_stats": html})
 
 
 @csrf_exempt
