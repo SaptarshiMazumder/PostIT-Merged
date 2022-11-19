@@ -66,6 +66,7 @@ def home_timeline(request, post_id=None):
     except:
         main_game_profile = None
         print("MAIN GAME PROFILE: ", main_game_profile)
+        gamer_profiles = None
     # joined_communities = request.user.profile.communities.all()
     try:
         joined_communities = request.user.profile.communities.all()
@@ -953,7 +954,7 @@ def Gamer_Profile_Data(request, user):
     print(request.POST['game'])
     gamer_profiles = GameProfile.objects.filter(
         user=User.objects.get(username=user), game=request.POST['game'])
-    context = {'selected_gamer_profiles': gamer_profiles}
+    context = {'gamer_profiles': gamer_profiles}
     html = render_to_string(
         'navigation/gamer_profile_stats.html', context, request=request)
     return JsonResponse({"gamer_profile_stats": html})

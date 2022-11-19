@@ -61,7 +61,10 @@
             </div>
 
             <div class="sidebar-profile-name">
-                {{user.username}}<br />
+                <div class="sidebar_username">
+                    {{user.username}}
+                </div>
+                <br />
                 <div class="sidebar-view-profile-button">
                     <a href="{%url 'posts-by-user' user %}">View Profile</a>
 
