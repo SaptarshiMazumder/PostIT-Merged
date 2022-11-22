@@ -253,6 +253,11 @@ class GameProfile(models.Model):
         LFTalent = 'Looking for talent', 'Looking for talent'
         none = 'none', 'none'
 
+    games_logo_list = {'League of Legends': '/media/images/logos/LoL_icon.svg.png',
+                       'Valorant': '/media/images/logos/LoL_icon.svg.png',
+                       'Call of Duty': '/media/images/logos/LoL_icon.svg.png',
+                       'Counter Strike: GO': '/media/images/logos/LoL_icon.svg.png',
+                       }
     servers_list = [('Val', ValorantServers.choices), ('COD', CODServers.choices),
                     ('LOL', LOLServers.choices), ('CS', CSServers.choices)]
 
@@ -264,7 +269,8 @@ class GameProfile(models.Model):
     server = models.CharField(max_length=50, choices=servers_list)
     rank = models.CharField(max_length=50, choices=ranks_list, default="")
     user_status = models.CharField(
-        max_length=50, choices=User_Status.choices, default='none')
+        max_length=50, choices=User_Status.choices, default='none')\
+
 
     def __str__(self):
         return str(self.user) + " | " + str(self.game) + " | " + str(self.server) + " | " + str(self.rank)

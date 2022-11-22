@@ -912,6 +912,75 @@ def create_game_profile(request, user):
     return render(request, 'create_gamer_profile.html', context={'form': form, 'post_form': post_form})
 
 
+def edit_gamer_profile(request, user):
+    form = GameProfileForm()
+    post_form = PostForm()
+
+    if(user != 'favicon.png'):
+        user = User.objects.get(username=user)
+
+        if(request.method == 'POST'):
+            if(GameProfile.objects.filter(user=user.id, game=request.POST['game'])):
+                print("Profile already exists")
+                game_profile = GameProfile.objects.filter(user=user.id,
+                                                          game=request.POST['game'])
+                game_profile.update(
+                    server=request.POST['server'], rank=request.POST['rank'])
+
+                if Main_Profile.objects.filter(user=user.id).exists():
+
+                    main_profile = Main_Profile.objects.get(user=user.id)
+                    if(request.POST['is_main'] == 'true'):
+                        main_profile.main_gamer_profile = game_profile[0]
+                        main_profile.save()
+                        print(main_profile)
+
+                if len(request.POST['body']) > 1:
+                    print(request.POST['body'])
+                    new_post = Post(title="Gamer Profile Update", author=user,
+                                    body=request.POST['body'], category=request.POST['game'])
+                    new_post.save()
+                    return redirect('home-page')
+
+            else:
+
+                print(request.POST)
+                new_gamer_profile = GameProfile(user=user, game=request.POST['game'],
+                                                server=request.POST['server'], rank=request.POST['rank'])
+                new_gamer_profile.save()
+
+                if Main_Profile.objects.filter(user=user.id).exists() and (request.POST['is_main'] == 'true'):
+                    main_profile = Main_Profile.objects.get(user=user.id)
+                    main_profile.main_gamer_profile = new_gamer_profile
+                    main_profile.save()
+
+                else:
+                    new_main_profile = Main_Profile(user=user,
+                                                    main_gamer_profile=new_gamer_profile)
+                    new_main_profile.save()
+
+                context = {'form': form, 'profile': new_gamer_profile,
+                           'post_form': post_form}
+
+                if len(request.POST['body']) > 1:
+                    print(request.POST['body'])
+                    new_post = Post(title="Gamer Profile Created", author=user,
+                                    body=request.POST['body'], category=request.POST['game'])
+                    new_post.save()
+                    return redirect('home-page')
+
+                # return render(request, 'create_gamer_profile.html', context)
+        else:
+            gamer_profiles = GameProfile.objects.filter(
+                user=User.objects.get(username=user))
+
+            return render(request, 'edit_gamer_profile.html',
+                          context={'form': form, 'post_form': post_form,
+                                   'gamer_profiles': gamer_profiles})
+
+    return render(request, 'edit_gamer_profile.html', context={'form': form, 'post_form': post_form})
+
+
 def MatchmakingHome(request, user):
     form = GameProfileForm()
     print(user)
@@ -951,18 +1020,23 @@ def Matchmaking_Data(request, user):
 
 def Gamer_Profile_Data(request, user):
 
-    print(request.POST['game'])
     gamer_profiles = GameProfile.objects.filter(
         user=User.objects.get(username=user), game=request.POST['game'])
-    context = {'gamer_profiles': gamer_profiles}
+
+    context = {
+        'selected_gamer_profiles': gamer_profiles,
+
+    }
     html = render_to_string(
         'navigation/gamer_profile_stats.html', context, request=request)
+    print(context)
     return JsonResponse({"gamer_profile_stats": html})
 
 
 @csrf_exempt
 @api_view(['GET'])
 def get_game_rank_server(request, game):
+
     ranks = []
     servers = []
     if game == "Valorant":
@@ -976,11 +1050,38 @@ def get_game_rank_server(request, game):
         ranks = GameProfile.LOLRanks.choices
         servers = GameProfile.LOLServers.choices
 
-    if game == "Counter Shit: GO":
+    if game == "Counter Strike: GO":
+        ranks = GameProfile.CSRanks.choices
+        servers = GameProfile.CSServers.choices
+    print(game, ranks, servers)
+    return JsonResponse({"ranks": ranks, "servers": servers})
+
+
+def get_saved_game_rank_server(request, game):
+    ranks = []
+    servers = []
+    if game == "Valorant":
+        ranks = GameProfile.ValorantRanks.choices
+        servers = GameProfile.ValorantServers.choices
+    if game == "Call of Duty":
+        ranks = GameProfile.CODRanks.choices
+        servers = GameProfile.CODServers.choices
+
+    if game == "League of Legends":
+        ranks = GameProfile.LOLRanks.choices
+        servers = GameProfile.LOLServers.choices
+
+    if game == "Counter Strike: GO":
         ranks = GameProfile.CSRanks.choices
         servers = GameProfile.CSServers.choices
 
-    return JsonResponse({"ranks": ranks, "servers": servers})
+    saved_gamer_profile = GameProfile.objects.get(user=request.user,
+                                                  game=game)
+    print(request.user)
+    return JsonResponse({"ranks": ranks, "servers": servers,
+                        "saved_rank": saved_gamer_profile.rank,
+                         "saved_server": saved_gamer_profile.server,
+                         })
 
 
 def search_results(request):

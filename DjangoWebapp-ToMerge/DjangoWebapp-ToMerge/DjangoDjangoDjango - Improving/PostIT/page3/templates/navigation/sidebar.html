@@ -12,45 +12,51 @@
    
     {%endif%}
     {%endfor%} -->
+    <div class="gamer-profile-sidebar">
+        <!-- {%if main_game_profile %}
+        MAIN PROFILE:
+        {{main_game_profile.main_gamer_profile.game}}
+        -{{main_game_profile.main_gamer_profile.server}}
+        -{{main_game_profile.main_gamer_profile.rank}}
+        {%endif%} -->
+        <!-- 
+        <br>
+        <br> -->
+        GAMER PROFILES
+        <br>
 
-    {%if main_game_profile %}
-    MAIN PROFILE:
-    {{main_game_profile.main_gamer_profile.game}}
-    -{{main_game_profile.main_gamer_profile.server}}
-    -{{main_game_profile.main_gamer_profile.rank}}
-    {%endif%}
+        {% if user.is_authenticated %}
+        {%if gamer_profiles%}
 
-    <br>
-    <br>
-    GAMER PROFILES
-    <br>
 
-    {% if user.is_authenticated %}
-    {%if gamer_profiles%}
-    <select class="gamer_profiles" id="gamer_profiles">
-        {%for g in gamer_profiles%}
-        {%if g.game == main_game_profile.main_gamer_profile.game%}
-        <option value={{g.game}} selected="selected">{{g.game}}</option>
-        {%else%}
-        <option value={{g.game}}>{{g.game}}</option>
+        <select class="gamer_profiles" id="gamer_profiles">
+            {%for g in gamer_profiles%}
+            {%if g.game == main_game_profile.main_gamer_profile.game%}
+            <option value={{g.game}} selected="selected">{{g.game}}</option>
+            {%else%}
+            <option value={{g.game}}>{{g.game}}</option>
+            {%endif%}
+            {%endfor%}
+        </select>
+
         {%endif%}
-        {%endfor%}
-    </select>
-    {%endif%}
 
-    <div class="gamer_profile_stats_section">
-        {%include 'navigation/gamer_profile_stats.html' %}
+        <div class="gamer_profile_stats_section">
+            {%include 'navigation/gamer_profile_stats.html' %}
+        </div>
+
+        <div class="matchmaking">
+            <a href="{% url 'matchmaking-home' user%}">Matchmaking</a>
+        </div>
+
+
+
+        <a href="{% url 'create-gamer-profile' user.username %}">Create New Gamer Profile</a>
+        {%if gamer_profiles %}
+        <a href="{% url 'edit-gamer-profile' user.username %}">Edit Gamer Profile</a>
+        {%endif%}
+        {%endif%}
     </div>
-
-    <div class="matchmaking">
-        <a href="{% url 'matchmaking-home' user%}">Matchmaking</a>
-    </div>
-
-
-
-    <a href="{% url 'create-gamer-profile' user.username %}">Create Gamer Profile</a>
-    {%endif%}
-
 
 
     LAST VIEWED: {{ last_viewed }}<br />

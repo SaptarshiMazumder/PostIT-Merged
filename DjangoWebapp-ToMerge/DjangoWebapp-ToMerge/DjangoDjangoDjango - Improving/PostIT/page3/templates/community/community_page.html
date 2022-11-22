@@ -21,66 +21,8 @@ Page3 - Community
 
             {{user}}
             {{message}} -->
-            <div class="community-profile-info-holder">
-                <div class="community-profile-info">
-                    <div class="community-profile-pic">
-                        {% if community.profile_pic.name %}
-                        <img src="{{ community.profile_pic.url}}">
-                        {% else %}
-                        <img src=" {% static 'PostIT/images/profilepic.jpg' %}">
-                        {% endif %}
+            {% include 'community/community_profile_info_holder.html' %}
 
-
-                    </div>
-                    <div class="community-profile-info-menu">
-                        <div class="community-profile-info-menu-left">
-                            <div class="community-name">
-                                <h5><b>{{ community.name }}</b></h5>
-                            </div>
-                            <div>Joined</div>
-                        </div>
-                        <div class="community-profile-info-menu-right">
-                            <div> Add Post Button</div>
-                            <div> 120.2k Members</div>
-                            <div> 3.5k Online</div>
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="community-profile-info-tabs">
-                    <div class="item selected-tab">
-                        Posts
-                    </div>
-                    <div class="item">Members</div>
-                    <div class="item">Rules</div>
-                    <div class="item">Discord</div>
-                    <div class="add-post-community-button" onclick="addPostCommunityOptionsToggle()">
-
-                        <i class="fa-solid fa-plus"></i>
-
-                    </div>
-                    <div class="add-post-community-options-holder">
-                        <div class="add-post-community-options" id="add-post-community-options">
-                            <ul>
-
-                                <li class="add-post-community-option"><a class="create-post"
-                                        href="{% url 'add-post-community' community.id %}"><i
-                                            class="fa-solid fa-feather"></i>Text
-                                        Post</a></li>
-                                <li class="add-post-community-option"><a
-                                        href="{% url 'add-image-post-community' community.id %}"><i
-                                            class="fa-regular fa-image "></i>Image Post</a>
-                                </li>
-                                <li class="add-post-community-option"><a
-                                        href="{% url 'add-video-post-community' community.id %}"><i
-                                            class="fa-solid fa-video "></i>Video Post</a></li>
-                            </ul>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
 
 
             {% if user.is_authenticated %}
@@ -101,6 +43,8 @@ Page3 - Community
 
 
                 <div class="infinite-container" style="background-color: #131212;" id="myDIV">
+                    {% include 'post/addPost/add_post_post.html' %}
+
                     {% for post in objects %}
                     {% if not post.is_reply %}
                     <div class="infinite-item">
@@ -342,6 +286,9 @@ Page3 - Community
 
 
 </script>
+
+
+
 
 <script src="{% static 'PostIT/js/togglePostOptions.js'%}"></script>
 {% endblock content %}
