@@ -1159,7 +1159,7 @@ h2::-webkit-scrollbar {
 
 .gamer-profile-sidebar .page-links .page-link {
     background-color: var(--tertiary1_bg_color);
-    margin: 10px;
+    margin: 7px;
     border-radius: 25px;
     /* padding: 10px; */
     border: none;
