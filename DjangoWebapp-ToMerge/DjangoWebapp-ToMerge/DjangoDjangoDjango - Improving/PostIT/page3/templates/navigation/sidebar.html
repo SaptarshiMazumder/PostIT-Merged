@@ -5,15 +5,7 @@
 
 
     <div class="gamer-profile-sidebar">
-        <!-- {%if main_game_profile %}
-        MAIN PROFILE:
-        {{main_game_profile.main_gamer_profile.game}}
-        -{{main_game_profile.main_gamer_profile.server}}
-        -{{main_game_profile.main_gamer_profile.rank}}
-        {%endif%} -->
-        <!-- 
-        <br>
-        <br> -->
+
         Profile
         <hr>
         <br>
@@ -65,22 +57,33 @@
         {%endif%}
 
         <div class="gamer_profile_stats_section">
-            {%include 'navigation/gamer_profile_stats.html' %}
+            {%include 'gamerProfile/gamer_profile_stats.html' %}
         </div>
-
         <div class="page-links">
-            <a href="{% url 'matchmaking-home' user%}">Matchmaking</a>
-        </div>
+            <button class="page-link" onclick="location.href=`{% url 'matchmaking-home' user%}`">
+                <a href="{% url 'matchmaking-home' user%}">
 
+                    Matchmaking
+                </a>
+            </button>
 
-        <div class="page-links">
-            <a href="{% url 'create-gamer-profile' user.username %}">Create New Gamer Profile</a>
+            <button class="page-link" onclick="location.href=`{% url 'create-gamer-profile' user.username %}`">
+                <a href="{% url 'create-gamer-profile' user.username %}">
+
+                    Create New Gamer Profile
+                </a>
+            </button>
+
+            {%if gamer_profiles %}
+            <button class="page-link" onclick="location.href=`{% url 'edit-gamer-profile' user.username %}`">
+                <a href="{% url 'edit-gamer-profile' user.username %}">
+
+                    Edit Gamer Profile
+                </a>
+            </button>
+
+            {%endif%}
         </div>
-        {%if gamer_profiles %}
-        <div class="page-links">
-            <a href="{% url 'edit-gamer-profile' user.username %}">Edit Gamer Profile</a>
-        </div>
-        {%endif%}
         {%endif%}
     </div>
 
@@ -113,11 +116,6 @@
 
     $(document).ready(function () {
         document.getElementById("gamer_profiles-btn").addEventListener("click", Toggle_Dropdown_Display);
-
-
-
-
-
     });
 
     $('.gamer_profiles_dropdown-btn').click(function () {
@@ -143,6 +141,7 @@
             }
         })
     });
+
 
     function Toggle_Dropdown_Display() {
         if ($('.gamer_profiles_dropdown-container').css('display') == 'flex') {

@@ -913,7 +913,7 @@ def create_game_profile(request, user):
 
                 # return render(request, 'create_gamer_profile.html', context)
 
-    return render(request, 'create_gamer_profile.html', context={'form': form, 'post_form': post_form})
+    return render(request, 'gamerProfile/create_gamer_profile.html', context={'form': form, 'post_form': post_form})
 
 
 def edit_gamer_profile(request, user):
@@ -978,11 +978,11 @@ def edit_gamer_profile(request, user):
             gamer_profiles = GameProfile.objects.filter(
                 user=User.objects.get(username=user))
 
-            return render(request, 'edit_gamer_profile.html',
+            return render(request, 'gamerProfile/edit_gamer_profile.html',
                           context={'form': form, 'post_form': post_form,
                                    'gamer_profiles': gamer_profiles})
 
-    return render(request, 'edit_gamer_profile.html', context={'form': form, 'post_form': post_form})
+    return render(request, 'gamerProfile/edit_gamer_profile.html', context={'form': form, 'post_form': post_form})
 
 
 def MatchmakingHome(request, user):
@@ -1032,7 +1032,7 @@ def Gamer_Profile_Data(request, user):
 
     }
     html = render_to_string(
-        'navigation/gamer_profile_stats.html', context, request=request)
+        'gamerProfile/gamer_profile_stats.html', context, request=request)
     print(context)
     return JsonResponse({"gamer_profile_stats": html,
                          'game_logo': GameProfile.games_logo_list[gamer_profiles[0].game],
