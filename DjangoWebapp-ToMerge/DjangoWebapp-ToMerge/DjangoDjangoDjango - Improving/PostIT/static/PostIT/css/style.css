@@ -1029,6 +1029,8 @@ h2::-webkit-scrollbar {
     border-radius: 10px;
     padding: 10px;
     background-color: var(--secondary_bg_color);
+    width: 100%;
+    position: relative;
 
 
 }
@@ -1037,21 +1039,112 @@ h2::-webkit-scrollbar {
     box-shadow: 0 2px 4px 0 rgba(212, 110, 212, 0.2), 0 3px 10px 0 rgba(212, 110, 212, 0.2);
 }
 
-.gamer-profile-sidebar select {
+
+
+#gamer_profiles-btn {
+    display: flex;
+    align-items: center;
     padding: 15px;
     background-color: var(--tertiary1_bg_color);
     color: #fff;
-    border-radius: 25px;
+    border-radius: 10px;
+    width: 90%;
+    margin: 0 auto;
+    color: var(--text-secondary-color);
+    display: flex;
+    justify-content: space-between;
+}
+
+#gamer_profiles-btn div {
+    display: flex;
+    justify-content: flex-start;
+    font-weight: bold;
+}
+
+#gamer_profiles-btn i {
+    position: relative;
+    top: -4px;
+}
+
+#gamer_profiles-btn img {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.gamer_profiles-btn-value {
+    padding: 0 10px;
+
+}
+
+.gamer_profiles_dropdown-container {
+    width: inherit;
+    margin: 0 auto;
+
+}
+
+
+.gamer_profiles_dropdown {
+    display: flex;
+    position: absolute;
+    margin: 0 auto;
+    flex-direction: column;
+    background-color: var(--post_bg_color);
+    width: 85%;
+    left: 25px;
+    border-radius: 10px;
+}
+
+.gamer_profiles_dropdown button {
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    font-size: medium;
+    font-weight: bold;
+    color: var(--text-secondary-color);
+}
+
+.gamer_profiles_dropdown button:hover {
+    background-color: var(--tertiary1_bg_color);
+    border-radius: 10px;
 }
 
 
 
-.gamer_profiles img {
-    width: 100px;
+.gamer_profiles_dropdown img {
+    width: 20px;
+    height: 20px;
     object-fit: cover;
 }
 
+.gamer_profiles_dropdown-item {
+    margin: 0 10px;
+    padding: 0 10px;
+}
 
+.gamer_profile_stats_section .gamer_profle_info {
+    display: flex;
+    flex-direction: column;
+}
+
+.gamer_profile_stats_section .gamer_profle_info .game_stat {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: small;
+    font-weight: bold;
+}
+
+
+
+.gamer_profile_stats_section .label {
+    color: var(--text-secondary-color);
+
+}
+
+
+.gamer-profile-sidebar .page-links {}
 
 /* Gamer profile sidebar end */
 

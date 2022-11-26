@@ -1,17 +1,9 @@
 <div class="sidebar">
 
+    {%for logo, url in game_logos.items%}
+    {%endfor%}
 
 
-    <!-- {%for game_profile in game_profiles%}
-    {%if game_profile.user == user%}
-    <div class="gamer_profile">
-        <p>{{game_profile.game}}</p>
-        <p>{{game_profile.rank}}</p>
-        <p>Location: {{game_profile.server}}</p>
-    </div>
-   
-    {%endif%}
-    {%endfor%} -->
     <div class="gamer-profile-sidebar">
         <!-- {%if main_game_profile %}
         MAIN PROFILE:
@@ -22,22 +14,53 @@
         <!-- 
         <br>
         <br> -->
-        GAMER PROFILES
+        Profile
+        <hr>
         <br>
 
         {% if user.is_authenticated %}
         {%if gamer_profiles%}
 
 
-        <select class="gamer_profiles" id="gamer_profiles">
+        <div class="gamer_profiles" id="gamer_profiles">
             {%for g in gamer_profiles%}
             {%if g.game == main_game_profile.main_gamer_profile.game%}
-            <option value={{g.game}} selected="selected">{{g.game}}</option>
-            {%else%}
-            <option value={{g.game}}>{{g.game}}</option>
+            <button id="gamer_profiles-btn" value="">
+                <div>
+                    {%for logo, url in game_logos.items%}
+                    {%if g.game == logo %}
+                    <img class="gamer_profiles-btn-img" src={{url}} alt="">
+                    {%endif%}
+                    {%endfor%}
+                    <div class="gamer_profiles-btn-value">
+                        {{g.game}}
+                    </div>
+                </div>
+                <i class="fa-solid fa-angle-down"></i>
+            </button>
             {%endif%}
             {%endfor%}
-        </select>
+        </div>
+        <div class="gamer_profiles_dropdown-container">
+            <div class="gamer_profiles_dropdown">
+                {%for g in gamer_profiles%}
+                <button class="gamer_profiles_dropdown-btn">
+
+                    {%for logo, url in game_logos.items%}
+                    {%if g.game == logo %}
+                    <!-- <img class="gamer_profiles-btn-img" src={{b}} alt=""> -->
+                    <img src="{{url}}">
+
+                    {%endif%}
+                    {%endfor%}
+                    <div class="gamer_profiles_dropdown-item">{{g.game}}</div>
+
+
+                </button>
+
+                {%endfor%}
+            </div>
+        </div>
 
         {%endif%}
 
@@ -45,15 +68,18 @@
             {%include 'navigation/gamer_profile_stats.html' %}
         </div>
 
-        <div class="matchmaking">
+        <div class="page-links">
             <a href="{% url 'matchmaking-home' user%}">Matchmaking</a>
         </div>
 
 
-
-        <a href="{% url 'create-gamer-profile' user.username %}">Create New Gamer Profile</a>
+        <div class="page-links">
+            <a href="{% url 'create-gamer-profile' user.username %}">Create New Gamer Profile</a>
+        </div>
         {%if gamer_profiles %}
-        <a href="{% url 'edit-gamer-profile' user.username %}">Edit Gamer Profile</a>
+        <div class="page-links">
+            <a href="{% url 'edit-gamer-profile' user.username %}">Edit Gamer Profile</a>
+        </div>
         {%endif%}
         {%endif%}
     </div>
@@ -82,22 +108,46 @@
 
 </div>
 <script>
+    var selected_gamer_profile;
+    $('.gamer_profiles_dropdown-container').css('display', 'none');
+
     $(document).ready(function () {
-        $("select.gamer_profiles").change(function () {
-            var selected_gamer_profile = $(this).children("option:selected").text();
-            user_name = $('.sidebar_username').text().replaceAll(' ', '');
-            $.ajax({
-                type: 'POST',
-                url: `/get_gamer_profile_stats/${user_name}`,
-                data: {
-                    game: selected_gamer_profile,
-                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                },
-                success: function (response) {
-                    console.log(response['gamer_profile_stats'])
-                    $('.gamer_profile_stats_section').html(response['gamer_profile_stats']);
-                }
-            })
-        });
+        document.getElementById("gamer_profiles-btn").addEventListener("click", Toggle_Dropdown_Display);
+
+
+
+
+
     });
+
+    $('.gamer_profiles_dropdown-btn').click(function () {
+        selected_gamer_profile = $(this).text().trim();
+
+        user_name = $('.sidebar_username').text().replaceAll(' ', '');
+        $.ajax({
+            type: 'POST',
+            url: `/get_gamer_profile_stats/${user_name}`,
+            dataType: "json",
+            data: {
+                game: selected_gamer_profile,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function (response) {
+
+                $('.gamer_profile_stats_section').html(response['gamer_profile_stats']);
+                Toggle_Dropdown_Display();
+                console.log(response['game_logo'])
+                $('.gamer_profiles-btn-value').text($('.game_name').text());
+                $('.gamer_profiles-btn-img').attr("src", response['game_logo']);
+
+            }
+        })
+    });
+
+    function Toggle_Dropdown_Display() {
+        if ($('.gamer_profiles_dropdown-container').css('display') == 'flex') {
+            $('.gamer_profiles_dropdown-container').css('display', 'none');
+        }
+        else $('.gamer_profiles_dropdown-container').css('display', 'flex');
+    }
 </script>

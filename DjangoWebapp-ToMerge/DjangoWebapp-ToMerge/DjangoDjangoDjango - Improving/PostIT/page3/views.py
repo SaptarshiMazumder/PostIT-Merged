@@ -67,6 +67,7 @@ def home_timeline(request, post_id=None):
         main_game_profile = None
         print("MAIN GAME PROFILE: ", main_game_profile)
         gamer_profiles = None
+
     # joined_communities = request.user.profile.communities.all()
     try:
         joined_communities = request.user.profile.communities.all()
@@ -107,6 +108,7 @@ def home_timeline(request, post_id=None):
             'joined_communities': joined_communities,
             'media_url': "127.0.0.1: 8000/media",
             'main_game_profile': main_game_profile,
+            'game_logos': GameProfile.games_logo_list,
         }
     except:
         context = {
@@ -121,8 +123,10 @@ def home_timeline(request, post_id=None):
             'media_url': "127.0.0.1: 8000/media",
             'main_game_profile': main_game_profile,
             'gamer_profiles': gamer_profiles,
+            'game_logos': GameProfile.games_logo_list,
         }
     # print("SETTINGS: ", static(settings.MEDIA_URL))
+
     return render(request, 'base/home_timeline.html', context)
 
 
@@ -1030,7 +1034,9 @@ def Gamer_Profile_Data(request, user):
     html = render_to_string(
         'navigation/gamer_profile_stats.html', context, request=request)
     print(context)
-    return JsonResponse({"gamer_profile_stats": html})
+    return JsonResponse({"gamer_profile_stats": html,
+                         'game_logo': GameProfile.games_logo_list[gamer_profiles[0].game],
+                         })
 
 
 @csrf_exempt

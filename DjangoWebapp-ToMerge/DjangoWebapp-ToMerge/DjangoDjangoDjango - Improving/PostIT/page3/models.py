@@ -254,9 +254,9 @@ class GameProfile(models.Model):
         none = 'none', 'none'
 
     games_logo_list = {'League of Legends': '/media/images/logos/LoL_icon.svg.png',
-                       'Valorant': '/media/images/logos/LoL_icon.svg.png',
-                       'Call of Duty': '/media/images/logos/LoL_icon.svg.png',
-                       'Counter Strike: GO': '/media/images/logos/LoL_icon.svg.png',
+                       'Valorant': '/media/images/logos/Val_icon.png',
+                       'Call of Duty': '/media/images/logos/COD_icon.jpg',
+                       'Counter Strike: GO': '/media/images/logos/CSGO_icon.png',
                        }
     servers_list = [('Val', ValorantServers.choices), ('COD', CODServers.choices),
                     ('LOL', LOLServers.choices), ('CS', CSServers.choices)]
