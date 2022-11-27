@@ -5,45 +5,59 @@ Create Gamer Profile
 {% endblock title %}
 
 {% block content %}
-
+{% include 'navigation/navbar-top.html' %}
 {% load crispy_forms_tags %}
 {% if user.is_authenticated %}
 <div class="main-body">
-    <div class="post">
-        <div id="currentuser">{{user.username}}</div>
-        <form action="" method="POST" enctype="multipart/form-data" id="gamerprofile_form">
-            <h1>Edit your Gamer Profile!!</h1>
-            {% csrf_token %}
+    {% include 'navigation/sidebar-left.html' %}
+    <div class="page-contents">
+        <div class="posts-timeline">
+            <div class="post">
+                <form action="" method="POST" enctype="multipart/form-data" id="gamerprofile_form">
 
-            <div class="profile-item">
-                <div> Select Gamer Profile to edit</div>
-                <!-- <div class="game">{{form.game}}</div> -->
-                <select name="game_to_edit" id="game_to_edit" class="game_to_edit">
-                    {%for g in gamer_profiles%}
-                    <option value={{g.game}}>{{g.game}}</option>
-                    {%endfor%}
-                </select>
-            </div>
-            <div class="profile-item">
-                <div> Preferred Server</div>
-                <select class="servers" form="gamerprofile_form"></select>
-            </div>
-            <div class="profile-item">
-                <div> Current Rank</div>
-                <select class="ranks" form="gamerprofile-form">Enter current rank</select>
-            </div>
-            <div class="profile-item">
-                <label for="is_main"> Is this your main gamer profile</label><br>
-                <input type="checkbox" id="is_main" name="is_main">
-            </div>
-            <button type="submit" name="submit-btn">Create</button>
-            {{user.username}}
+                    <div class="gamer_profile_form">
+                        <div class="header">
+                            Edit Gamer Profile
+                        </div>
+                        <hr>
+                        {% csrf_token %}
 
-        </form>
+                        <div class="profile-item">
+                            <div class="label">Game Title</div>
+                            <!-- <div class="game">{{form.game}}</div> -->
+                            <select name="game_to_edit" id="game_to_edit" class="game_to_edit">
+                                {%for g in gamer_profiles%}
+                                <option value={{g.game}}>{{g.game}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                        <div class="profile-item">
+                            <div class="label"> Preferred Server</div>
+                            <select class="servers" form="gamerprofile_form"></select>
+                        </div>
+                        <div class="profile-item">
+                            <div class="label"> Current Rank</div>
+                            <select class="ranks" form="gamerprofile-form">Enter current rank</select>
+                        </div>
+                        <div class="profile-item">
+                            <input type="checkbox" id="is_main" name="is_main">
+                            <label for="is_main" class="label"> Is this your main gamer profile</label>
 
-        <input type="checkbox" name="is_post" id="is_post">Post it for your followers to see!
-        <div class="post_form">
-            <input type="text" name="post_body" id="post_body">
+                        </div>
+                        <button type="submit" name="submit-btn">Save Profile</button>
+
+                    </div>
+                </form>
+
+                <input type="checkbox" name="is_post" id="is_post">Post it for your followers to see!
+                <div class="post_form">
+                    <input type="text" name="post_body" id="post_body">
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            Sidebar
+            <div id="currentuser">{{user.username}}</div>
         </div>
     </div>
 </div>

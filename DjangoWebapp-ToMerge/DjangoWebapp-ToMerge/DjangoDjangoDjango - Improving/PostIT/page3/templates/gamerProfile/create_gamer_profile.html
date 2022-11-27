@@ -5,40 +5,119 @@ Create Gamer Profile
 {% endblock title %}
 
 {% block content %}
-
+{% include 'navigation/navbar-top.html' %}
 {% load crispy_forms_tags %}
 {% if user.is_authenticated %}
 <div class="main-body">
-    <div class="post">
-        <div id="currentuser">{{user.username}}</div>
-        <form action="" method="POST" enctype="multipart/form-data" id="gamerprofile_form">
-            <h1>Create your Gamer Profile!!</h1>
-            {% csrf_token %}
+    {% include 'navigation/sidebar-left.html' %}
+    <div class="page-contents">
+        <div class="posts-timeline">
+            <div class="post">
 
-            <div class="profile-item">
-                <div> Preferred Game</div>
-                <div class="game">{{form.game}}</div>
-            </div>
-            <div class="profile-item">
-                <div> Preferred Server</div>
-                <select class="servers" form="gamerprofile_form"></select>
-            </div>
-            <div class="profile-item">
-                <div> Current Rank</div>
-                <select class="ranks" form="gamerprofile-form">Enter current rank</select>
-            </div>
-            <div class="profile-item">
-                <label for="is_main"> Is this your main gamer profile</label><br>
-                <input type="checkbox" id="is_main" name="is_main">
-            </div>
-            <button type="submit" name="submit-btn">Create</button>
-            {{user.username}}
+                <form action="" method="POST" enctype="multipart/form-data" id="gamerprofile_form">
+                    <div class="gamer_profile_form">
+                        <div class="header">
+                            Create new Gamer Profile
+                        </div>
+                        <hr>
+                        {% csrf_token %}
 
-        </form>
+                        <div class="profile-item">
+                            <div class="label">Game Title</div>
+                            <div class="game">{{form.game}}</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="label"> Preferred Server</div>
+                            <select class="servers" form="gamerprofile_form"></select>
+                        </div>
+                        <div class="profile-item">
+                            <div class="label"> Current Rank</div>
+                            <select class="ranks" form="gamerprofile-form">Enter current rank</select>
+                        </div>
+                        <div class="profile-item">
+                            <input type="checkbox" id="is_main" name="is_main">
+                            <label for="is_main" class="label">Set as main profile</label>
 
-        <input type="checkbox" name="is_post" id="is_post">Post it for your followers to see!
-        <div class="post_form">
-            <input type="text" name="post_body" id="post_body">
+                        </div>
+                        <button type="submit" name="submit-btn">Create Profile</button>
+                    </div>
+                </form>
+
+                <input type="checkbox" name="is_post" id="is_post">Post it for your followers to see!
+                <div class="post_form">
+                    <input type="text" name="post_body" id="post_body">
+                </div>
+            </div>
+        </div>
+        <div class="sidebar ">
+
+            <div class="gamer-profile-page-sidebar">
+                <div class="header">
+                    <div class="header-noimg"></div>
+                    <div class="profile">
+                        <div class="profile-identity">
+                            <a href="{%url 'posts-by-user' user %}">
+                                {% if user.profile.profile_pic.name %}
+                                <img src="{{ user.profile.profile_pic.url}}"></a>
+                            {% else %}
+                            <a href="{%url 'posts-by-user' user %}">
+                                <img src="{% static 'PostIT/images/profilepic.jpg' %}">
+                            </a>
+                            {% endif %}
+                            <div id="currentuser">{{user.username}}</div>
+                        </div>
+                        <div class="profile-info">
+                            <div class="info-item">
+                                <span class="data">{{user.profile.followers.count}}</span>
+                                <div class="label">Followers</div>
+
+                            </div>
+                            <div class="info-item">
+                                <span class="data">{{user.profile.following.count}}</span>
+                                <div class="label">Following</div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                {%if gamer_profiles%}
+
+
+
+                {%include 'gamerProfile/gamer_profile_section_sidebar.html' %}
+
+                {%endif%}
+                <div class="gamer_profile_stats_section">
+                    {%include 'gamerProfile/gamer_profile_stats.html' %}
+                </div>
+                <div class="page-links">
+                    <button class="page-link" onclick="location.href=`{% url 'matchmaking-home' user%}`">
+                        <a href="{% url 'matchmaking-home' user%}">
+
+                            Matchmaking
+                        </a>
+                    </button>
+
+                    <button class="page-link" onclick="location.href=`{% url 'create-gamer-profile' user.username %}`">
+                        <a href="{% url 'create-gamer-profile' user.username %}">
+
+                            Create New Gamer Profile
+                        </a>
+                    </button>
+
+                    {%if gamer_profiles %}
+                    <button class="page-link" onclick="location.href=`{% url 'edit-gamer-profile' user.username %}`">
+                        <a href="{% url 'edit-gamer-profile' user.username %}">
+
+                            Edit Gamer Profile
+                        </a>
+                    </button>
+
+                    {%endif%}
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -119,5 +198,44 @@ Login first!
 
 </script>
 
+<script>
+    var selected_gamer_profile;
+    $('.gamer_profiles_dropdown-container').css('display', 'none');
 
+    $(document).ready(function () {
+        document.getElementById("gamer_profiles-btn").addEventListener("click", Toggle_Dropdown_Display);
+    });
+
+    $('.gamer_profiles_dropdown-btn').click(function () {
+        selected_gamer_profile = $(this).text().trim();
+
+        user_name = $('.sidebar_username').text().replaceAll(' ', '');
+        $.ajax({
+            type: 'POST',
+            url: `/get_gamer_profile_stats/${user_name}`,
+            dataType: "json",
+            data: {
+                game: selected_gamer_profile,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function (response) {
+
+                $('.gamer_profile_stats_section').html(response['gamer_profile_stats']);
+                Toggle_Dropdown_Display();
+                console.log(response['game_logo'])
+                $('.gamer_profiles-btn-value').text($('.game_name').text());
+                $('.gamer_profiles-btn-img').attr("src", response['game_logo']);
+
+            }
+        })
+    });
+
+
+    function Toggle_Dropdown_Display() {
+        if ($('.gamer_profiles_dropdown-container').css('display') == 'flex') {
+            $('.gamer_profiles_dropdown-container').css('display', 'none');
+        }
+        else $('.gamer_profiles_dropdown-container').css('display', 'flex');
+    }
+</script>
 {% endblock content %}

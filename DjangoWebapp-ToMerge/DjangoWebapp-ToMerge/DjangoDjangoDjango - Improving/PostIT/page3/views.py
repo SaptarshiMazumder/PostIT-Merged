@@ -912,8 +912,26 @@ def create_game_profile(request, user):
                     return redirect('home-page')
 
                 # return render(request, 'create_gamer_profile.html', context)
+    try:
+        main_game_profile = Main_Profile.objects.get(user=request.user)
 
-    return render(request, 'gamerProfile/create_gamer_profile.html', context={'form': form, 'post_form': post_form})
+        gamer_profiles = GameProfile.objects.filter(user=request.user)
+        print("User's GAME PROFILES: ", gamer_profiles)
+    except:
+        main_game_profile = None
+        print("MAIN GAME PROFILE: ", main_game_profile)
+        gamer_profiles = None
+
+    context = {
+        'form': form,
+        'post_form': post_form,
+        'main_game_profile': main_game_profile,
+        'gamer_profiles': gamer_profiles,
+        'game_logos': GameProfile.games_logo_list,
+
+    }
+
+    return render(request, 'gamerProfile/create_gamer_profile.html', context)
 
 
 def edit_gamer_profile(request, user):

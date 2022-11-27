@@ -1181,6 +1181,105 @@ h2::-webkit-scrollbar {
 
 /* Gamer profile sidebar end */
 
+/* Gamer profile form page*/
+
+.gamer_profile_form {
+    padding: 10px;
+    color: var(--text-primary-color);
+
+}
+
+.gamer_profile_form .header {
+    padding: 10px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.gamer_profile_form select {
+    background-color: var(--tertiary1_bg_color);
+    margin: 5px;
+    border-radius: 10px;
+    width: 90%;
+    margin: 0 auto;
+    color: var(--text-primary-color);
+    padding: 10px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.gamer_profile_form select :hover {
+    border: 2px solid var(--primary_color);
+}
+
+.gamer_profile_form button {
+    background-color: var(--primary_color);
+    padding: 5px 10px;
+    border-radius: 25px;
+    font-size: small;
+    font-weight: bold;
+}
+
+.gamer_profile_form .profile-item {
+    padding: 5px;
+}
+
+.gamer_profile_form .label {
+    font-size: small;
+    padding: 5px;
+    color: var(--text-secondary-color);
+    font-weight: bold;
+}
+
+.gamer-profile-page-sidebar .header-noimg {
+    height: 75px;
+    width: 100% !important;
+    background-color: var(--primary_color);
+}
+
+.gamer-profile-page-sidebar .profile {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: -50px;
+}
+
+.gamer-profile-page-sidebar .profile-identity {
+    font-size: small;
+    font-weight: bold;
+}
+
+.gamer-profile-page-sidebar .profile-identity img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 5px solid var(--post_bg_color);
+}
+
+.gamer-profile-page-sidebar .profile-info {
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    font-size: small;
+}
+
+.gamer-profile-page-sidebar .data {
+    font-weight: bold;
+    color: var(--text-primary-color);
+}
+
+.gamer-profile-page-sidebar .label {
+    color: var(--text-secondary-color);
+    font-weight: bold;
+}
+
+.gamer-profile-page-sidebar .info-item {
+    background-color: var(--secondary_bg_color);
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+/* Gamer profile form page end*/
 
 button {
     background: none;
@@ -1384,7 +1483,6 @@ button {
 }
 
 
-
 .community-item-sidebar button {
     background-color: var(--primary_color);
     width: 80px;
@@ -1396,10 +1494,13 @@ button {
 
 }
 
-/* 
-.community-item-sidebar-row {
-    background-color: aqua !important;
-} */
+.community-name-sidebar {
+    /* display: none; */
+    /* background-color: aqua !important; */
+    color: var(--text-secondary-color);
+    font-size: small;
+    font-weight: bold;
+}
 
 .community-header {
     background-color: var(--post_bg_color);
