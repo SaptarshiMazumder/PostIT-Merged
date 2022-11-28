@@ -1,0 +1,26 @@
+{% load static %}
+<div class="sidebar-page-links">
+    <button class="page-link" onclick="location.href=`{% url 'matchmaking-home' user%}`">
+        <a href="{% url 'matchmaking-home' user%}">
+
+            Matchmaking
+        </a>
+    </button>
+
+    <button class="page-link" onclick="location.href=`{% url 'create-gamer-profile' user.username %}`">
+        <a href="{% url 'create-gamer-profile' user.username %}">
+
+            Create New Gamer Profile
+        </a>
+    </button>
+
+    {%if gamer_profiles %}
+    <button class="page-link" onclick="location.href=`{% url 'edit-gamer-profile' user.username %}`">
+        <a href="{% url 'edit-gamer-profile' user.username %}">
+
+            Edit Gamer Profile
+        </a>
+    </button>
+
+    {%endif%}
+</div>

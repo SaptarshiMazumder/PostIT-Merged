@@ -937,6 +937,24 @@ def create_game_profile(request, user):
 def edit_gamer_profile(request, user):
     form = GameProfileForm()
     post_form = PostForm()
+    try:
+        main_game_profile = Main_Profile.objects.get(user=request.user)
+
+        gamer_profiles = GameProfile.objects.filter(user=request.user)
+        print("User's GAME PROFILES: ", gamer_profiles)
+    except:
+        main_game_profile = None
+        print("MAIN GAME PROFILE: ", main_game_profile)
+        gamer_profiles = None
+
+    context = {
+        'form': form,
+        'post_form': post_form,
+        'main_game_profile': main_game_profile,
+        'gamer_profiles': gamer_profiles,
+        'game_logos': GameProfile.games_logo_list,
+
+    }
 
     if(user != 'favicon.png'):
         user = User.objects.get(username=user)
@@ -980,9 +998,17 @@ def edit_gamer_profile(request, user):
                     new_main_profile = Main_Profile(user=user,
                                                     main_gamer_profile=new_gamer_profile)
                     new_main_profile.save()
+                context = {
+                    'form': form,
+                    'post_form': post_form,
+                    'profile': new_gamer_profile,
+                    'main_game_profile': main_game_profile,
+                    'gamer_profiles': gamer_profiles,
+                    'game_logos': GameProfile.games_logo_list,
 
-                context = {'form': form, 'profile': new_gamer_profile,
-                           'post_form': post_form}
+                }
+                # context = {'form': form, 'profile': new_gamer_profile,
+                #            'post_form': post_form}
 
                 if len(request.POST['body']) > 1:
                     print(request.POST['body'])
@@ -998,9 +1024,11 @@ def edit_gamer_profile(request, user):
 
             return render(request, 'gamerProfile/edit_gamer_profile.html',
                           context={'form': form, 'post_form': post_form,
-                                   'gamer_profiles': gamer_profiles})
+                                   'gamer_profiles': gamer_profiles,
+                                   'main_game_profile': main_game_profile,
+                                   'game_logos': GameProfile.games_logo_list, })
 
-    return render(request, 'gamerProfile/edit_gamer_profile.html', context={'form': form, 'post_form': post_form})
+    return render(request, 'gamerProfile/edit_gamer_profile.html', context)
 
 
 def MatchmakingHome(request, user):

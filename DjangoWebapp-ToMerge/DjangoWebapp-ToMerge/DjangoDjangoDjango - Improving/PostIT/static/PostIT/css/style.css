@@ -1146,18 +1146,18 @@ h2::-webkit-scrollbar {
 }
 
 
-.gamer-profile-sidebar .page-links {
+.sidebar-page-links {
     display: flex;
     flex-direction: column;
 }
 
-.gamer-profile-sidebar .page-links {
+.sidebar-page-links {
     /* background: none !important; */
     margin: 7px 15px;
 }
 
 
-.gamer-profile-sidebar .page-links .page-link {
+.sidebar-page-links .page-link {
     background-color: var(--tertiary1_bg_color);
     margin: 7px;
     border-radius: 25px;
@@ -1173,7 +1173,7 @@ h2::-webkit-scrollbar {
     color: var(--text-primary-color);
 }
 
-.gamer-profile-sidebar .page-links .page-link:hover {
+.sidebar-page-links .page-link:hover {
     background-color: var(--primary_color);
     color: var(--text-primary-color);
 }
@@ -1253,6 +1253,7 @@ h2::-webkit-scrollbar {
     width: 100px;
     height: 100px;
     border-radius: 50%;
+    object-fit: cover;
     border: 5px solid var(--post_bg_color);
 }
 
