@@ -264,6 +264,11 @@ class GameProfile(models.Model):
     ranks_list = [('Val', ValorantRanks.choices), ('COD', CODRanks.choices),
                   ('LOL', LOLRanks.choices), ('CS', CSRanks.choices)]
 
+    Valorant_additional_fields = ['Agents', 'Maps', 'Role', 'Act Rank']
+    LOL_additional_fields = ['Agents', 'Abilities', 'Role', 'Hours Played']
+    COD_additional_fields = ['Guns', 'Maps', 'Role']
+    CS_GO_additional_fields = ['Guns', 'Maps', 'Role']
+
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     game = models.CharField(max_length=50, choices=games_list)
     server = models.CharField(max_length=50, choices=servers_list)
@@ -271,6 +276,8 @@ class GameProfile(models.Model):
     user_status = models.CharField(
         max_length=50, choices=User_Status.choices, default='none')\
 
+    additional_info = ArrayField(models.CharField(
+        max_length=500, null=True, blank=True, default=""), blank=True, null=True, default=list)
 
     def __str__(self):
         return str(self.user) + " | " + str(self.game) + " | " + str(self.server) + " | " + str(self.rank)

@@ -35,6 +35,12 @@ Create Gamer Profile
                             <select class="ranks" form="gamerprofile-form">Enter current rank</select>
                         </div>
                         <div class="profile-item">
+                            <div class="label">Additional Fields</div>
+                            <div class="additional-fields">
+
+                            </div>
+                        </div>
+                        <div class="profile-item">
                             <input type="checkbox" id="is_main" name="is_main">
                             <label for="is_main" class="label">Set as main profile</label>
 
@@ -81,7 +87,6 @@ Login first!
     })
     $('.game').click(function () {
         var pref_game = $('.game select').val();
-        console.log(pref_game);
 
         $.ajax({
             type: 'GET',
@@ -96,6 +101,15 @@ Login first!
                 for (let i = 0; i < response['ranks'].length; i++) {
                     $('.ranks').append(`<option>${response['ranks'][i][0]}</option>`)
                 }
+                $('.additional-fields').empty();
+                for (let i = 0; i < response['additional_fields'].length; i++) {
+
+                    let field = response['additional_fields'][i]
+
+                    $('.additional-fields').append(`<div> ${response['additional_fields'][i]}</div>
+                                                    <input name=field_${i} class=field_${i}></input>`)
+                }
+                console.log(response['additional_fields']);
             }
         })
     })
@@ -113,7 +127,11 @@ Login first!
         e.preventDefault();
         var pref_game = $('.game select').val();
         var user_name = $('#currentuser').text();
-        console.log(user_name, pref_game);
+        let additional_info = [
+            $('.field_0').val(),
+            $('.field_1').val(),
+            $('.field_2').val()]
+        console.log(additional_info,);
         $.ajax({
             type: 'POST',
             url: `/create_gamer_profile/${user_name}`,
@@ -121,12 +139,17 @@ Login first!
                 game: pref_game,
                 rank: $('.ranks').val(),
                 server: $('.servers').val(),
+                additional_info: {
+                    1: additional_info
+                }
+                ,
                 body: $('#post_body').val(),
                 is_main: is_main,
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
             },
             success: function (response) {
                 console.log("Success");
+                //window.location = '/';
             }
         })
     })

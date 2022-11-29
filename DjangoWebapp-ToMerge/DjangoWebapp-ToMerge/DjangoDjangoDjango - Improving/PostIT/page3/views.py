@@ -38,6 +38,7 @@ from .serializers import PostSerializer
 from django.core import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+import json
 
 
 def is_ajax(request):
@@ -862,12 +863,17 @@ def create_game_profile(request, user):
         #     print("Profile already exists")
 
         if(request.method == 'POST'):
+
+            a = request.POST
+            for i in a.items():
+                print(i, "ppop")
             if(GameProfile.objects.filter(user=user.id, game=request.POST['game'])):
                 print("Profile already exists")
                 game_profile = GameProfile.objects.filter(user=user.id,
                                                           game=request.POST['game'])
                 game_profile.update(
-                    server=request.POST['server'], rank=request.POST['rank'])
+                    server=request.POST['server'], rank=request.POST['rank'],
+                )
 
                 if Main_Profile.objects.filter(user=user.id).exists():
 
@@ -875,10 +881,9 @@ def create_game_profile(request, user):
                     if(request.POST['is_main'] == 'true'):
                         main_profile.main_gamer_profile = game_profile[0]
                         main_profile.save()
-                        print(main_profile)
 
                 if len(request.POST['body']) > 1:
-                    print(request.POST['body'])
+
                     user_profile = Profile.objects.get(
                         user=User.objects.get(username=user))
                     new_post = Post(title="Gamer Profile Update", author=user,
@@ -1037,22 +1042,30 @@ def get_game_rank_server(request, game):
 
     ranks = []
     servers = []
+    additional_info_fields = []
     if game == "Valorant":
         ranks = GameProfile.ValorantRanks.choices
         servers = GameProfile.ValorantServers.choices
+        additional_info_fields = GameProfile.Valorant_additional_fields
+
     if game == "Call of Duty":
         ranks = GameProfile.CODRanks.choices
         servers = GameProfile.CODServers.choices
+        additional_info_fields = GameProfile.COD_additional_fields
 
     if game == "League of Legends":
         ranks = GameProfile.LOLRanks.choices
         servers = GameProfile.LOLServers.choices
+        additional_info_fields = GameProfile.LOL_additional_fields
 
     if game == "Counter Strike: GO":
         ranks = GameProfile.CSRanks.choices
         servers = GameProfile.CSServers.choices
-    print(game, ranks, servers)
-    return JsonResponse({"ranks": ranks, "servers": servers})
+        additional_info_fields = GameProfile.CS_GO_additional_fields
+
+    print(game, ranks, servers, additional_info_fields)
+    return JsonResponse({"ranks": ranks, "servers": servers,
+                        "additional_fields": additional_info_fields})
 
 
 def get_saved_game_rank_server(request, game):
