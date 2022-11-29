@@ -5,10 +5,11 @@
 
 
     <div class="gamer-profile-sidebar">
+        <div class="sidebar-section-title">
+            Profile
+        </div>
 
-        Profile
-        <hr>
-        <br>
+
 
         {% if user.is_authenticated %}
         {%if gamer_profiles%}
@@ -39,11 +40,11 @@
     <br>
 
     <div class="article">
-        <div class="article-category">News</div>
+        <div class="sidebar-section-title">News</div>
         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit, numquam?</p>
     </div>
     <div class="article">
-        <div class="article-category">News</div>
+        <div class="sidebar-section-title">News</div>
         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit, numquam?</p>
     </div>
     <br />
