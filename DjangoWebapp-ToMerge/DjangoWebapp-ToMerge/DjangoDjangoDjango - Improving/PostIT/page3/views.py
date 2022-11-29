@@ -879,7 +879,10 @@ def create_game_profile(request, user):
 
                 if len(request.POST['body']) > 1:
                     print(request.POST['body'])
+                    user_profile = Profile.objects.get(
+                        user=User.objects.get(username=user))
                     new_post = Post(title="Gamer Profile Update", author=user,
+                                    user_profile=user_profile,
                                     body=request.POST['body'], category=request.POST['game'])
                     new_post.save()
                     return redirect('home-page')
@@ -891,12 +894,12 @@ def create_game_profile(request, user):
                                                 server=request.POST['server'], rank=request.POST['rank'])
                 new_gamer_profile.save()
 
-                if Main_Profile.objects.filter(user=user.id).exists() and (request.POST['is_main'] == 'true'):
+                if Main_Profile.objects.filter(user=user).exists() and (request.POST['is_main'] == 'true'):
                     main_profile = Main_Profile.objects.get(user=user.id)
                     main_profile.main_gamer_profile = new_gamer_profile
                     main_profile.save()
 
-                else:
+                elif request.POST['is_main'] == 'true':
                     new_main_profile = Main_Profile(user=user,
                                                     main_gamer_profile=new_gamer_profile)
                     new_main_profile.save()
@@ -906,7 +909,10 @@ def create_game_profile(request, user):
 
                 if len(request.POST['body']) > 1:
                     print(request.POST['body'])
+                    user_profile = Profile.objects.get(
+                        user=User.objects.get(username=user))
                     new_post = Post(title="Gamer Profile Created", author=user,
+                                    user_profile=user_profile,
                                     body=request.POST['body'], category=request.POST['game'])
                     new_post.save()
                     return redirect('home-page')
@@ -959,74 +965,14 @@ def edit_gamer_profile(request, user):
     if(user != 'favicon.png'):
         user = User.objects.get(username=user)
 
-        if(request.method == 'POST'):
-            if(GameProfile.objects.filter(user=user.id, game=request.POST['game'])):
-                print("Profile already exists")
-                game_profile = GameProfile.objects.filter(user=user.id,
-                                                          game=request.POST['game'])
-                game_profile.update(
-                    server=request.POST['server'], rank=request.POST['rank'])
+        gamer_profiles = GameProfile.objects.filter(
+            user=User.objects.get(username=user))
 
-                if Main_Profile.objects.filter(user=user.id).exists():
-
-                    main_profile = Main_Profile.objects.get(user=user.id)
-                    if(request.POST['is_main'] == 'true'):
-                        main_profile.main_gamer_profile = game_profile[0]
-                        main_profile.save()
-                        print(main_profile)
-
-                if len(request.POST['body']) > 1:
-                    print(request.POST['body'])
-                    new_post = Post(title="Gamer Profile Update", author=user,
-                                    body=request.POST['body'], category=request.POST['game'])
-                    new_post.save()
-                    return redirect('home-page')
-
-            else:
-
-                print(request.POST)
-                new_gamer_profile = GameProfile(user=user, game=request.POST['game'],
-                                                server=request.POST['server'], rank=request.POST['rank'])
-                new_gamer_profile.save()
-
-                if Main_Profile.objects.filter(user=user.id).exists() and (request.POST['is_main'] == 'true'):
-                    main_profile = Main_Profile.objects.get(user=user.id)
-                    main_profile.main_gamer_profile = new_gamer_profile
-                    main_profile.save()
-
-                else:
-                    new_main_profile = Main_Profile(user=user,
-                                                    main_gamer_profile=new_gamer_profile)
-                    new_main_profile.save()
-                context = {
-                    'form': form,
-                    'post_form': post_form,
-                    'profile': new_gamer_profile,
-                    'main_game_profile': main_game_profile,
-                    'gamer_profiles': gamer_profiles,
-                    'game_logos': GameProfile.games_logo_list,
-
-                }
-                # context = {'form': form, 'profile': new_gamer_profile,
-                #            'post_form': post_form}
-
-                if len(request.POST['body']) > 1:
-                    print(request.POST['body'])
-                    new_post = Post(title="Gamer Profile Created", author=user,
-                                    body=request.POST['body'], category=request.POST['game'])
-                    new_post.save()
-                    return redirect('home-page')
-
-                # return render(request, 'create_gamer_profile.html', context)
-        else:
-            gamer_profiles = GameProfile.objects.filter(
-                user=User.objects.get(username=user))
-
-            return render(request, 'gamerProfile/edit_gamer_profile.html',
-                          context={'form': form, 'post_form': post_form,
-                                   'gamer_profiles': gamer_profiles,
-                                   'main_game_profile': main_game_profile,
-                                   'game_logos': GameProfile.games_logo_list, })
+        return render(request, 'gamerProfile/edit_gamer_profile.html',
+                      context={'form': form, 'post_form': post_form,
+                               'gamer_profiles': gamer_profiles,
+                               'main_game_profile': main_game_profile,
+                               'game_logos': GameProfile.games_logo_list, })
 
     return render(request, 'gamerProfile/edit_gamer_profile.html', context)
 
