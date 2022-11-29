@@ -858,53 +858,54 @@ def create_game_profile(request, user):
 
     if(user != 'favicon.png'):
         user = User.objects.get(username=user)
-        print(user.username)
-        # if(GameProfile.objects.filter(user=user.id)):
-        #     print("Profile already exists")
 
         if(request.method == 'POST'):
+            print(request.POST, "Pogba")
 
-            a = request.POST
-            for i in a.items():
-                print(i, "ppop")
-            if(GameProfile.objects.filter(user=user.id, game=request.POST['game'])):
+            additional_info = []
+            for i in request.POST.items():
+                if "field" in i[0]:
+                    additional_info.append(i[1])
+
+            if(GameProfile.objects.filter(user=user.id, game=request.POST.get("game"))):
                 print("Profile already exists")
                 game_profile = GameProfile.objects.filter(user=user.id,
-                                                          game=request.POST['game'])
+                                                          game=request.POST.get("game"))
                 game_profile.update(
-                    server=request.POST['server'], rank=request.POST['rank'],
-                )
+                    server=request.POST.get("server"), rank=request.POST.get("rank"),
+                    additional_info=additional_info)
 
                 if Main_Profile.objects.filter(user=user.id).exists():
 
                     main_profile = Main_Profile.objects.get(user=user.id)
-                    if(request.POST['is_main'] == 'true'):
+                    if(request.POST.get('is_main') == 'on'):
                         main_profile.main_gamer_profile = game_profile[0]
                         main_profile.save()
 
-                if len(request.POST['body']) > 1:
+                if len(request.POST.get('body')) > 1:
 
                     user_profile = Profile.objects.get(
                         user=User.objects.get(username=user))
                     new_post = Post(title="Gamer Profile Update", author=user,
                                     user_profile=user_profile,
-                                    body=request.POST['body'], category=request.POST['game'])
+                                    body=request.POST.get('body'), category=request.POST.get('game'))
                     new_post.save()
                     return redirect('home-page')
 
             else:
 
                 print(request.POST)
-                new_gamer_profile = GameProfile(user=user, game=request.POST['game'],
-                                                server=request.POST['server'], rank=request.POST['rank'])
+                new_gamer_profile = GameProfile(user=user, game=request.POST.get('game'),
+                                                server=request.POST.get('server'), rank=request.POST.get('rank'),
+                                                additional_info=additional_info)
                 new_gamer_profile.save()
 
-                if Main_Profile.objects.filter(user=user).exists() and (request.POST['is_main'] == 'true'):
+                if Main_Profile.objects.filter(user=user).exists() and (request.POST.get('is_main') == 'on'):
                     main_profile = Main_Profile.objects.get(user=user.id)
                     main_profile.main_gamer_profile = new_gamer_profile
                     main_profile.save()
 
-                elif request.POST['is_main'] == 'true':
+                elif request.POST.get('is_main') == 'on':
                     new_main_profile = Main_Profile(user=user,
                                                     main_gamer_profile=new_gamer_profile)
                     new_main_profile.save()
@@ -912,13 +913,13 @@ def create_game_profile(request, user):
                 context = {'form': form, 'profile': new_gamer_profile,
                            'post_form': post_form}
 
-                if len(request.POST['body']) > 1:
-                    print(request.POST['body'])
+                if len(request.POST.get('body')) > 1:
+                    print(request.POST.get('body'))
                     user_profile = Profile.objects.get(
                         user=User.objects.get(username=user))
                     new_post = Post(title="Gamer Profile Created", author=user,
                                     user_profile=user_profile,
-                                    body=request.POST['body'], category=request.POST['game'])
+                                    body=request.POST.get('body'), category=request.POST.get('game'))
                     new_post.save()
                     return redirect('home-page')
 

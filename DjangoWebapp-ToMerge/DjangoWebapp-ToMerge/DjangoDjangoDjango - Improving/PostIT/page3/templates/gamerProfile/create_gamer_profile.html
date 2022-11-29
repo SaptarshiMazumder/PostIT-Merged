@@ -28,11 +28,11 @@ Create Gamer Profile
                         </div>
                         <div class="profile-item">
                             <div class="label"> Preferred Server</div>
-                            <select class="servers" form="gamerprofile_form"></select>
+                            <select class="servers" name="server" form="gamerprofile_form"></select>
                         </div>
                         <div class="profile-item">
                             <div class="label"> Current Rank</div>
-                            <select class="ranks" form="gamerprofile-form">Enter current rank</select>
+                            <select class="ranks" name="rank" form="gamerprofile_form"></select>
                         </div>
                         <div class="profile-item">
                             <div class="label">Additional Fields</div>
@@ -45,14 +45,15 @@ Create Gamer Profile
                             <label for="is_main" class="label">Set as main profile</label>
 
                         </div>
+
+                        <input type="checkbox" name="is_post" id="is_post">Post it for your followers to see!
+                        <div class="post_form">
+                            <input type="text" name="body" id="post_body">
+                        </div>
                         <button type="submit" name="submit-btn">Create Profile</button>
                     </div>
                 </form>
 
-                <input type="checkbox" name="is_post" id="is_post">Post it for your followers to see!
-                <div class="post_form">
-                    <input type="text" name="post_body" id="post_body">
-                </div>
             </div>
         </div>
         <div class="sidebar ">
@@ -101,6 +102,7 @@ Login first!
                 for (let i = 0; i < response['ranks'].length; i++) {
                     $('.ranks').append(`<option>${response['ranks'][i][0]}</option>`)
                 }
+
                 $('.additional-fields').empty();
                 for (let i = 0; i < response['additional_fields'].length; i++) {
 
@@ -123,8 +125,9 @@ Login first!
         console.log(is_main);
     })
 
-    $(document).on('submit', '#gamerprofile_form', function (e) {
-        e.preventDefault();
+    //$(document).on('submit', '#gamerprofile_form') 
+    function SubmitForm(e) {
+        //e.preventDefault();
         var pref_game = $('.game select').val();
         var user_name = $('#currentuser').text();
         let additional_info = [
@@ -152,7 +155,7 @@ Login first!
                 //window.location = '/';
             }
         })
-    })
+    }
 
 </script>
 
