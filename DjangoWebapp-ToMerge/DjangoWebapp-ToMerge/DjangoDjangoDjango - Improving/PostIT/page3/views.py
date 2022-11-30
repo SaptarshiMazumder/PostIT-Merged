@@ -860,7 +860,6 @@ def create_game_profile(request, user):
         user = User.objects.get(username=user)
 
         if(request.method == 'POST'):
-            print(request.POST, "Pogba")
 
             additional_info = []
             for i in request.POST.items():
@@ -868,7 +867,7 @@ def create_game_profile(request, user):
                     additional_info.append(i[1])
 
             if(GameProfile.objects.filter(user=user.id, game=request.POST.get("game"))):
-                print("Profile already exists")
+
                 game_profile = GameProfile.objects.filter(user=user.id,
                                                           game=request.POST.get("game"))
                 game_profile.update(
@@ -894,18 +893,18 @@ def create_game_profile(request, user):
 
             else:
 
-                print(request.POST)
                 new_gamer_profile = GameProfile(user=user, game=request.POST.get('game'),
                                                 server=request.POST.get('server'), rank=request.POST.get('rank'),
                                                 additional_info=additional_info)
                 new_gamer_profile.save()
 
-                if Main_Profile.objects.filter(user=user).exists() and (request.POST.get('is_main') == 'on'):
-                    main_profile = Main_Profile.objects.get(user=user.id)
-                    main_profile.main_gamer_profile = new_gamer_profile
-                    main_profile.save()
+                if Main_Profile.objects.filter(user=user).exists():
+                    if (request.POST.get('is_main') == 'on'):
+                        main_profile = Main_Profile.objects.get(user=user.id)
+                        main_profile.main_gamer_profile = new_gamer_profile
+                        main_profile.save()
 
-                elif request.POST.get('is_main') == 'on':
+                else:
                     new_main_profile = Main_Profile(user=user,
                                                     main_gamer_profile=new_gamer_profile)
                     new_main_profile.save()
@@ -914,7 +913,7 @@ def create_game_profile(request, user):
                            'post_form': post_form}
 
                 if len(request.POST.get('body')) > 1:
-                    print(request.POST.get('body'))
+
                     user_profile = Profile.objects.get(
                         user=User.objects.get(username=user))
                     new_post = Post(title="Gamer Profile Created", author=user,
@@ -928,10 +927,10 @@ def create_game_profile(request, user):
         main_game_profile = Main_Profile.objects.get(user=request.user)
 
         gamer_profiles = GameProfile.objects.filter(user=request.user)
-        print("User's GAME PROFILES: ", gamer_profiles)
+
     except:
         main_game_profile = None
-        print("MAIN GAME PROFILE: ", main_game_profile)
+
         gamer_profiles = None
 
     context = {
