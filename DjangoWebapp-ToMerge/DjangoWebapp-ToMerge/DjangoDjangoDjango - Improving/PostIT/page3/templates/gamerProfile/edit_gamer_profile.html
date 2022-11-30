@@ -40,6 +40,12 @@ Create Gamer Profile
                             <select class="ranks" form="gamerprofile-form">Enter current rank</select>
                         </div>
                         <div class="profile-item">
+                            <div class="label">Additional Fields</div>
+                            <div class="additional-fields">
+
+                            </div>
+                        </div>
+                        <div class="profile-item">
                             <input type="checkbox" id="is_main" name="is_main">
                             <label for="is_main" class="label"> Is this your main gamer profile</label>
 
@@ -120,6 +126,17 @@ Login first!
                     else
                         $('.ranks').append(`<option>${response['ranks'][i][0]}</option>`)
                 }
+
+                $('.additional-fields').empty();
+                for (let i = 0; i < response['additional_fields'].length; i++) {
+
+                    let field = response['additional_fields'][i]
+
+                    $('.additional-fields').append(`<div> ${response['additional_fields'][i]}</div>
+                                                    <input name=field_${i} class=field_${i}></input>`);
+                    $(`.field_${i}`).val(response['additional_fields'][i]);
+                }
+                console.log(response['additional_fields'][1]);
             }
         })
     }

@@ -1155,6 +1155,7 @@ def get_game_rank_server(request, game):
 def get_saved_game_rank_server(request, game):
     ranks = []
     servers = []
+
     if game == "Valorant":
         ranks = GameProfile.ValorantRanks.choices
         servers = GameProfile.ValorantServers.choices
@@ -1176,6 +1177,7 @@ def get_saved_game_rank_server(request, game):
     return JsonResponse({"ranks": ranks, "servers": servers,
                         "saved_rank": saved_gamer_profile.rank,
                          "saved_server": saved_gamer_profile.server,
+                         "additional_fields": saved_gamer_profile.additional_info,
                          })
 
 
