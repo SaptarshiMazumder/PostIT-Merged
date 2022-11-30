@@ -276,8 +276,9 @@ class GameProfile(models.Model):
     user_status = models.CharField(
         max_length=50, choices=User_Status.choices, default='none')\
 
-    additional_info = ArrayField(models.CharField(
-        max_length=500, null=True, blank=True, default=""), blank=True, null=True, default=list)
+    additional_info = ArrayField(ArrayField(models.CharField(
+        max_length=500, null=True, blank=True, default=""), blank=True, null=True, default=list),
+        blank=True, null=True, default=list)
 
     def __str__(self):
         return str(self.user) + " | " + str(self.game) + " | " + str(self.server) + " | " + str(self.rank)

@@ -828,10 +828,27 @@ def posts_by_user(request, user):
         posts = Post.objects.filter(author=user)
         profile = Profile.objects.filter(user=user)[0]
         image_list = ImageFiles.objects.all()
-        print("Profile of: ", profile.followers.count())
+        gamer_profiles = GameProfile.objects.filter(user=user)
+        main_gamer_profile = Main_Profile.objects.get(
+            user=User.objects.get(username=user))
+        additional_info = []
+        for g in gamer_profiles:
+            info_obj = g.additional_info
+
+            dict_obj = {}
+            for i in range(len(info_obj)):
+                dict_obj[i] = info_obj[i]
+            additional_info.append({'game': g.game,
+                                    'info': dict_obj})
 
         context = {'posts': posts, 'profile_owner': user,
-                   'profile': profile, 'image_list': image_list}
+                   'profile': profile, 'image_list': image_list,
+                   'gamer_profiles': gamer_profiles,
+                   'main_gamer_profile': main_gamer_profile,
+                   'additional_info': additional_info,
+                   'game_logos': GameProfile.games_logo_list, }
+
+        print(additional_info)
         return render(request, 'post/posts_by_user.html', context)
     return render(request, 'post/posts_by_user.html')
 
@@ -1024,16 +1041,83 @@ def Gamer_Profile_Data(request, user):
     gamer_profiles = GameProfile.objects.filter(
         user=User.objects.get(username=user), game=request.POST['game'])
 
+    main_gamer_profile = Main_Profile.objects.get(
+        user=User.objects.get(username=user))
+    additional_info = []
+    for g in gamer_profiles:
+        info_obj = g.additional_info
+
+        dict_obj = {}
+        for i in range(len(info_obj)):
+            dict_obj[i] = info_obj[i]
+        additional_info.append({'game': g.game,
+                                'info': dict_obj})
+
     context = {
         'selected_gamer_profiles': gamer_profiles,
+        'main_gamer_profile': main_gamer_profile,
+        'additional_info': additional_info,
+        'game_logos': GameProfile.games_logo_list, }
 
-    }
     html = render_to_string(
         'gamerProfile/gamer_profile_stats.html', context, request=request)
     print(context)
     return JsonResponse({"gamer_profile_stats": html,
                          'game_logo': GameProfile.games_logo_list[gamer_profiles[0].game],
                          })
+
+
+def User_Profile_Page_Data(request, user, game):
+    gamer_profiles = GameProfile.objects.filter(
+        user=User.objects.get(username=user), game=request.POST['game'])
+
+    main_gamer_profile = Main_Profile.objects.get(
+        user=User.objects.get(username=user))
+    additional_info = []
+    for g in gamer_profiles:
+        info_obj = g.additional_info
+
+        dict_obj = {}
+        for i in range(len(info_obj)):
+            dict_obj[i] = info_obj[i]
+        additional_info.append({'game': g.game,
+                                'info': dict_obj})
+
+    context = {
+        'selected_gamer_profiles': gamer_profiles,
+        'main_gamer_profile': main_gamer_profile,
+        'additional_info': additional_info,
+        'game_logos': GameProfile.games_logo_list, }
+
+    if(game == 'Valorant'):
+
+        html = render_to_string(
+            'gamerProfile/game_specific_stats/valorant_stats.html', context, request=request)
+        print(context)
+        return JsonResponse({"gamer_profile_stats": html,
+                             'game_logo': GameProfile.games_logo_list[gamer_profiles[0].game],
+                             })
+    elif(game == 'Call of Duty'):
+        html = render_to_string(
+            'gamerProfile/game_specific_stats/cod_stats.html', context, request=request)
+        print(context)
+        return JsonResponse({"gamer_profile_stats": html,
+                             'game_logo': GameProfile.games_logo_list[gamer_profiles[0].game],
+                             })
+    elif(game == 'League of Legends'):
+        html = render_to_string(
+            'gamerProfile/game_specific_stats/lol_stats.html', context, request=request)
+        print(context)
+        return JsonResponse({"gamer_profile_stats": html,
+                             'game_logo': GameProfile.games_logo_list[gamer_profiles[0].game],
+                             })
+    elif(game == 'Counter Strike: GO'):
+        html = render_to_string(
+            'gamerProfile/game_specific_stats/cs_go_stats.html', context, request=request)
+        print(context)
+        return JsonResponse({"gamer_profile_stats": html,
+                             'game_logo': GameProfile.games_logo_list[gamer_profiles[0].game],
+                             })
 
 
 @csrf_exempt
