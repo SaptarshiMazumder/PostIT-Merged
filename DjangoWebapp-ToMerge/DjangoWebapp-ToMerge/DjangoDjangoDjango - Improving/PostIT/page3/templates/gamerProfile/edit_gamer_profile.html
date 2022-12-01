@@ -137,8 +137,8 @@ Login first!
                         let field = response['additional_fields'][i]
 
 
-                        $('.additional-fields').append(`<div> ${field}</div>
-                                                    <input name=field_${i} class=field_${i}></input>`);
+                        $('.additional-fields').append(`<div>${response['default_additonal_fields'][i]}</div>
+                        <input name=field_${i} class=field_${i}></input>`);
                         $(`.field_${i}`).val(field);
 
                     }
@@ -146,9 +146,9 @@ Login first!
                 else {
                     for (let i = 0; i < response['default_additonal_fields'].length; i++) {
                         let field = response['default_additonal_fields'][i]
-                        $('.additional-fields').append(`<div> ${field}</div>
-                                                    <input name=field_${i} class=field_${i}></input>`);
-                        console.log(response['default_additonal_fields'][1]);
+                        $('.additional-fields').append(`<div>${response['default_additonal_fields'][i]}</div>
+                        <input name=field_${i} class=field_${i}></input>`);
+
                     }
                 }
             }
