@@ -965,14 +965,51 @@ def create_game_profile(request, user):
 def edit_gamer_profile(request, user):
     form = GameProfileForm()
     post_form = PostForm()
+
+    if(user != 'favicon.png'):
+        user = User.objects.get(username=user)
+
+        if(request.method == 'POST'):
+
+            additional_info = []
+            for i in request.POST.items():
+                if "field" in i[0]:
+                    additional_info.append(i[1])
+
+            if(GameProfile.objects.filter(user=user.id, game=request.POST.get("game_to_edit"))):
+
+                game_profile = GameProfile.objects.filter(user=user.id,
+                                                          game=request.POST.get("game_to_edit"))
+
+                game_profile.update(
+                    server=request.POST.get("server"), rank=request.POST.get("rank"),
+                    additional_info=additional_info)
+
+                if Main_Profile.objects.filter(user=user.id).exists():
+
+                    main_profile = Main_Profile.objects.get(user=user.id)
+                    if(request.POST.get('is_main') == 'on'):
+                        main_profile.main_gamer_profile = game_profile[0]
+                        main_profile.save()
+
+                if len(request.POST.get('body')) > 1:
+
+                    user_profile = Profile.objects.get(
+                        user=User.objects.get(username=user))
+                    new_post = Post(title="Gamer Profile Update", author=user,
+                                    user_profile=user_profile,
+                                    body=request.POST.get('body'), category=request.POST.get('game'))
+                    new_post.save()
+                    return redirect('home-page')
+
     try:
         main_game_profile = Main_Profile.objects.get(user=request.user)
 
         gamer_profiles = GameProfile.objects.filter(user=request.user)
-        print("User's GAME PROFILES: ", gamer_profiles)
+
     except:
         main_game_profile = None
-        print("MAIN GAME PROFILE: ", main_game_profile)
+
         gamer_profiles = None
 
     context = {
@@ -983,18 +1020,6 @@ def edit_gamer_profile(request, user):
         'game_logos': GameProfile.games_logo_list,
 
     }
-
-    if(user != 'favicon.png'):
-        user = User.objects.get(username=user)
-
-        gamer_profiles = GameProfile.objects.filter(
-            user=User.objects.get(username=user))
-
-        return render(request, 'gamerProfile/edit_gamer_profile.html',
-                      context={'form': form, 'post_form': post_form,
-                               'gamer_profiles': gamer_profiles,
-                               'main_game_profile': main_game_profile,
-                               'game_logos': GameProfile.games_logo_list, })
 
     return render(request, 'gamerProfile/edit_gamer_profile.html', context)
 
@@ -1155,21 +1180,26 @@ def get_game_rank_server(request, game):
 def get_saved_game_rank_server(request, game):
     ranks = []
     servers = []
+    default_additonal_fields = []
 
     if game == "Valorant":
         ranks = GameProfile.ValorantRanks.choices
         servers = GameProfile.ValorantServers.choices
+        default_additonal_fields = GameProfile.Valorant_additional_fields
     if game == "Call of Duty":
         ranks = GameProfile.CODRanks.choices
         servers = GameProfile.CODServers.choices
+        default_additonal_fields = GameProfile.Valorant_additional_fields
 
     if game == "League of Legends":
         ranks = GameProfile.LOLRanks.choices
         servers = GameProfile.LOLServers.choices
+        default_additonal_fields = GameProfile.Valorant_additional_fields
 
     if game == "Counter Strike: GO":
         ranks = GameProfile.CSRanks.choices
         servers = GameProfile.CSServers.choices
+        default_additonal_fields = GameProfile.Valorant_additional_fields
 
     saved_gamer_profile = GameProfile.objects.get(user=request.user,
                                                   game=game)
@@ -1178,6 +1208,7 @@ def get_saved_game_rank_server(request, game):
                         "saved_rank": saved_gamer_profile.rank,
                          "saved_server": saved_gamer_profile.server,
                          "additional_fields": saved_gamer_profile.additional_info,
+                         "default_additonal_fields": default_additonal_fields,
                          })
 
 

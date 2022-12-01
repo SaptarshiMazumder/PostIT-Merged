@@ -27,17 +27,17 @@ Create Gamer Profile
                             <!-- <div class="game">{{form.game}}</div> -->
                             <select name="game_to_edit" id="game_to_edit" class="game_to_edit">
                                 {%for g in gamer_profiles%}
-                                <option value={{g.game}}>{{g.game}}</option>
+                                <option value="{{g.game}}">{{g.game}}</option>
                                 {%endfor%}
                             </select>
                         </div>
                         <div class="profile-item">
                             <div class="label"> Preferred Server</div>
-                            <select class="servers" form="gamerprofile_form"></select>
+                            <select class="servers" name="server" form="gamerprofile_form"></select>
                         </div>
                         <div class="profile-item">
                             <div class="label"> Current Rank</div>
-                            <select class="ranks" form="gamerprofile-form">Enter current rank</select>
+                            <select class="ranks" name="rank" form="gamerprofile_form"></select>
                         </div>
                         <div class="profile-item">
                             <div class="label">Additional Fields</div>
@@ -50,15 +50,16 @@ Create Gamer Profile
                             <label for="is_main" class="label"> Is this your main gamer profile</label>
 
                         </div>
+                        <input type="checkbox" name="is_post" id="is_post">Post it for your followers to see!
+                        <div class="post_form">
+                            <input type="text" name="body" id="post_body">
+                        </div>
                         <button type="submit" name="submit-btn">Save Profile</button>
 
                     </div>
                 </form>
 
-                <input type="checkbox" name="is_post" id="is_post">Post it for your followers to see!
-                <div class="post_form">
-                    <input type="text" name="post_body" id="post_body">
-                </div>
+
             </div>
         </div>
         <div class="sidebar">
@@ -125,18 +126,31 @@ Login first!
                         $('.ranks').append(`<option selected="selected">${response['ranks'][i][0]}</option>`)
                     else
                         $('.ranks').append(`<option>${response['ranks'][i][0]}</option>`)
+
                 }
 
                 $('.additional-fields').empty();
-                for (let i = 0; i < response['additional_fields'].length; i++) {
 
-                    let field = response['additional_fields'][i]
+                if (response['additional_fields'].length > 0) {
+                    for (let i = 0; i < response['additional_fields'].length; i++) {
 
-                    $('.additional-fields').append(`<div> ${response['additional_fields'][i]}</div>
+                        let field = response['additional_fields'][i]
+
+
+                        $('.additional-fields').append(`<div> ${field}</div>
                                                     <input name=field_${i} class=field_${i}></input>`);
-                    $(`.field_${i}`).val(response['additional_fields'][i]);
+                        $(`.field_${i}`).val(field);
+
+                    }
                 }
-                console.log(response['additional_fields'][1]);
+                else {
+                    for (let i = 0; i < response['default_additonal_fields'].length; i++) {
+                        let field = response['default_additonal_fields'][i]
+                        $('.additional-fields').append(`<div> ${field}</div>
+                                                    <input name=field_${i} class=field_${i}></input>`);
+                        console.log(response['default_additonal_fields'][1]);
+                    }
+                }
             }
         })
     }
@@ -150,8 +164,10 @@ Login first!
         console.log(is_main);
     })
 
-    $(document).on('submit', '#gamerprofile_form', function (e) {
-        e.preventDefault();
+
+    //$(document).on('submit', '#gamerprofile_form') 
+    function SubmitForm(e) {
+
 
         var user_name = $('#currentuser').text();
         console.log(user_name, pref_game);
@@ -170,7 +186,7 @@ Login first!
                 console.log("Success");
             }
         })
-    })
+    }
 
 </script>
 <script>

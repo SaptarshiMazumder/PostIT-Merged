@@ -92,7 +92,7 @@ class Post(models.Model):
     reply_root = models.IntegerField(null=True, blank=True, default=-1)
     post_date = models.DateField(auto_now_add=True)
     post_datetime = models.DateTimeField(auto_now_add=True)
-    category = models.CharField(max_length=50, default='none')
+    category = models.CharField(max_length=50, default='none', null=True)
     tags = models.CharField(
         max_length=255, default='', blank=True)
     likes = models.ManyToManyField(
