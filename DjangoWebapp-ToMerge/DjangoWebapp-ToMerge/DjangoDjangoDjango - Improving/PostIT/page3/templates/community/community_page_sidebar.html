@@ -1,11 +1,18 @@
 {% load static %}
 <div class="community-page-sidebar">
     <div class="about">
-        <div class="label">
+        <div class="sidebar-section-title">
             About Community
         </div>
+        <div class="community-info">
 
-        {{community.bio}}
+            {{community.bio}}
+            <br>
+            Created on: {{community.post_date}}
+        </div>
+        <div class="members_info">
+            Members: {{community.members.count}}
+        </div>
     </div>
 
 </div>

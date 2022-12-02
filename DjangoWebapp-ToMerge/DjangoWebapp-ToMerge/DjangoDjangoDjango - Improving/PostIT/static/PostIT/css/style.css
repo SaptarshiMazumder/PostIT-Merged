@@ -1247,6 +1247,20 @@ h2::-webkit-scrollbar {
     font-weight: bold;
 }
 
+.gamer_profile_form .input {
+    background-color: var(--tertiary1_bg_color);
+    border: none;
+    border-radius: 10px;
+    width: 90%;
+    margin: 5px;
+    height: 40px;
+    padding: 10px;
+    color: var(--text-primary-color);
+    font-weight: bold;
+}
+
+
+
 .gamer-profile-sidebar {
     width: 100%;
 }

@@ -110,6 +110,7 @@ def home_timeline(request, post_id=None):
             'media_url': "127.0.0.1: 8000/media",
             'main_game_profile': main_game_profile,
             'game_logos': GameProfile.games_logo_list,
+            'page': 'home-timeline',
         }
     except:
         context = {
@@ -125,6 +126,7 @@ def home_timeline(request, post_id=None):
             'main_game_profile': main_game_profile,
             'gamer_profiles': gamer_profiles,
             'game_logos': GameProfile.games_logo_list,
+            'page': 'home-timeline',
         }
     # print("SETTINGS: ", static(settings.MEDIA_URL))
 
@@ -956,6 +958,7 @@ def create_game_profile(request, user):
         'main_game_profile': main_game_profile,
         'gamer_profiles': gamer_profiles,
         'game_logos': GameProfile.games_logo_list,
+        'page': 'create-gamer-profile'
 
     }
 
@@ -1018,6 +1021,7 @@ def edit_gamer_profile(request, user):
         'main_game_profile': main_game_profile,
         'gamer_profiles': gamer_profiles,
         'game_logos': GameProfile.games_logo_list,
+        'page': 'edit-gamer-profile'
 
     }
 
@@ -1189,17 +1193,17 @@ def get_saved_game_rank_server(request, game):
     if game == "Call of Duty":
         ranks = GameProfile.CODRanks.choices
         servers = GameProfile.CODServers.choices
-        default_additonal_fields = GameProfile.Valorant_additional_fields
+        default_additonal_fields = GameProfile.COD_additional_fields
 
     if game == "League of Legends":
         ranks = GameProfile.LOLRanks.choices
         servers = GameProfile.LOLServers.choices
-        default_additonal_fields = GameProfile.Valorant_additional_fields
+        default_additonal_fields = GameProfile.LOL_additional_fields
 
     if game == "Counter Strike: GO":
         ranks = GameProfile.CSRanks.choices
         servers = GameProfile.CSServers.choices
-        default_additonal_fields = GameProfile.Valorant_additional_fields
+        default_additonal_fields = GameProfile.CS_GO_additional_fields
 
     saved_gamer_profile = GameProfile.objects.get(user=request.user,
                                                   game=game)

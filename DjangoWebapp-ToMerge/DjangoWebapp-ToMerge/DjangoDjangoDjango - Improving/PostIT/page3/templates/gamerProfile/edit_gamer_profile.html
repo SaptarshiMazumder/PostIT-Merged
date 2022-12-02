@@ -40,7 +40,6 @@ Create Gamer Profile
                             <select class="ranks" name="rank" form="gamerprofile_form"></select>
                         </div>
                         <div class="profile-item">
-                            <div class="label">Additional Fields</div>
                             <div class="additional-fields">
 
                             </div>
@@ -137,8 +136,8 @@ Login first!
                         let field = response['additional_fields'][i]
 
 
-                        $('.additional-fields').append(`<div>${response['default_additonal_fields'][i]}</div>
-                        <input name=field_${i} class=field_${i}></input>`);
+                        $('.additional-fields').append(`<div class="label">${response['default_additonal_fields'][i]}</div>
+                        <input name=field_${i} class="field_${i} input"></input>`);
                         $(`.field_${i}`).val(field);
 
                     }
@@ -146,8 +145,8 @@ Login first!
                 else {
                     for (let i = 0; i < response['default_additonal_fields'].length; i++) {
                         let field = response['default_additonal_fields'][i]
-                        $('.additional-fields').append(`<div>${response['default_additonal_fields'][i]}</div>
-                        <input name=field_${i} class=field_${i}></input>`);
+                        $('.additional-fields').append(`<div class="label">${response['default_additonal_fields'][i]}</div>
+                        <input name=field_${i} class="field_${i} input"></input>`);
 
                     }
                 }
