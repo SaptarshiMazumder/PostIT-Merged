@@ -11,6 +11,12 @@
             Created on: {{community.post_date}}
         </div>
         <div class="members_info">
+            <div class="community-admin">
+                Created by: {{community.created_by}}
+                {%if user == community.created_by%}
+                Edit Commuity
+                {%endif%}
+            </div>
             Members: {{community.members.count}}
         </div>
     </div>

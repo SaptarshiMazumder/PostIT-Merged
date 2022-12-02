@@ -48,7 +48,8 @@ class Community(models.Model):
 
     post_date = models.DateField(auto_now_add=True)
     post_datetime = models.DateTimeField(auto_now_add=True)
-
+    rules = ArrayField(models.CharField(
+        max_length=500, null=True, blank=True, default=""), blank=True, null=True, default=list)
     # post = models.ManyToManyField(
     #     Post, default=None, blank=True, related_name='community_posts')
 

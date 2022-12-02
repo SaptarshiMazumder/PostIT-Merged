@@ -20,7 +20,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseNotAllowed
 from django.views.generic import ListView, DetailView
 from matplotlib.style import context
 from . models import Community, GameProfile, Post, Replies, ImageFiles, Profile, Tags, Main_Profile
-from . forms import EditPostForm, EditVideoPostForm, ImageForm, PostForm, PostImageForm, PostVideoForm, EditImagePostForm, GameProfileForm, MatchmakingForm, CreateCommunityForm
+from . forms import EditPostForm, EditVideoPostForm, ImageForm, PostForm, PostImageForm, PostVideoForm, EditImagePostForm, GameProfileForm, MatchmakingForm, CreateCommunityForm, EditCommunityForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -831,8 +831,12 @@ def posts_by_user(request, user):
         profile = Profile.objects.filter(user=user)[0]
         image_list = ImageFiles.objects.all()
         gamer_profiles = GameProfile.objects.filter(user=user)
-        main_gamer_profile = Main_Profile.objects.get(
-            user=User.objects.get(username=user))
+        try:
+            main_gamer_profile = Main_Profile.objects.get(
+                user=User.objects.get(username=user))
+        except:
+            main_gamer_profile = None
+
         additional_info = []
         for g in gamer_profiles:
             info_obj = g.additional_info
@@ -850,7 +854,6 @@ def posts_by_user(request, user):
                    'additional_info': additional_info,
                    'game_logos': GameProfile.games_logo_list, }
 
-        print(additional_info)
         return render(request, 'post/posts_by_user.html', context)
     return render(request, 'post/posts_by_user.html')
 
@@ -1294,6 +1297,44 @@ def create_community(request):
             return redirect('home-page')
 
     return render(request, 'community/create_community.html', context)
+
+
+def edit_community(request):
+    form = EditCommunityForm()
+    message = ""
+    context = {
+        'user': request.user,
+        'form': form,
+        'message': message
+    }
+    if request.method == 'POST':
+        form = EditCommunityForm(request.POST, request.FILES)
+        if form.is_valid():
+            # form.save()
+            # print("Name: ",)
+            instance = form.save(commit=False)
+            print("COMMUNITY NAME: ", instance.name)
+            existing_community = Community.objects.filter(name=instance.name)
+
+            print("EXISTING COMMUNITY: ", existing_community)
+            print(existing_community.count())
+            if existing_community.count() == 0:
+
+                instance.created_by = request.user
+
+                instance.save()
+
+                instance.community_admins.add(request.user)
+                instance.save()
+
+            else:
+                message = "This community already exists! Try something else"
+                context['message'] = message
+                return render(request, 'community/create_community.html', context)
+
+            return redirect('home-page')
+
+    return render(request, 'community/edit_community.html', context)
 
 
 def community_page(request, community_id):

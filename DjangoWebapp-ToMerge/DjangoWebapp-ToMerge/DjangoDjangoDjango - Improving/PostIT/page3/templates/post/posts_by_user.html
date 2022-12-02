@@ -163,7 +163,7 @@ Page3 Homepage
     });
 
     function get_selected_game_stats() {
-        user_name = $('.logged_in_user').text().replaceAll(' ', '');
+        user_name = $('.user_name').text().replaceAll(' ', '');
         $.ajax({
             type: 'POST',
             url: `/get_user_profile_stats/${user_name}/${selected_gamer_profile}`,
