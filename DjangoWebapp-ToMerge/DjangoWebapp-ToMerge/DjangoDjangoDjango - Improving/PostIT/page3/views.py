@@ -17,7 +17,7 @@ from unittest import result
 from urllib.request import Request
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse, HttpResponseNotAllowed
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, UpdateView
 from matplotlib.style import context
 from . models import Community, GameProfile, Post, Replies, ImageFiles, Profile, Tags, Main_Profile
 from . forms import EditPostForm, EditVideoPostForm, ImageForm, PostForm, PostImageForm, PostVideoForm, EditImagePostForm, GameProfileForm, MatchmakingForm, CreateCommunityForm, EditCommunityForm
@@ -1299,42 +1299,39 @@ def create_community(request):
     return render(request, 'community/create_community.html', context)
 
 
-def edit_community(request):
-    form = EditCommunityForm()
-    message = ""
+def edit_community(request, id):
+    community = Community.objects.filter(id=id)[0]
+    form = EditCommunityForm(request.POST or None,
+                             request.FILES or None, instance=community)
+
+    message = "Hiii"
     context = {
         'user': request.user,
         'form': form,
-        'message': message
+        'message': message,
+        'existing_community_data': community,
     }
     if request.method == 'POST':
-        form = EditCommunityForm(request.POST, request.FILES)
-        if form.is_valid():
-            # form.save()
-            # print("Name: ",)
-            instance = form.save(commit=False)
-            print("COMMUNITY NAME: ", instance.name)
-            existing_community = Community.objects.filter(name=instance.name)
+        form = EditCommunityForm(request.POST or None,
+                                 request.FILES or None, instance=community)
 
-            print("EXISTING COMMUNITY: ", existing_community)
-            print(existing_community.count())
-            if existing_community.count() == 0:
+        instance = form.save(commit=False)
 
-                instance.created_by = request.user
-
-                instance.save()
-
-                instance.community_admins.add(request.user)
-                instance.save()
-
-            else:
-                message = "This community already exists! Try something else"
-                context['message'] = message
-                return render(request, 'community/create_community.html', context)
-
-            return redirect('home-page')
-
+        instance.save()
+        return redirect('home-page')
     return render(request, 'community/edit_community.html', context)
+
+
+def editCommunityRules(request, id):
+    community = Community.objects.filter(id=id)[0]
+    print(request.POST['rules'], "Shazam")
+    print("HHHHHHHHHHHHHHHHHHHHHHHHHHH")
+
+
+def get_community_details(request, id):
+    community = Community.objects.filter(id=id)
+    json_data = {'community_name': community[0].name}
+    return JsonResponse(json_data)
 
 
 def community_page(request, community_id):

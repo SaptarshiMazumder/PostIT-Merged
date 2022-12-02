@@ -40,7 +40,12 @@ urlpatterns = [
 
     #     Communities section
     path('create_community', views.create_community, name='create-community'),
-    path('edit_community', views.edit_community, name='create-community'),
+    path('edit_community/<int:id>',
+         views.edit_community, name='edit-community'),
+    path('edit_community_rules/<int:id>',
+         views.editCommunityRules, name='edit_community_rules'),
+    path('get_community_data/<int:id>',
+         views.get_community_details, name='get_community_data'),
     path('community/<int:community_id>',
          views.community_page, name='community-page'),
     path('join_community', views.join_community, name='join_community'),

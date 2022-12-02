@@ -14,7 +14,8 @@
             <div class="community-admin">
                 Created by: {{community.created_by}}
                 {%if user == community.created_by%}
-                Edit Commuity
+                <a href="{% url 'edit-community' community.id %}">Edit Community</a>
+
                 {%endif%}
             </div>
             Members: {{community.members.count}}
