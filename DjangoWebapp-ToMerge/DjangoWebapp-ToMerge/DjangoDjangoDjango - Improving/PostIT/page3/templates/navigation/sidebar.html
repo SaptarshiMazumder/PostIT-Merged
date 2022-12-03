@@ -4,7 +4,7 @@
     {%endfor%}
 
 
-    <div class="gamer-profile-sidebar">
+    <div class="sidebar-section">
         <div class="sidebar-section-title">
             Profile
         </div>
@@ -28,27 +28,23 @@
         {%endif%}
     </div>
 
-
-
-
-
-    <hr>
-
-
-
-
-    <br>
-
-    <div class="article">
+    <div class="sidebar-section">
         <div class="sidebar-section-title">News</div>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit, numquam?</p>
+        <div class="article">
+            <p class="value">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit, numquam?</p>
+        </div>
     </div>
-    <div class="article">
+    <div class="sidebar-section">
         <div class="sidebar-section-title">News</div>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit, numquam?</p>
+        <div class="article">
+            <p class="value">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit, numquam?</p>
+        </div>
     </div>
-    <br />
+
     {% include 'community/communities_list.html' %}
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">More Stuff</div>
+    </div>
 
 </div>
 <script>

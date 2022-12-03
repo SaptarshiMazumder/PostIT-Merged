@@ -1,53 +1,55 @@
 {% load static %}
-<div class="communities-section-sidebar">
-    {% if user.is_authenticated %}
-    <div class="communities-section-sidebar-header">
-        Featured communities
-        <hr>
-    </div>
+<div class="sidebar-section">
+    <div class="communities-section-sidebar">
+        {% if user.is_authenticated %}
+        <div class="sidebar-section-title">
+            Featured communities
 
-    <table class="community-table-sidebar">
-        {%for community in communities %}
-        <tr class="community-item-sidebar">
-            <div class="community-item-sidebar-row">
-                <td class="community-profile-pic-sidebar">
-                    {% if community.profile_pic.name %}
-                    <a href="{% url 'community-page' community.id %}"><img src="{{ community.profile_pic.url}}"></a>
+        </div>
 
-                    {% else %}
-                    <a href="{% url 'community-page' community.id %}">
-                        <img src="{% static 'PostIT/images/profilepic.jpg' %}"></a>
-                    {% endif %}
-                </td>
-                <td class="community-name-sidebar">
-                    <a href="{% url 'community-page' community.id %}">
-                        {{ community }}</a>
-                </td>
-                <td>
-                    {% if community in joined_communities %}
+        <table class="community-table-sidebar">
+            {%for community in communities %}
+            <tr class="community-item-sidebar">
+                <div class="community-item-sidebar-row">
+                    <td class="community-profile-pic-sidebar">
+                        {% if community.profile_pic.name %}
+                        <a href="{% url 'community-page' community.id %}"><img src="{{ community.profile_pic.url}}"></a>
 
-                    <b><button class="button" id="join-community-button"
-                            value="{{community.id}}"><b>Joined</b></button></b>
-                    {% else %}
-                    <b><button class="button" id="join-community-button"
-                            value="{{community.id}}"><b>Join</b></button></b>
-                    {% endif %}
-                </td>
-            </div>
-        </tr>
+                        {% else %}
+                        <a href="{% url 'community-page' community.id %}">
+                            <img src="{% static 'PostIT/images/profilepic.jpg' %}"></a>
+                        {% endif %}
+                    </td>
+                    <td class="community-name-sidebar">
+                        <a href="{% url 'community-page' community.id %}">
+                            {{ community }}</a>
+                    </td>
+                    <td>
+                        {% if community in joined_communities %}
+
+                        <b><button class="button" id="join-community-button"
+                                value="{{community.id}}"><b>Joined</b></button></b>
+                        {% else %}
+                        <b><button class="button" id="join-community-button"
+                                value="{{community.id}}"><b>Join</b></button></b>
+                        {% endif %}
+                    </td>
+                </div>
+            </tr>
 
 
-        <!-- <br /> -->
-        {% endfor %}
-    </table>
-    <br />
-    <button><b>View All</b></button>
-    {% endif %}
-    <!-- {%for joined_community in joined_communities %}
+            <!-- <br /> -->
+            {% endfor %}
+        </table>
+        <br />
+        <button><b>View All</b></button>
+        {% endif %}
+        <!-- {%for joined_community in joined_communities %}
 
     {{joined_community.id}}
     {% endfor %} -->
 
+    </div>
 </div>
 
 <script>

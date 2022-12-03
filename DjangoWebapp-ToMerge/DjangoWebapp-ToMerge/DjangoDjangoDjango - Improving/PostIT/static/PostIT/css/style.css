@@ -543,7 +543,8 @@ i:hover {
 
 .sidebar-profile-section .sidebar_username {
     margin-bottom: 5px;
-    ;
+    color: var(--text-secondary2-color);
+    font-weight: bold;
 }
 
 .sidebar-profile-section:hover {
@@ -580,6 +581,7 @@ i:hover {
 
 .sidebar-view-profile-button {
     font-size: small;
+    font-weight: bold;
     color: #d46ed4 !important;
     text-decoration: none !important;
 }
@@ -941,6 +943,8 @@ p::-webkit-scrollbar {
     padding: 50px;
 }
 
+/* Sidebar section start */
+
 .sidebar {
 
     display: flex;
@@ -960,39 +964,43 @@ p::-webkit-scrollbar {
 
 }
 
+.sidebar-section {
+    border-radius: 10px;
+    padding-bottom: 10px;
+    background-color: var(--secondary_bg_color);
+    width: 100%;
+    position: relative;
+    margin: 5px 0px;
+
+
+}
+
+.sidebar-section:hover {
+    box-shadow: 0 2px 4px 0 rgba(212, 110, 212, 0.2), 0 3px 10px 0 rgba(212, 110, 212, 0.2);
+}
+
 .community-sidebar {
     margin-top: 130px;
 }
 
 .sidebar .article {
-    padding: 10px;
+    padding: 0px 10px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    background-color: var(--secondary_bg_color);
-    /* border: 1px solid var(--grey_color); */
-    border-radius: 10px;
-    margin: 5px 0;
 }
 
-.sidebar .article:hover {
-    box-shadow: 0 2px 4px 0 rgba(212, 110, 212, 0.2), 0 3px 10px 0 rgba(212, 110, 212, 0.2);
+
+.sidebar .article .value {
+    color: var(--text-secondary2-color);
+    font-weight: bold;
+    font-size: medium;
 }
 
-.sidebar .article-category {
-    text-align: start;
-    width: 100%;
-    color: var(--grey_color);
-    font-size: larger;
-    padding-bottom: 5px;
-    border-bottom: 1px solid var(--grey_color);
-    margin: 5px;
-    overflow: hidden;
-}
 
 .sidebar-section-title {
     text-align: start;
-    width: 100%;
+    width: 97%;
     color: var(--grey_color);
     font-size: medium;
     padding-bottom: 5px;
@@ -1001,6 +1009,10 @@ p::-webkit-scrollbar {
     margin: 5px 5px 15px 5px;
     overflow: hidden;
     font-weight: bold;
+
+    padding-top: 10px;
+    /* background-color: var(--primary_color); */
+
     /* text-transform: uppercase; */
 }
 
@@ -1040,6 +1052,8 @@ h2::-webkit-scrollbar {
     display: none;
 }
 
+/* Sidebar section end */
+
 /* Gamer profile Sidebar */
 
 .gamer-profile-sidebar {
@@ -1048,6 +1062,7 @@ h2::-webkit-scrollbar {
     background-color: var(--secondary_bg_color);
     width: 100%;
     position: relative;
+    margin: 5px 0px;
 
 
 }
@@ -1159,6 +1174,10 @@ h2::-webkit-scrollbar {
 .gamer_profile_stats_section .label {
     color: var(--text-secondary-color);
 
+}
+
+.gamer_profile_stats_section .value {
+    color: var(--text-secondary2-color);
 }
 
 
@@ -1466,14 +1485,8 @@ button {
     /* background: rgba(0, 0, 0, .5); */
 }
 
-.communities-section-sidebar {
-    border-radius: 10px;
-    background-color: var(--secondary_bg_color);
-}
 
-.communities-section-sidebar:hover {
-    box-shadow: 0 2px 4px 0 rgba(212, 110, 212, 0.2), 0 3px 10px 0 rgba(212, 110, 212, 0.2);
-}
+
 
 .communities-section-sidebar-header {
     padding: 10px;
@@ -1495,11 +1508,7 @@ button {
     margin-bottom: 10px;
 }
 
-.community-name-sidebar {
-    float: left;
-    margin-top: 10px;
-    font-size: medium;
-}
+
 
 .community-name-sidebar :hover {
     /* text-decoration: none; */
@@ -1533,7 +1542,10 @@ button {
 .community-name-sidebar {
     /* display: none; */
     /* background-color: aqua !important; */
-    color: var(--text-secondary-color);
+    float: left;
+    margin-top: 10px;
+
+    color: var(--text-secondary2-color);
     font-size: small;
     font-weight: bold;
 }
@@ -1769,9 +1781,89 @@ button {
 }
 
 /* Community page sidebar start */
+.community-info {
+    padding: 0px 10px;
+    color: var(--text-secondary2-color);
+    font-weight: bold;
+    font-size: medium;
+    text-align: left;
+}
 
-.community-page-sidebar .label {
+.community-info .creation-date {
+    font-size: small;
     color: var(--text-secondary-color);
+}
+
+.community-rules {
+    padding: 0px 10px;
+    color: var(--text-secondary2-color);
+    font-weight: normal !important;
+    font-size: medium;
+    text-align: left;
+}
+
+.community-members {
+    padding: 0px 10px;
+    color: var(--text-secondary2-color);
+    font-weight: normal !important;
+    font-size: medium;
+    text-align: left;
+
+
+}
+
+.community-members .members-list {
+    height: 300px;
+    overflow: scroll;
+}
+
+.community-members .item {
+    display: flex;
+    border-radius: 25px;
+
+    padding: 5px;
+}
+
+.community-members .item:hover {
+    background-color: var(--tertiary1_bg_color);
+}
+
+.community-members .member-profile-pic img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.community-members .member-username {
+    position: relative;
+    padding: 10px;
+    top: -5px;
+    color: var(--text-secondary2-color);
+    font-weight: bold;
+}
+
+.community-members .member-username a {
+    color: inherit;
+}
+
+.community-members .member-username a:hover {
+    color: var(--primary_color);
+}
+
+.community-members .members-button {
+    border-radius: 25px;
+    background-color: var(--primary_color);
+    padding: 7px;
+    font-size: small;
+    text-align: center;
+    color: var(--text-primary-color);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.community-members .members-button a {
+    color: inherit;
 }
 
 /* Community page sidebar end */
