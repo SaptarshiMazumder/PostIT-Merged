@@ -985,7 +985,8 @@ p::-webkit-scrollbar {
     box-shadow: 0 2px 4px 0 rgba(212, 110, 212, 0.2), 0 3px 10px 0 rgba(212, 110, 212, 0.2);
 }
 
-.community-sidebar {
+.community-sidebar,
+.user-profile-page-sidebar {
     margin-top: 130px;
 }
 
@@ -1355,9 +1356,6 @@ h2::-webkit-scrollbar {
     border-radius: 5px;
 }
 
-.user_profile_sidebar {
-    top: 205px;
-}
 
 /* Gamer profile form page end*/
 
