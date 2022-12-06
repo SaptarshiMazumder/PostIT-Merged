@@ -824,7 +824,7 @@ def deletePost(request, pk):
     return Response('Post was deleted!')
 
 
-def posts_by_user(request, user):
+def user_profile_stats(request, user):
     if(user != 'favicon.png'):
         user = User.objects.get(username=user)
         posts = Post.objects.filter(author=user)
@@ -850,12 +850,52 @@ def posts_by_user(request, user):
         context = {'posts': posts, 'profile_owner': user,
                    'profile': profile, 'image_list': image_list,
                    'gamer_profiles': gamer_profiles,
-                   'main_gamer_profile': main_gamer_profile,
+                   'main_game_profile': main_gamer_profile,
                    'additional_info': additional_info,
                    'game_logos': GameProfile.games_logo_list, }
 
-        return render(request, 'post/posts_by_user.html', context)
-    return render(request, 'post/posts_by_user.html')
+        return render(request, 'user/user_profile_stats.html', context)
+    return render(request, 'user/user_profile_stats.html')
+
+
+def user_posts_page(request, user):
+    try:
+        if(user != 'favicon.png'):
+            user = User.objects.get(username=user)
+            posts = Post.objects.filter(author=user)
+            profile = Profile.objects.filter(user=user)[0]
+            image_list = ImageFiles.objects.all()
+            gamer_profiles = GameProfile.objects.filter(user=user)
+            try:
+                main_gamer_profile = Main_Profile.objects.get(
+                    user=User.objects.get(username=user))
+            except:
+                main_gamer_profile = None
+
+            additional_info = []
+            for g in gamer_profiles:
+                info_obj = g.additional_info
+
+                dict_obj = {}
+                for i in range(len(info_obj)):
+                    dict_obj[i] = info_obj[i]
+                additional_info.append({'game': g.game,
+                                        'info': dict_obj})
+
+            context = {'posts': posts, 'profile_owner': user,
+                       'profile': profile, 'image_list': image_list,
+                       'gamer_profiles': gamer_profiles,
+                       'main_game_profile': main_gamer_profile,
+                       'additional_info': additional_info,
+                       'game_logos': GameProfile.games_logo_list, }
+
+            return render(request, 'user/user_posts_page.html', context)
+        else:
+            return redirect('home')
+
+    except:
+        print("Mike", user, "Shinoda")
+        return render(request, 'user/user_posts_page.html', context={})
 
 
 @api_view(['GET', 'POST'])
@@ -1324,8 +1364,6 @@ def edit_community(request, id):
 
 def editCommunityRules(request, id):
     community = Community.objects.filter(id=id)[0]
-    print(request.POST['rules'], "Shazam")
-    print("HHHHHHHHHHHHHHHHHHHHHHHHHHH")
 
 
 def get_community_details(request, id):

@@ -2,8 +2,8 @@
 
 <div class="gamer_profiles" id="gamer_profiles">
     {%for g in gamer_profiles%}
-    {%if g.game == main_game_profile.main_gamer_profile.game%}
 
+    {%if g.game == main_game_profile.main_gamer_profile.game%}
     <button id="gamer_profiles-btn" value="">
         <div>
             {%for logo, url in game_logos.items%}
@@ -11,7 +11,7 @@
             <img class="gamer_profiles-btn-img" src={{url}} alt="">
             {%endif%}
             {%endfor%}
-            <div class="gamer_profiles-btn-value">
+            <div class="gamer_profiles_btn_text">
                 {{g.game}}
             </div>
         </div>

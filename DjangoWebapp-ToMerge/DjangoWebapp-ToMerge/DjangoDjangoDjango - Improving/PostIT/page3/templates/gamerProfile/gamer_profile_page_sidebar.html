@@ -4,11 +4,11 @@
         <div class="header-noimg"></div>
         <div class="profile">
             <div class="profile-identity">
-                <a href="{%url 'posts-by-user' user %}">
+                <a href="{%url 'user-posts-page' user %}">
                     {% if user.profile.profile_pic.name %}
                     <img src="{{ user.profile.profile_pic.url}}"></a>
                 {% else %}
-                <a href="{%url 'posts-by-user' user %}">
+                <a href="{%url 'user-posts-page' user %}">
                     <img src="{% static 'PostIT/images/profilepic.jpg' %}">
                 </a>
                 {% endif %}

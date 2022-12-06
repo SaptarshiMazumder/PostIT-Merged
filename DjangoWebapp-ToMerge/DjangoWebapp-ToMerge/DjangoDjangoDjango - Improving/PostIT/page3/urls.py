@@ -57,7 +57,9 @@ urlpatterns = [
          views.add_video_post_community, name='add-video-post-community'),
 
 
-    path('posts/<str:user>', views.posts_by_user, name="posts-by-user"),
+    path('user/<str:user>', views.user_posts_page, name="user-posts-page"),
+    path('user/profile/<str:user>', views.user_profile_stats,
+         name="user-profile-stats"),
 
     path('create_gamer_profile/<str:user>',
          views.create_game_profile, name="create-gamer-profile"),

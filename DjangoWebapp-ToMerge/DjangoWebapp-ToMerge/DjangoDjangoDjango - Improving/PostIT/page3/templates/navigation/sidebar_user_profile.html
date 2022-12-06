@@ -1,5 +1,7 @@
-<div class="sidebar">
-
+<div class="sidebar user_profile_sidebar">
+    <div class="profile_user" style="display: none;">
+        {{ profile.user.username }}
+    </div>
     {%for logo, url in game_logos.items%}
     {%endfor%}
 
@@ -9,23 +11,18 @@
             Profile
         </div>
 
-
-
-        {% if user.is_authenticated %}
         {%if gamer_profiles%}
-
-
 
         {%include 'gamerProfile/gamer_profile_section_sidebar.html' %}
 
         {%endif%}
 
-        <div class="gamer_profile_stats_section">
+        <div class="sidebar_gamer_profile_stats_section">
             {%include 'gamerProfile/gamer_profile_stats.html' %}
         </div>
 
         {%include 'navigation/sidebar_page_links.html' %}
-        {%endif%}
+
     </div>
 
     <div class="sidebar-section">
@@ -58,7 +55,7 @@
     $('.gamer_profiles_dropdown-btn').click(function () {
         selected_gamer_profile = $(this).text().trim();
 
-        user_name = $('.sidebar_username').text().replaceAll(' ', '');
+        user_name = $('.profile_user').text().replaceAll(' ', '');
         $.ajax({
             type: 'POST',
             url: `/get_gamer_profile_stats/${user_name}`,
@@ -69,9 +66,10 @@
             },
             success: function (response) {
 
-                $('.gamer_profile_stats_section').html(response['gamer_profile_stats']);
+                $('.sidebar_gamer_profile_stats_section').html(response['gamer_profile_stats']);
                 Toggle_Dropdown_Display();
-                console.log(response['game_logo'])
+
+
                 $('.gamer_profiles_btn_text').text($('.game_name').text());
                 $('.gamer_profiles-btn-img').attr("src", response['game_logo']);
 

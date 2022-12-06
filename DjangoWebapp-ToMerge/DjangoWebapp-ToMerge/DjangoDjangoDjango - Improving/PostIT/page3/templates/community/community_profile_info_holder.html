@@ -1,8 +1,8 @@
 {% load static %}
 
-<div class="community-profile-info-holder">
-    <div class="community-profile-info">
-        <div class="community-profile-pic">
+<div class="profile-info-holder">
+    <div class="profile-info">
+        <div class="profile-pic">
             {% if community.profile_pic.name %}
             <img src="{{ community.profile_pic.url}}">
             {% else %}
@@ -11,16 +11,16 @@
 
 
         </div>
-        <div class="community-profile-info-menu">
-            <div class="community-profile-info-menu-left">
+        <div class="profile-info-menu">
+            <div class="profile-info-menu-left">
                 <div class="community-name">
                     <h5><b>{{ community.name }}</b></h5>
                 </div>
                 <div>
-                    <button class="join-community-button">Joined</button>
+                    <button class="profile-interct-button">Joined</button>
                 </div>
             </div>
-            <div class="community-profile-info-menu-right">
+            <div class="profile-info-menu-right">
 
                 <div class="info">
                     <div class="number">{{community.members.count}}</div>
@@ -35,7 +35,7 @@
         </div>
 
     </div>
-    <div class="community-profile-info-tabs">
+    <div class="profile-info-tabs">
         <div class="item selected-tab">
             Posts
         </div>

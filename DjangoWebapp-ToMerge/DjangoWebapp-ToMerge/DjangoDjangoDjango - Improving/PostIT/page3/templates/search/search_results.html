@@ -23,7 +23,7 @@ Page3 Homepage
                 {%for person in people_list%}
                 <li class="post" id="people-list">
                     <div class="profile-pic">
-                        <a href="{%url 'posts-by-user' person.user.username%}"><img src="media/{{person.profile_pic}}"
+                        <a href="{%url 'user-posts-page' person.user.username%}"><img src="media/{{person.profile_pic}}"
                                 width="500"></a>
                         <div class="username"> {{person.user.username}}</div>
                     </div>
@@ -56,7 +56,7 @@ Page3 Homepage
                                         {% for p in profiles %}
                                         {%if p.user == post.author%}
                                         <div class="profile-pic">
-                                            <a href="{%url 'posts-by-user' post.author%}"><img
+                                            <a href="{%url 'user-posts-page' post.author%}"><img
                                                     src="media/{{p.profile_pic}}" width="500"></a>
                                         </div>
                                         {%endif%}

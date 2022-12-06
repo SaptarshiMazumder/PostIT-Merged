@@ -495,7 +495,7 @@ i:hover {
 .sidebar-left {
     padding-top: 100px !important;
     color: #fff !important;
-    width: 300px !important;
+    width: 300px;
     /* margin-top: -1 rem; */
     position: fixed;
     top: 0px;
@@ -509,6 +509,8 @@ i:hover {
     /* size: 100%; */
 
 }
+
+
 
 /* .sidebar-left.show {
     display: block;
@@ -931,11 +933,15 @@ p::-webkit-scrollbar {
 
 }
 
-.community-page-contents {
-
+.community-page-contents,
+.user-profile-page-contents {
     margin: 0 auto;
-
 }
+
+.user-profile-page-contents {
+    min-height: 1200px;
+}
+
 
 .nav-sidebar {
     margin-right: auto;
@@ -1073,7 +1079,8 @@ h2::-webkit-scrollbar {
 
 
 
-#gamer_profiles-btn {
+#gamer_profiles-btn,
+#main_gamer_profiles-btn {
     display: flex;
     align-items: center;
     padding: 15px;
@@ -1087,37 +1094,43 @@ h2::-webkit-scrollbar {
     justify-content: space-between;
 }
 
-#gamer_profiles-btn div {
+#gamer_profiles-btn div,
+#main_gamer_profiles-btn div {
     display: flex;
     justify-content: flex-start;
     font-weight: bold;
 }
 
-#gamer_profiles-btn i {
+#gamer_profiles-btn i,
+#main_gamer_profiles-btn i {
     position: relative;
     top: -4px;
 }
 
-#gamer_profiles-btn img {
+#gamer_profiles-btn img,
+#main_gamer_profiles-btn img {
     width: 20px;
     height: 20px;
     object-fit: cover;
     margin-right: 10px;
 }
 
-.gamer_profiles-btn-value {
+.sidebar_gamer_profiles-btn-value,
+.main_gamer_profiles-btn-value {
     padding: 0 10px;
 
 }
 
-.gamer_profiles_dropdown-container {
+.gamer_profiles_dropdown-container,
+.main_gamer_profiles_dropdown-container {
     width: inherit;
     margin: 0 auto;
 
 }
 
 
-.gamer_profiles_dropdown {
+.gamer_profiles_dropdown,
+.main_gamer_profiles_dropdown {
     display: flex;
     position: absolute;
     margin: 0 auto;
@@ -1129,7 +1142,8 @@ h2::-webkit-scrollbar {
     z-index: 2;
 }
 
-.gamer_profiles_dropdown button {
+.gamer_profiles_dropdown button,
+.main_gamer_profiles_dropdown button {
     display: flex;
     padding: 10px 20px;
     align-items: center;
@@ -1138,30 +1152,35 @@ h2::-webkit-scrollbar {
     color: var(--text-secondary-color);
 }
 
-.gamer_profiles_dropdown button:hover {
+.gamer_profiles_dropdown button:hover,
+.main_gamer_profiles_dropdown button:hover {
     background-color: var(--tertiary1_bg_color);
     border-radius: 10px;
 }
 
 
 
-.gamer_profiles_dropdown img {
+.gamer_profiles_dropdown img,
+.main_gamer_profiles_dropdown img {
     width: 20px;
     height: 20px;
     object-fit: cover;
 }
 
-.gamer_profiles_dropdown-item {
+.gamer_profiles_dropdown-item,
+.main_gamer_profiles_dropdown-item {
     margin: 0 10px;
     padding: 0 10px;
 }
 
-.gamer_profile_stats_section .gamer_profle_info {
+.gamer_profile_stats_section,
+.sidebar_gamer_profile_stats_section .gamer_profle_info {
     display: flex;
     flex-direction: column;
 }
 
-.gamer_profile_stats_section .gamer_profle_info .game_stat {
+.gamer_profile_stats_section,
+.sidebar_gamer_profile_stats_section .gamer_profle_info .game_stat {
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
@@ -1171,12 +1190,14 @@ h2::-webkit-scrollbar {
 
 
 
-.gamer_profile_stats_section .label {
+.gamer_profile_stats_section,
+.sidebar_gamer_profile_stats_section .label {
     color: var(--text-secondary-color);
 
 }
 
-.gamer_profile_stats_section .value {
+.gamer_profile_stats_section,
+.sidebar_gamer_profile_stats_section .value {
     color: var(--text-secondary2-color);
 }
 
@@ -1334,6 +1355,10 @@ h2::-webkit-scrollbar {
     border-radius: 5px;
 }
 
+.user_profile_sidebar {
+    top: 205px;
+}
+
 /* Gamer profile form page end*/
 
 button {
@@ -1384,7 +1409,7 @@ button {
 }
 
 
-/* User Posts Page */
+/* User Profile Page */
 .user_page_profile_pic img {
     width: 250px;
     height: 250px;
@@ -1396,7 +1421,7 @@ button {
     visibility: hidden;
 }
 
-/* User Posts Page */
+/* User Profile Page End*/
 
 /* Search Results Page */
 .button-section {
@@ -1470,6 +1495,140 @@ button {
     display: none;
 }
 
+
+/* Profile info start */
+
+.profile-info-holder {
+    background-color: var(--secondary_bg_color);
+    border-radius: 10px;
+    margin-bottom: 20px;
+
+}
+
+.profile-info-holder:hover {
+    box-shadow: 0 2px 2px 0 rgba(212, 110, 212, 0.2), 0 1.5px 5px 0 rgba(212, 110, 212, 0.2);
+}
+
+.profile-info-holder .profile-info {
+    /* position: relative; */
+    top: 5px;
+    /* width: 100vh; */
+    display: flex;
+    padding: 0 50px;
+    /* background-color: var(--secondary_bg_color); */
+    border-radius: 10px;
+    height: 65px;
+    /* margin-bottom: 50px; */
+
+    position: relative;
+
+
+
+    /* box-shadow: 0 2px 2px 0 rgba(212, 110, 212, 0.2), 0 1.5px 5px 0 rgba(212, 110, 212, 0.2); */
+    /* margin-left: 300px; */
+
+}
+
+.profile-info-holder .profile-pic img {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    top: -25px;
+    border-radius: 50%;
+    border: 5px solid var(--secondary_bg_color);
+    background-color: var(--bg_color);
+}
+
+.profile-info-tabs {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 10px;
+    padding-left: 10px;
+    color: var(--text-secondary-color);
+
+
+}
+
+.profile-info-tabs a:hover {
+    color: white
+}
+
+.selected-tab {
+    /* display: none; */
+    color: #fff !important;
+    border-bottom: 5px solid var(--primary_color);
+}
+
+.profile-info-tabs>div {
+    padding: 5px 15px;
+}
+
+.profile-info-tabs .item {
+    font-weight: bold;
+}
+
+.profile-info-tabs .item:hover {
+    color: #fff !important;
+    cursor: pointer;
+}
+
+
+
+
+.profile-info-menu {
+    margin: auto 0;
+    position: relative;
+    display: flex;
+    width: 100%;
+    top: -5px;
+    justify-content: space-between;
+}
+
+.profile-info-menu-left,
+.profile-info-menu-right {
+    display: flex;
+}
+
+.profile-info-menu-left div {
+    padding: 10px;
+}
+
+.profile-info-menu-right .info {
+    padding: 10px;
+
+}
+
+.profile-info-menu-right .number {
+    /* color: var(--text-secondary-color); */
+    font-size: small;
+    font-weight: bold;
+}
+
+.profile-info-menu-right .label {
+    color: var(--text-secondary-color);
+    font-size: small;
+    font-weight: bold;
+}
+
+
+
+.profile-interct-button {
+    background-color: var(--primary_color);
+    font-size: small;
+    font-weight: bold;
+    border-radius: 25px;
+    padding: 5px 15px;
+    position: relative;
+    top: -5px;
+    /* margin: 5px !important; */
+    /* padding: 5px !important; */
+}
+
+/* Profile info end */
 
 /* Communities section */
 .blocker-page-community {
@@ -1579,119 +1738,11 @@ button {
     /* padding: 10px; */
 }
 
-.community-profile-info-holder {
-    background-color: var(--secondary_bg_color);
-    border-radius: 10px;
-    margin-bottom: 20px;
-
-}
-
-.community-profile-info-holder:hover {
-    box-shadow: 0 2px 2px 0 rgba(212, 110, 212, 0.2), 0 1.5px 5px 0 rgba(212, 110, 212, 0.2);
-}
-
-.community-profile-info {
-    /* position: relative; */
-    top: 5px;
-    /* width: 100vh; */
-    display: flex;
-    padding: 0 50px;
-    background-color: var(--secondary_bg_color);
-    border-radius: 10px;
-    height: 65px;
-    /* margin-bottom: 50px; */
-
-    position: relative;
-
-
-
-    /* box-shadow: 0 2px 2px 0 rgba(212, 110, 212, 0.2), 0 1.5px 5px 0 rgba(212, 110, 212, 0.2); */
-    /* margin-left: 300px; */
-
-}
-
-.community-profile-info-tabs {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    width: 100%;
+.user-page-profile-info {
+    background-color: var(--post_bg_color);
+    width: 680px;
     margin: 0 auto;
-    padding-top: 10px;
-    padding-left: 10px;
-    color: var(--text-secondary-color);
 
-
-}
-
-.selected-tab {
-    /* display: none; */
-    color: #fff !important;
-    border-bottom: 5px solid var(--primary_color);
-}
-
-.community-profile-info-tabs>div {
-    padding: 5px 15px;
-}
-
-.community-profile-info-tabs .item {
-    font-weight: bold;
-}
-
-.community-profile-info-tabs .item:hover {
-    color: #fff !important;
-    cursor: pointer;
-}
-
-
-
-
-.community-profile-info-menu {
-    margin: auto 0;
-    position: relative;
-    display: flex;
-    width: 100%;
-    top: -5px;
-    justify-content: space-between;
-}
-
-.community-profile-info-menu-left,
-.community-profile-info-menu-right {
-    display: flex;
-}
-
-.community-profile-info-menu-left div {
-    padding: 10px;
-}
-
-.community-profile-info-menu-right .info {
-    padding: 10px;
-
-}
-
-.community-profile-info-menu-right .number {
-    /* color: var(--text-secondary-color); */
-    font-size: small;
-    font-weight: bold;
-}
-
-.community-profile-info-menu-right .label {
-    color: var(--text-secondary-color);
-    font-size: small;
-    font-weight: bold;
-}
-
-
-
-.join-community-button {
-    background-color: var(--primary_color);
-    font-size: small;
-    font-weight: bold;
-    border-radius: 25px;
-    padding: 5px 15px;
-    position: relative;
-    top: -5px;
-    /* margin: 5px !important; */
-    /* padding: 5px !important; */
 }
 
 .add-post-community-button {
@@ -1735,16 +1786,6 @@ button {
 
 }
 
-.community-profile-pic img {
-    position: relative;
-    width: 90px;
-    height: 90px;
-    object-fit: cover;
-    top: -25px;
-    border-radius: 50%;
-    border: 5px solid var(--secondary_bg_color);
-    background-color: var(--bg_color);
-}
 
 .add-post-community-options-holder {
     position: relative;
@@ -1779,6 +1820,8 @@ button {
     width: 100%;
 
 }
+
+
 
 /* Community page sidebar start */
 .community-info {
@@ -1867,6 +1910,16 @@ button {
 }
 
 /* Community page sidebar end */
+
+/*  Profile Stats Section */
+
+.profile-stats {
+    background-color: var(--post_bg_color);
+    width: 680px;
+    margin: 0 auto;
+}
+
+/*  Profile Stats End */
 
 /* Media Queries */
 

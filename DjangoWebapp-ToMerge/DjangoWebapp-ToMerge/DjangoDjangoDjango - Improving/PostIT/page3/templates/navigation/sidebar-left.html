@@ -33,7 +33,7 @@
                         </div>
 
                     </a></li>
-                <li><a href="{%url 'posts-by-user' user %}">
+                <li><a href="{%url 'user-posts-page' user %}">
                         <div class="sidebar-list-item">
                             <i class="fa-solid fa-user"></i>Profile
                         </div>
@@ -51,7 +51,7 @@
         <div class="sidebar-profile-section">
 
             <div class="sidebar-profile-pic">
-                <a href="{%url 'posts-by-user' user %}">
+                <a href="{%url 'user-posts-page' user %}">
                     {% if user.profile.profile_pic.name %}
                     <img src="{{ user.profile.profile_pic.url}}" width="200"></a>
                 {% else %}
@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="sidebar-view-profile-button">
-                    <a href="{%url 'posts-by-user' user %}">View Profile</a>
+                    <a href="{%url 'user-posts-page' user %}">View Profile</a>
 
                 </div>
             </div>

@@ -49,16 +49,16 @@
             <div class="item">
                 <div class="member-profile-pic">
                     {% if member.profile.profile_pic.name %}
-                    <a href="{% url 'posts-by-user' member %}"><img src="{{ member.profile.profile_pic.url}}"></a>
+                    <a href="{% url 'user-posts-page' member %}"><img src="{{ member.profile.profile_pic.url}}"></a>
 
                     {% else %}
-                    <a href="{% url 'posts-by-user' member %}">
+                    <a href="{% url 'user-posts-page' member %}">
                         <img src="{% static 'PostIT/images/profilepic.jpg' %}"></a>
                     {% endif %}
                 </div>
                 <div class="member-username">
 
-                    <a href="{% url 'posts-by-user' member %}">
+                    <a href="{% url 'user-posts-page' member %}">
                         {{member}}
                     </a>
                 </div>

@@ -2,7 +2,7 @@
     <div class="post-header-section">
         <div class="profile-pic">
             {%if user.profile.profile_pic.name %}
-            <a href="{%url 'posts-by-user' user %}"><img src="{{ user.profile.profile_pic.url }}" width="500"></a>
+            <a href="{%url 'user-posts-page' user %}"><img src="{{ user.profile.profile_pic.url }}" width="500"></a>
             {% endif %}
         </div>
     </div>
