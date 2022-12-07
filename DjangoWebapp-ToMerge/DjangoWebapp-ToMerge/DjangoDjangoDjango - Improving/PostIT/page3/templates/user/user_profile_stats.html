@@ -21,7 +21,7 @@ Page3 - Community
             <div class="profile-stats">
                 <div class="logged_in_user">{{user.username}}</div>
                 <div class="user_page_profile_pic"><img src="/media/{{profile.profile_pic}}" /></div>
-                <h1>This is the profilepage of</h1>
+                <h1>This is the profile page of</h1>
                 <h1 class="user_name">{{profile_owner.username}}</h1>
                 <div class="followers">Followers{{profile.followers.count}}</div>
                 <div class="followers">Following{{profile.following.count}}</div>
@@ -37,17 +37,17 @@ Page3 - Community
 
                 {%endif%}
                 {%endfor%}
-                <div class="main_game-specific-stats">
+                <div class="game-specific-all-stats">
                     {%for g in gamer_profiles%}
                     {% if g.game == main_game_profile.main_gamer_profile.game %}
-                    <button id="main_gamer_profiles-btn">
+                    <button id="gamer_profiles-btn_to_show_all_stats">
                         <div>
                             {%for logo, url in game_logos.items%}
                             {%if g.game == logo %}
-                            <img class="main_gamer_profiles-btn-img" src={{url}} alt="">
+                            <img class="gamer_profiles-btn_to_show_all_stats-img" src={{url}} alt="">
                             {%endif%}
                             {%endfor%}
-                            <div class="main_gamer_profiles-btn-value">
+                            <div class="gamer_profiles-btn_to_show_all_stats_text">
                                 {{g.game}}
                             </div>
                         </div>
@@ -57,10 +57,10 @@ Page3 - Community
                     {%endfor%}
 
                 </div>
-                <div class="main_gamer_profiles_dropdown-container">
-                    <div class="main_gamer_profiles_dropdown">
+                <div class="gamer_profiles_all_stats_dropdown-container">
+                    <div class="gamer_profiles_all_stats_dropdown">
                         {%for g in gamer_profiles%}
-                        <button class="main_gamer_profiles_dropdown-btn">
+                        <button class="gamer_profiles_all_stats_dropdown-btn">
 
                             {%for logo, url in game_logos.items%}
                             {%if g.game == logo %}
@@ -69,7 +69,7 @@ Page3 - Community
 
                             {%endif%}
                             {%endfor%}
-                            <div class="main_gamer_profiles_dropdown-item">{{g.game}}</div>
+                            <div class="gamer_profiles_all_stats_dropdown-item">{{g.game}}</div>
 
 
                         </button>
@@ -77,10 +77,10 @@ Page3 - Community
                         {%endfor%}
                     </div>
                 </div>
-                <div class="main_gamer_profile_stats_section">
+                <div class="gamer_profile_all_stats_section">
 
                 </div>
-                <button class="follow_btn">Follow</button>
+                <button>Follow</button>
             </div>
 
         </div>
@@ -133,36 +133,20 @@ Page3 - Community
 
         $('.profile-info-stats').addClass('selected-tab');
 
-        $('.follow_btn').click(function () {
-            $.ajax({
-                type: 'POST',
-                url: `/start_following/${$('.user_name').text()}`,
-                data: {
-                    'user': $('.logged_in_user').text(),
-                    // csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                    'csrfmiddlewaretoken': '{{ csrf_token }}',
-                },
-                success: function (response) {
 
-                },
-                error: function (response) {
-                    //alert("Error getting ranks and servers")
-                }
-            })
-        })
     })
 
 
     var selected_gamer_profile;
-    $('.main_gamer_profiles_dropdown-container').css('display', 'none');
+    $('.gamer_profiles_all_stats_dropdown-container').css('display', 'none');
     $(document).ready(function () {
-        document.getElementById("main_gamer_profiles-btn").addEventListener("click", Toggle_Main_Dropdown_Display);
+        document.getElementById("gamer_profiles-btn_to_show_all_stats").addEventListener("click", Toggle_Main_Dropdown_Display);
         selected_gamer_profile = $('.main_game').text();
         get_selected_game_stats();
         Toggle_Main_Dropdown_Display();
     });
 
-    $('.main_gamer_profiles_dropdown-btn').click(function () {
+    $('.gamer_profiles_all_stats_dropdown-btn').click(function () {
         selected_gamer_profile = $(this).text().trim();
         console.log(selected_gamer_profile);
         get_selected_game_stats();
@@ -182,10 +166,10 @@ Page3 - Community
             },
             success: function (response) {
 
-                $('.main_gamer_profile_stats_section').html(response['gamer_profile_stats']);
+                $('.gamer_profile_all_stats_section').html(response['gamer_profile_stats']);
                 Toggle_Main_Dropdown_Display();
                 console.log(response['game_logo'])
-                $('.main_gamer_profiles-btn-value').text(selected_gamer_profile);
+                $('.gamer_profiles-btn_to_show_all_stats_text').text(selected_gamer_profile);
                 $('.main_gamer_profiles-btn-img').attr("src", response['game_logo']);
 
             }
@@ -194,10 +178,10 @@ Page3 - Community
 
 
     function Toggle_Main_Dropdown_Display() {
-        if ($('.main_gamer_profiles_dropdown-container').css('display') == 'flex') {
-            $('.main_gamer_profiles_dropdown-container').css('display', 'none');
+        if ($('.gamer_profiles_all_stats_dropdown-container').css('display') == 'flex') {
+            $('.gamer_profiles_all_stats_dropdown-container').css('display', 'none');
         }
-        else $('.main_gamer_profiles_dropdown-container').css('display', 'flex');
+        else $('.gamer_profiles_all_stats_dropdown-container').css('display', 'flex');
     }
 </script>
 

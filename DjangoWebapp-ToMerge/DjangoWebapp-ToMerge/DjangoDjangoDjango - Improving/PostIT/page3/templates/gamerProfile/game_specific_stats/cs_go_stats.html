@@ -21,11 +21,18 @@
 
 {%for item in additional_info%}
 {% if item.game == 'Counter Strike: GO' %}
-Preferred Guns:
-{{item.info.0}}
-<br>
-Preferred Maps:
-{{item.info.1}}
+<div class="game_stat">
+    <div class="stat_name">
+        <i class="fa-solid fa-gun"></i> Preferred Guns:
+    </div>
+    <div class="stat_value">
+        {{item.info.0}}
+    </div>
+</div>
+<div class="game_stat">
+    <i class="fa-solid fa-road"></i> Preferred Maps:
+    {{item.info.1}}
+</div>
 {%endif%}
 <br>
 {%endfor%}

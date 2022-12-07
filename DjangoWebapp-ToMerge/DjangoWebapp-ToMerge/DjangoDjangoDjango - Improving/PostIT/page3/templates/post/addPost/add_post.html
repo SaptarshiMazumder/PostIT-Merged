@@ -6,7 +6,9 @@ Page3 - Add post
 {% block content %}
 {% load crispy_forms_tags %}
 {% if user.is_authenticated %}
-<form action="" method="POST" enctype="multipart/form-data">
+
+<form action="" method="POST" enctype="multipart/form-data" style="color: white;">
+
     {% csrf_token %}
     {{ form.media }}
     {{ form.as_p }}

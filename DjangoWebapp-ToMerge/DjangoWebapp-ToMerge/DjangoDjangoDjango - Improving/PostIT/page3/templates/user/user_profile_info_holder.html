@@ -1,7 +1,7 @@
 {% load static %}
 
 <div class="profile-info-holder">
-
+    <div class="logged_in_user" style="display: none;">{{user.username}}</div>
     <div class="profile-info">
         <div class="profile-pic">
             {% if profile.profile_pic.name %}
@@ -18,7 +18,7 @@
                     <h5><b>{{ profile.user.username }}</b></h5>
                 </div>
                 <div>
-                    <button class="profile-interct-button">Follow</button>
+                    <button class="profile-interct-button follow_btn">Follow</button>
                 </div>
             </div>
             <div class="profile-info-menu-right">
@@ -49,3 +49,28 @@
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        console.log("Doc readyy!!")
+        $('.profile-interct-button').click(function () {
+            console.log("Follow btn clicked")
+            $.ajax({
+                type: 'POST',
+                url: `/start_following/${$('.name').text().trim()}`,
+                data: {
+                    'user': $('.logged_in_user').text(),
+                    // csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function (response) {
+
+                },
+                error: function (response) {
+                    //alert("Error getting ranks and servers")
+                }
+            })
+        })
+    })
+</script>

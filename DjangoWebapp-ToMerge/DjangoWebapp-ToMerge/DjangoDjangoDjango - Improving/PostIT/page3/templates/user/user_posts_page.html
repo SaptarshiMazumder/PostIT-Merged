@@ -12,7 +12,7 @@ Page3 - Community
     {% include 'navigation/sidebar-left.html' %}
 
 
-    <div class="page-contents community-page-contents">
+    <div class="page-contents user-profile-page-contents">
         <div class="posts-timeline">
 
             {% include 'user/user_profile_info_holder.html' %}
@@ -127,7 +127,28 @@ Page3 - Community
 
 </script>
 
+<script>
+    $(document).ready(function () {
 
+        $('.follow_btn').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: `/start_following/${$('.user_name').text()}`,
+                data: {
+                    'user': $('.logged_in_user').text(),
+                    // csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function (response) {
+
+                },
+                error: function (response) {
+                    //alert("Error getting ranks and servers")
+                }
+            })
+        })
+    })
+</script>
 
 <script>
 

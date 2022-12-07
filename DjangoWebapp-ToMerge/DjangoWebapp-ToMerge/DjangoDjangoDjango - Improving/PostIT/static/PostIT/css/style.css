@@ -78,7 +78,7 @@ li {
     display: none;
 }
 
-/* 
+/*
 .navbar-contents a:hover {
     color: var(--grey_color);
 }
@@ -173,7 +173,7 @@ i:hover {
 
 }
 
-/* 
+/*
 .navbar-top-left-section {
     display: flex;
     align-items: flex-start;
@@ -482,7 +482,7 @@ i:hover {
 
 /* .navbar-contents .search-bar {
     margin-left: auto;
-    
+
 }
 
 .navbar-contents .search-bar input {
@@ -492,23 +492,6 @@ i:hover {
 
 
 
-.sidebar-left {
-    padding-top: 100px !important;
-    color: #fff !important;
-    width: 300px;
-    /* margin-top: -1 rem; */
-    position: fixed;
-    top: 0px;
-    display: flex;
-    flex-direction: column;
-
-    background-color: var(--post_bg_color);
-    border-radius: 10px;
-    height: 100%;
-    z-index: 100;
-    /* size: 100%; */
-
-}
 
 
 
@@ -517,154 +500,32 @@ i:hover {
 
 } */
 
-.sidebar-top-section {
-    padding: 10px;
-
-}
-
-.bottom-sidebar {
-    position: absolute;
-    bottom: 0px;
-    /* padding-bottom: 50px; */
-    /* margin-top: auto; */
-    padding: 10px 10px 50px 10px;
-}
 
 
-.sidebar-profile-section {
-    display: flex;
-    justify-content: space-between;
 
-    /* overflow: hidden; */
-    background-color: var(--secondary_bg_color);
-    border-radius: 50px;
-    width: 270px;
-    /* background-color: #333; */
 
-}
 
-.sidebar-profile-section .sidebar_username {
-    margin-bottom: 5px;
-    color: var(--text-secondary2-color);
-    font-weight: bold;
-}
 
-.sidebar-profile-section:hover {
-    box-shadow: 0 2px 4px 0 rgba(212, 110, 212, 0.2), 0 3px 10px 0 rgba(212, 110, 212, 0.2);
 
-}
+
+
+
 
 /* .sidebar-profile-section:hover {
     background-color: #444;
 } */
 
-.sidebar-profile-pic img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 50%;
-    overflow: hidden;
-    align-items: center;
-    margin: 10px;
-
-}
 
 
 
-.sidebar-profile-name {
-    position: relative;
-    top: 10px;
-    left: -50px;
-
-    /* background-color: #d46ed4; */
-    /* color: #d46ed4; */
-}
 
 
-.sidebar-view-profile-button {
-    font-size: small;
-    font-weight: bold;
-    color: #d46ed4 !important;
-    text-decoration: none !important;
-}
 
-.sidebar-view-profile-button a {
-    color: inherit !important;
-    text-decoration: none;
-}
 
-.sidebar-profile-settings-button {
-    margin-left: auto;
-    position: relative;
-    align-items: flex-end;
-    top: 20px;
-    left: -15px;
-    cursor: pointer;
-    background: none;
-    padding: 0;
-    margin: 0;
-}
 
-.sidebar-profile-settings-options {
-    position: absolute;
-    top: -120px;
-    left: 20px;
-    width: 300px;
-    float: left;
-    text-align: left;
-    border-radius: 5px;
-    background-color: var(--secondary_bg_color);
-    box-shadow: 0 2px 4px 0 rgba(212, 110, 212, 0.2), 0 3px 10px 0 rgba(212, 110, 212, 0.2);
-    padding-top: 15px;
-    display: none;
-}
 
-.sidebar-profile-settings-options ul li {
-    padding: 5px;
-    text-decoration: none;
-}
 
-.sidebar-profile-settings-options ul li a:hover {
-    color: var(--primary_color);
-}
 
-.sidebar-list {
-    margin: 0px;
-    padding: 5px;
-    display: flex;
-    flex-direction: column;
-    /* align-items: center; */
-}
-
-.sidebar-list-item {
-    display: flex;
-    padding: 10px;
-    font-size: large;
-    cursor: pointer;
-    border-radius: 25px;
-    width: 250px;
-}
-
-.sidebar-list-item:hover {
-    color: var(--primary_color);
-    background-color: var(--secondary_bg_color);
-
-    /* box-shadow: 0 2px 4px 0 rgba(212, 110, 212, 0.2), 0 3px 10px 0 rgba(212, 110, 212, 0.2); */
-}
-
-.sidebar-list-item a:hover {
-    color: var(--primary_color);
-}
-
-.sidebar-list-item .fa-solid {
-    color: #fff;
-
-}
-
-.sidebar-list-item:hover .fa-solid {
-    color: var(--primary_color);
-
-}
 
 
 
@@ -933,95 +794,22 @@ p::-webkit-scrollbar {
 
 }
 
-.community-page-contents,
-.user-profile-page-contents {
+.community-page-contents {
     margin: 0 auto;
 }
 
+
+
+
+/* User Profile Section */
+
 .user-profile-page-contents {
+    margin: 0 auto;
     min-height: 1200px;
 }
 
+/* User Profile Section End */
 
-.nav-sidebar {
-    margin-right: auto;
-    position: fixed;
-    padding: 50px;
-}
-
-/* Sidebar section start */
-
-.sidebar {
-
-    display: flex;
-    flex-direction: column;
-    background-color: var(--post_bg_color);
-    min-height: 700px;
-    width: 500px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding: 10px;
-
-    border-radius: 10px;
-    max-height: 800px;
-    position: sticky;
-    top: 100px;
-    z-index: 2;
-
-}
-
-.sidebar-section {
-    border-radius: 10px;
-    padding-bottom: 10px;
-    background-color: var(--secondary_bg_color);
-    width: 100%;
-    position: relative;
-    margin: 5px 0px;
-
-
-}
-
-.sidebar-section:hover {
-    box-shadow: 0 2px 4px 0 rgba(212, 110, 212, 0.2), 0 3px 10px 0 rgba(212, 110, 212, 0.2);
-}
-
-.community-sidebar,
-.user-profile-page-sidebar {
-    margin-top: 130px;
-}
-
-.sidebar .article {
-    padding: 0px 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-
-.sidebar .article .value {
-    color: var(--text-secondary2-color);
-    font-weight: bold;
-    font-size: medium;
-}
-
-
-.sidebar-section-title {
-    text-align: start;
-    width: 97%;
-    color: var(--grey_color);
-    font-size: medium;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    border-bottom: 1px solid var(--border-color);
-    margin: 5px 5px 15px 5px;
-    overflow: hidden;
-    font-weight: bold;
-
-    padding-top: 10px;
-    /* background-color: var(--primary_color); */
-
-    /* text-transform: uppercase; */
-}
 
 /* width */
 ::-webkit-scrollbar {
@@ -1050,10 +838,7 @@ p::-webkit-scrollbar {
     display: none;
 }
 
-.sidebar .article p {
-    padding: 10px 0;
-    text-align: start;
-}
+
 
 h2::-webkit-scrollbar {
     display: none;
@@ -1063,25 +848,13 @@ h2::-webkit-scrollbar {
 
 /* Gamer profile Sidebar */
 
-.gamer-profile-sidebar {
-    border-radius: 10px;
-    padding-bottom: 10px;
-    background-color: var(--secondary_bg_color);
-    width: 100%;
-    position: relative;
-    margin: 5px 0px;
-
-
-}
-
-.gamer-profile-sidebar:hover {
-    box-shadow: 0 2px 4px 0 rgba(212, 110, 212, 0.2), 0 3px 10px 0 rgba(212, 110, 212, 0.2);
-}
 
 
 
-#gamer_profiles-btn,
-#main_gamer_profiles-btn {
+
+
+
+#gamer_profiles-btn {
     display: flex;
     align-items: center;
     padding: 15px;
@@ -1095,43 +868,34 @@ h2::-webkit-scrollbar {
     justify-content: space-between;
 }
 
-#gamer_profiles-btn div,
-#main_gamer_profiles-btn div {
+#gamer_profiles-btn div {
     display: flex;
     justify-content: flex-start;
     font-weight: bold;
 }
 
-#gamer_profiles-btn i,
-#main_gamer_profiles-btn i {
+#gamer_profiles-btn i {
     position: relative;
     top: -4px;
 }
 
-#gamer_profiles-btn img,
-#main_gamer_profiles-btn img {
+#gamer_profiles-btn img {
     width: 20px;
     height: 20px;
     object-fit: cover;
     margin-right: 10px;
 }
 
-.sidebar_gamer_profiles-btn-value,
-.main_gamer_profiles-btn-value {
-    padding: 0 10px;
 
-}
 
-.gamer_profiles_dropdown-container,
-.main_gamer_profiles_dropdown-container {
+.gamer_profiles_dropdown-container {
     width: inherit;
     margin: 0 auto;
 
 }
 
 
-.gamer_profiles_dropdown,
-.main_gamer_profiles_dropdown {
+.gamer_profiles_dropdown {
     display: flex;
     position: absolute;
     margin: 0 auto;
@@ -1143,8 +907,7 @@ h2::-webkit-scrollbar {
     z-index: 2;
 }
 
-.gamer_profiles_dropdown button,
-.main_gamer_profiles_dropdown button {
+.gamer_profiles_dropdown button {
     display: flex;
     padding: 10px 20px;
     align-items: center;
@@ -1153,90 +916,28 @@ h2::-webkit-scrollbar {
     color: var(--text-secondary-color);
 }
 
-.gamer_profiles_dropdown button:hover,
-.main_gamer_profiles_dropdown button:hover {
+.gamer_profiles_dropdown button:hover {
     background-color: var(--tertiary1_bg_color);
     border-radius: 10px;
 }
 
 
 
-.gamer_profiles_dropdown img,
-.main_gamer_profiles_dropdown img {
+.gamer_profiles_dropdown img {
     width: 20px;
     height: 20px;
     object-fit: cover;
 }
 
-.gamer_profiles_dropdown-item,
-.main_gamer_profiles_dropdown-item {
+.gamer_profiles_dropdown-item {
     margin: 0 10px;
     padding: 0 10px;
 }
-
-.gamer_profile_stats_section,
-.sidebar_gamer_profile_stats_section .gamer_profle_info {
-    display: flex;
-    flex-direction: column;
-}
-
-.gamer_profile_stats_section,
-.sidebar_gamer_profile_stats_section .gamer_profle_info .game_stat {
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    font-size: small;
-    font-weight: bold;
-}
-
-
-
-.gamer_profile_stats_section,
-.sidebar_gamer_profile_stats_section .label {
-    color: var(--text-secondary-color);
-
-}
-
-.gamer_profile_stats_section,
-.sidebar_gamer_profile_stats_section .value {
-    color: var(--text-secondary2-color);
-}
-
-
-.sidebar-page-links {
-    display: flex;
-    flex-direction: column;
-}
-
-.sidebar-page-links {
-    /* background: none !important; */
-    margin: 7px 15px;
-}
-
-
-.sidebar-page-links .page-link {
-    background-color: var(--tertiary1_bg_color);
-    margin: 7px;
-    border-radius: 25px;
-    /* padding: 10px; */
-    border: none;
-    color: var(--text-secondary-color);
-    font-weight: bold;
-
-}
-
 
 .page-link a:hover {
     color: var(--text-primary-color);
 }
 
-.sidebar-page-links .page-link:hover {
-    background-color: var(--primary_color);
-    color: var(--text-primary-color);
-}
-
-
-/* Gamer profile sidebar end */
 
 /* Gamer profile form page*/
 
@@ -1298,62 +999,6 @@ h2::-webkit-scrollbar {
     padding: 10px;
     color: var(--text-primary-color);
     font-weight: bold;
-}
-
-
-
-.gamer-profile-sidebar {
-    width: 100%;
-}
-
-.gamer-profile-sidebar .header-noimg {
-    border-radius: 10px 10px 0 0;
-    height: 75px;
-    width: 100% !important;
-    background-color: var(--primary_color);
-}
-
-.gamer-profile-sidebar .profile {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    top: -50px;
-}
-
-.gamer-profile-sidebar .profile-identity {
-    font-size: small;
-    font-weight: bold;
-}
-
-.gamer-profile-sidebar .profile-identity img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 5px solid var(--post_bg_color);
-}
-
-.gamer-profile-sidebar .profile-info {
-    padding: 10px;
-    display: flex;
-    justify-content: space-around;
-    font-size: small;
-}
-
-.gamer-profile-sidebar .data {
-    font-weight: bold;
-    color: var(--text-secondary2-color);
-}
-
-.gamer-profile-sidebar .label {
-    color: var(--text-secondary-color);
-    font-weight: bold;
-}
-
-.gamer-profile-sidebar .info-item {
-    background-color: var(--secondary_bg_color);
-    padding: 10px 20px;
-    border-radius: 5px;
 }
 
 
@@ -1420,6 +1065,106 @@ button {
 }
 
 /* User Profile Page End*/
+
+/* User Profile Stats Page */
+#gamer_profiles-btn_to_show_all_stats {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--tertiary1_bg_color);
+    color: #fff;
+    border-radius: 10px;
+    width: 90%;
+    margin: 0 auto;
+    color: var(--text-secondary-color);
+    display: flex;
+    justify-content: space-between;
+}
+
+#gamer_profiles-btn_to_show_all_stats img {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+#gamer_profiles-btn_to_show_all_stats div {
+    display: flex;
+    justify-content: flex-start;
+    font-weight: bold;
+}
+
+#gamer_profiles-btn_to_show_all_stats i {
+    position: relative;
+    top: -4px;
+}
+
+.gamer_profiles_all_stats_dropdown button:hover {
+    background-color: var(--tertiary1_bg_color);
+    border-radius: 10px;
+}
+
+.gamer_profiles_all_stats_dropdown-container {
+
+    margin: 0 auto;
+
+}
+
+.gamer_profiles_all_stats_dropdown {
+    display: flex;
+    /* position: absolute; */
+    width: 90%;
+    margin: 0 auto;
+    flex-direction: column;
+    background-color: var(--secondary_bg_color);
+    left: 25px;
+    border-radius: 10px;
+    z-index: 2;
+}
+
+.gamer_profiles_all_stats_dropdown button {
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    font-size: medium;
+    font-weight: bold;
+    color: var(--text-secondary-color);
+}
+
+
+
+.gamer_profiles_all_stats_dropdown img {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+}
+
+.gamer_profiles_all_stats_dropdown-item {
+    margin: 0 10px;
+    padding: 0 10px;
+}
+
+.gamer_profile_all_stats_section {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--secondary_bg_color);
+    width: 80%;
+    margin: 10px auto;
+    padding: 20px 0;
+    border-radius: 10px;
+}
+
+.gamer_profile_all_stats_section .game_stat {
+    display: flex;
+    margin: 5px 20px;
+    justify-content: flex-start;
+    height: 40px;
+    border-bottom: 1px solid var(--tertiary1_bg_color);
+}
+
+/* User Profile Stats Page End*/
+
+
 
 /* Search Results Page */
 .button-section {
@@ -1645,67 +1390,7 @@ button {
 
 
 
-.communities-section-sidebar-header {
-    padding: 10px;
-    /* background-color: var(--primary_color); */
-    border-radius: 10px;
-    overflow: hidden;
-}
 
-.communities-section-sidebar table tr td {
-    padding: 5px;
-}
-
-.communities-section-sidebar button {
-    background-color: var(--primary_color);
-    width: 300px;
-    border-radius: 50px;
-    padding: 7px;
-    font-size: small;
-    margin-bottom: 10px;
-}
-
-
-
-.community-name-sidebar :hover {
-    /* text-decoration: none; */
-    color: var(--primary_color);
-}
-
-
-.community-table-sidebar {
-    margin: 5px;
-}
-
-.community-profile-pic-sidebar img {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
-
-.community-item-sidebar button {
-    background-color: var(--primary_color);
-    width: 80px;
-    border-radius: 50px;
-    padding: 5px !important;
-    font-size: small;
-    margin-top: 8px;
-
-
-}
-
-.community-name-sidebar {
-    /* display: none; */
-    /* background-color: aqua !important; */
-    float: left;
-    margin-top: 10px;
-
-    color: var(--text-secondary2-color);
-    font-size: small;
-    font-weight: bold;
-}
 
 .community-header {
     background-color: var(--post_bg_color);
@@ -1925,9 +1610,6 @@ button {
 
 @media (max-width:500px) {
 
-    .sidebar {
-        display: none;
-    }
 
 
     .posts-timeline ul {
@@ -1936,9 +1618,7 @@ button {
         padding-inline-start: 0;
     }
 
-    .sidebar-left {
-        display: none;
-    }
+
 
     .navbar-toggle {
         display: block;
@@ -1955,13 +1635,13 @@ button {
 
 }
 
-/* 
+/*
 @media (max-width:500px) {
     .navbar-toggle {
         display: block;
     }
 } */
-/* 
+/*
 @media (min-width:501px) {
     .navbar-contents a {
         font-size: x-large;

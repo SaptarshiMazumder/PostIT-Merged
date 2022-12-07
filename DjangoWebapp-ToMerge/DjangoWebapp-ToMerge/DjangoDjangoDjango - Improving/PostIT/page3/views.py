@@ -855,7 +855,7 @@ def user_profile_stats(request, user):
                    'game_logos': GameProfile.games_logo_list, }
 
         return render(request, 'user/user_profile_stats.html', context)
-    return render(request, 'user/user_profile_stats.html')
+    return render(request, 'user/user_profile_stats.html', context={})
 
 
 def user_posts_page(request, user):
@@ -891,17 +891,17 @@ def user_posts_page(request, user):
 
             return render(request, 'user/user_posts_page.html', context)
         else:
-            return redirect('home')
+            return redirect('home-page')
 
     except:
-        print("Mike", user, "Shinoda")
+        print("Mike", user, "Smalling")
         return render(request, 'user/user_posts_page.html', context={})
 
 
 @api_view(['GET', 'POST'])
 def start_following(request, who_to_follow):
     # print(who_to_follow, request.POST['user'])
-
+    print(request.POST['user'], 'INIESTAA')
     profile = Profile.objects.filter(
         user=User.objects.get(username=request.POST['user']).id)
     profile[0].following.add(User.objects.get(username=who_to_follow))
