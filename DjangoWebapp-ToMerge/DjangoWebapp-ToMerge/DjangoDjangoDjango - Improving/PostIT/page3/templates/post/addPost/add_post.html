@@ -10,11 +10,12 @@ Page3 - Add post
 <div class="main-body">
     {% include 'navigation/sidebar-left.html' %}
 
-    <div class="form_label">
-        Add a post
-    </div>
+
     <form action="" method="POST" id="add_post_form" enctype="multipart/form-data" style="color: white;">
         <div class="form_contents">
+            <div class="form_label">
+                Add a post
+            </div>
             {% csrf_token %}
             {{ form.media }}
             {{ form.as_p }}
