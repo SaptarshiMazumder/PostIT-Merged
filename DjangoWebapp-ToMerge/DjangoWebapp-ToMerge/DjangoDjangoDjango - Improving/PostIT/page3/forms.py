@@ -19,7 +19,7 @@ class PostForm(ModelForm):
     class Meta:
         model = Post
         # fields = '__all__'
-        fields = ('title', 'body', 'category', 'tags')
+        fields = ('body', 'category', 'tags')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}),
             # 'author': forms.TextInput(attrs={'class': 'form-control', 'value': '', 'id': 'author-name', 'type': 'hidden'}),
