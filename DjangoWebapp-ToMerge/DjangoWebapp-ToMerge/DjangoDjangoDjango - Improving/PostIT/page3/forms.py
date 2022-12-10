@@ -34,11 +34,11 @@ class PostImageForm(ModelForm):
     class Meta:
         model = Post
         # fields = '__all__'
-        fields = ('title', 'body', 'category', 'tags')
+        fields = ('body', 'category', 'tags')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}),
             'category': forms.Select(choices=choice_list, attrs={'class': 'form-control'}),
-            'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Write something here...'}),
+            'body': forms.Textarea(attrs={'class': 'form-control', 'id': 'form-body', 'placeholder': 'Write something here...'}),
             'tags': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'eg- #LFT, #Valo, #Valorant'})
         }
 
