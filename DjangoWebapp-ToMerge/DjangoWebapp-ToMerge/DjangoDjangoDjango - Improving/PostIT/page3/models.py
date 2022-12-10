@@ -84,7 +84,7 @@ empty_list = []
 class Post(models.Model):
     title = models.CharField(max_length=255, blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
-    body = RichTextField(blank=True, null=True)
+
     # body = models.TextField()
     reply_to = models.IntegerField(null=True, blank=True, default=-1)
     is_reply = models.BooleanField(null=True, default=False, blank=True)
@@ -105,7 +105,7 @@ class Post(models.Model):
     has_video = models.BooleanField(null=True, blank=True, default=False)
     user_profile = models.ForeignKey(
         Profile, on_delete=models.DO_NOTHING, default=None, null=True, blank=True,)
-    body = RichTextField(blank=True, null=True)
+    body = models.CharField(max_length=280, blank=True, null=True)
     community = models.ForeignKey(
         Community, on_delete=models.DO_NOTHING, default=None, null=True, blank=True)
     images_ids_list = ArrayField(models.IntegerField(

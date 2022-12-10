@@ -6,13 +6,22 @@ Page3 - Add Video Post
 {% block content %}
 {% load crispy_forms_tags %}
 {% if user.is_authenticated %}
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.media }}
-    {{ form.as_p }}
-    <button type="submit">Post</button>
-</form>
+{% include 'navigation/navbar-top.html' %}
+<div class="main-body">
+    {% include 'navigation/sidebar-left.html' %}
+    <form action="" method="POST" id="add_post_form" enctype="multipart/form-data">
+        <div class=" form_contents">
+            <div class="form_label">
+                Add a post
+            </div>
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <button type="submit">Post</button>
+        </div>
+    </form>
 
+</div>
 
 {% else %}
 Login first!

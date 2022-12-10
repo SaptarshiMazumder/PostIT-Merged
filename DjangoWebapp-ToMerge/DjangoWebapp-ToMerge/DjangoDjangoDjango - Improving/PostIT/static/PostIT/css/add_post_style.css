@@ -12,7 +12,7 @@
     flex-direction: column;
     max-width: 50%;
     width: 600px;
-    margin: 50px auto;
+    margin: 100px auto;
     padding: 20px;
     align-items: flex-start;
     background-color: var(--secondary_bg_color);
@@ -20,8 +20,16 @@
 }
 
 .form-control {
+    color: white;
     display: flex;
     width: 100%;
+    background-color: var(--tertiary1_bg_color);
+    border: none;
+}
+
+.form-control:focus {
+    color: white;
+    background-color: var(--tertiary1_bg_color);
 }
 
 .form_contents p {
