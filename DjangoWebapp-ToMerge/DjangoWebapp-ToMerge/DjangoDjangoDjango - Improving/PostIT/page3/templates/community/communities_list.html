@@ -26,12 +26,10 @@
                     </td>
                     <td>
                         {% if community in joined_communities %}
-
-                        <b><button class="button" id="join-community-button"
-                                value="{{community.id}}"><b>Joined</b></button></b>
+                        <!-- Previosuly class was "button" -->
+                        <b><button id="join-community-button" value="{{community.id}}"><b>Joined</b></button></b>
                         {% else %}
-                        <b><button class="button" id="join-community-button"
-                                value="{{community.id}}"><b>Join</b></button></b>
+                        <b><button id="join-community-button" value="{{community.id}}"><b>Join</b></button></b>
                         {% endif %}
                     </td>
                 </div>
