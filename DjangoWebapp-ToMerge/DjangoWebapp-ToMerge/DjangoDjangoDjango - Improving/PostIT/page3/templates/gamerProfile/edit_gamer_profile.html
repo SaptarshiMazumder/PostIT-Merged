@@ -13,6 +13,7 @@ Create Gamer Profile
     <div class="page-contents">
         <div class="posts-timeline">
             <div class="post">
+
                 <form action="" method="POST" enctype="multipart/form-data" id="gamerprofile_form">
 
                     <div class="gamer_profile_form">
@@ -41,6 +42,11 @@ Create Gamer Profile
                         </div>
                         <div class="profile-item">
                             <div class="additional-fields">
+
+                            </div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="roles">
 
                             </div>
                         </div>
@@ -85,6 +91,9 @@ Login first!
     $(document).ready(function () {
         pref_game = $('.game_to_edit').find(":selected").text();
         get_saved_game_profile_data();
+        document.getElementById("role_slider").addEventListener("change", function () {
+            console.log("HII")
+        })
     });
 
     $(".post_form").hide();
@@ -149,6 +158,26 @@ Login first!
                         <input name=field_${i} class="field_${i} input"></input>`);
 
                     }
+                }
+                $('.roles').empty();
+
+                for (let i = 0; i < response['default_roles'].length; i++) {
+                    let role = response['default_roles'][i];
+                    let roles_zero_values = new Array(response['default_roles'].length).fill(0)
+                    $('.roles').append(`<div class="label">${response['default_roles'][i]}</div>
+                        <span><input type="range" min="0" max="10" name=role_${i} class="role_${i} input" id="role_slider"></input>
+                        <div class="role_slider_${i}"></div></span>`);
+
+                    console.log(response['roles_rating'][i])
+                    if (typeof response['roles_rating'][i] === 'undefined') {
+                        $(`.role_${i}`).val(roles_zero_values[i])
+
+                    }
+                    else {
+
+                        $(`.role_${i}`).val(response['roles_rating'][i])
+                    }
+                    //$(`.role_${i}`).val(response['roles_rating'][i]);
                 }
             }
         })

@@ -1018,9 +1018,12 @@ def edit_gamer_profile(request, user):
         if(request.method == 'POST'):
 
             additional_info = []
+            roles = []
             for i in request.POST.items():
                 if "field" in i[0]:
                     additional_info.append(i[1])
+                if "role" in i[0]:
+                    roles.append(i[1])
 
             if(GameProfile.objects.filter(user=user.id, game=request.POST.get("game_to_edit"))):
 
@@ -1029,7 +1032,7 @@ def edit_gamer_profile(request, user):
 
                 game_profile.update(
                     server=request.POST.get("server"), rank=request.POST.get("rank"),
-                    additional_info=additional_info)
+                    additional_info=additional_info, roles_rating=roles)
 
                 if Main_Profile.objects.filter(user=user.id).exists():
 
@@ -1228,25 +1231,31 @@ def get_saved_game_rank_server(request, game):
     ranks = []
     servers = []
     default_additonal_fields = []
+    roles = []
 
     if game == "Valorant":
         ranks = GameProfile.ValorantRanks.choices
         servers = GameProfile.ValorantServers.choices
         default_additonal_fields = GameProfile.Valorant_additional_fields
+        default_roles = GameProfile.Valorant_Roles
+
     if game == "Call of Duty":
         ranks = GameProfile.CODRanks.choices
         servers = GameProfile.CODServers.choices
         default_additonal_fields = GameProfile.COD_additional_fields
+        default_roles = GameProfile.COD_Roles
 
     if game == "League of Legends":
         ranks = GameProfile.LOLRanks.choices
         servers = GameProfile.LOLServers.choices
         default_additonal_fields = GameProfile.LOL_additional_fields
+        default_roles = GameProfile.LOL_Roles
 
     if game == "Counter Strike: GO":
         ranks = GameProfile.CSRanks.choices
         servers = GameProfile.CSServers.choices
         default_additonal_fields = GameProfile.CS_GO_additional_fields
+        default_roles = GameProfile.CS_GO_Roles
 
     saved_gamer_profile = GameProfile.objects.get(user=request.user,
                                                   game=game)
@@ -1256,6 +1265,8 @@ def get_saved_game_rank_server(request, game):
                          "saved_server": saved_gamer_profile.server,
                          "additional_fields": saved_gamer_profile.additional_info,
                          "default_additonal_fields": default_additonal_fields,
+                         "default_roles": default_roles,
+                         "roles_rating": saved_gamer_profile.roles_rating,
                          })
 
 
