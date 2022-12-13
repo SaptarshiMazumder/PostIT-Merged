@@ -1050,7 +1050,7 @@ def edit_gamer_profile(request, user):
                 is_looking_for_friends = True
 
             comm_rating = request.POST.get("comm_rating")
-
+            print(request.POST, "Chester")
             if(GameProfile.objects.filter(user=user.id, game=request.POST.get("game_to_edit"))):
 
                 game_profile = GameProfile.objects.filter(user=user.id,
@@ -1061,7 +1061,8 @@ def edit_gamer_profile(request, user):
                     additional_info=additional_info, roles_rating=roles,
                     remarks=request.POST.get("remarks"), looking_for_friends=is_looking_for_friends,
                     time_available=request.POST.get('time_available'),
-                    communication_level=int(comm_rating))
+                    communication_level=int(comm_rating),
+                    user_status=request.POST.get("user_status"))
 
                 if Main_Profile.objects.filter(user=user.id).exists():
 
@@ -1256,13 +1257,15 @@ def get_game_rank_server(request, game):
         additional_info_fields = GameProfile.CS_GO_additional_fields
         default_roles = GameProfile.CS_GO_Roles
 
+    default_user_status = GameProfile.User_Status.choices
     is_profile_exists = GameProfile.objects.filter(user=request.user,
                                                    game=game).exists()
     print(game, ranks, servers, additional_info_fields)
     return JsonResponse({"ranks": ranks, "servers": servers,
                         "additional_fields": additional_info_fields,
                          "default_roles": default_roles,
-                         "is_profile_exists": is_profile_exists})
+                         "is_profile_exists": is_profile_exists,
+                         "default_user_status": default_user_status})
 
 
 def get_saved_game_rank_server(request, game):
@@ -1270,6 +1273,7 @@ def get_saved_game_rank_server(request, game):
     servers = []
     default_additonal_fields = []
     default_roles = []
+    default_user_status = []
     remarks = ""
 
     if game == "Valorant":
@@ -1296,6 +1300,7 @@ def get_saved_game_rank_server(request, game):
         default_additonal_fields = GameProfile.CS_GO_additional_fields
         default_roles = GameProfile.CS_GO_Roles
 
+    default_user_status = GameProfile.User_Status.choices
     saved_gamer_profile = GameProfile.objects.get(user=request.user,
                                                   game=game)
     print(request.user)
@@ -1310,6 +1315,8 @@ def get_saved_game_rank_server(request, game):
                          "looking_for_friends": saved_gamer_profile.looking_for_friends,
                          "time_available": saved_gamer_profile.time_available,
                          "communication_level": saved_gamer_profile.communication_level,
+                         "default_user_status": default_user_status,
+                         "saved_user_status": saved_gamer_profile.user_status
                          })
 
 

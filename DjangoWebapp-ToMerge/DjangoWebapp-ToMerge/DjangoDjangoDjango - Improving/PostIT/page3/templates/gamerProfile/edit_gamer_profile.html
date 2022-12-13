@@ -71,6 +71,12 @@ Create Gamer Profile
                             <input name="time_available" class="time_available">
                         </div>
                         <div class="profile-item">
+                            <div class="label">Are you looking for Teams/ Talent ?</div>
+                            <select class="user_status" name="user_status">
+
+                            </select>
+                        </div>
+                        <div class="profile-item">
                             <div class="label">In game communication skill</div>
                             <input type="range" min="0" max="5" class="comm_rating input" name="comm_rating">
                         </div>
@@ -150,6 +156,16 @@ Login first!
                     else
                         $('.ranks').append(`<option>${response['ranks'][i][0]}</option>`)
 
+                }
+
+                $('.user_status').empty();
+                console.log(response['default_user_status'])
+                for (let i = 0; i < response['default_user_status'].length; i++) {
+
+                    if (response['saved_user_status'] == response['default_user_status'][i][0])
+                        $('.user_status').append(`<option selected="selected">${response['default_user_status'][i][0]}</option>`)
+                    else
+                        $('.user_status').append(`<option>${response['default_user_status'][i][0]}</option>`)
                 }
 
                 $('.additional-fields').empty();
