@@ -993,8 +993,8 @@ h2::-webkit-scrollbar {
 
 /* User Profile Page */
 .user_page_profile_pic img {
-    width: 250px;
-    height: 250px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     border-radius: 50%;
 }
@@ -1006,6 +1006,17 @@ h2::-webkit-scrollbar {
 /* User Profile Page End*/
 
 /* User Profile Stats Page */
+
+.display_info {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--secondary_bg_color);
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
 #gamer_profiles-btn_to_show_all_stats {
     display: flex;
     align-items: center;

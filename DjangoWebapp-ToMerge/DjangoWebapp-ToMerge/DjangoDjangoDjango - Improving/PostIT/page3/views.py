@@ -852,7 +852,9 @@ def user_profile_stats(request, user):
                    'gamer_profiles': gamer_profiles,
                    'main_game_profile': main_gamer_profile,
                    'additional_info': additional_info,
-                   'game_logos': GameProfile.games_logo_list, }
+                   'game_logos': GameProfile.games_logo_list,
+                   'page': 'user_profile_page',
+                   'user_to_view': user.username}
 
         return render(request, 'user/user_profile_stats.html', context)
     return render(request, 'user/user_profile_stats.html', context={})

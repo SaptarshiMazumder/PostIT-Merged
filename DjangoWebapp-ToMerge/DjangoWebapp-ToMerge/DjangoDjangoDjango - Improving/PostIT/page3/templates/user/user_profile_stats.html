@@ -20,11 +20,14 @@ Page3 - Community
 
             <div class="profile-stats">
                 <div class="logged_in_user">{{user.username}}</div>
-                <div class="user_page_profile_pic"><img src="/media/{{profile.profile_pic}}" /></div>
-                <h1>This is the profile page of</h1>
-                <h1 class="user_name">{{profile_owner.username}}</h1>
-                <div class="followers">Followers{{profile.followers.count}}</div>
-                <div class="followers">Following{{profile.following.count}}</div>
+                <div class="display_info">
+                    <div class="user_page_profile_pic"><img src="/media/{{profile.profile_pic}}" /></div>
+                    <div class="info_right">
+                        <h2 class="user_name">{{profile_owner.username}}</h2>
+                        <div class="followers">Followers{{profile.followers.count}}</div>
+                        <div class="followers">Following{{profile.following.count}}</div>
+                    </div>
+                </div>
 
 
                 {%for g in gamer_profiles%}
@@ -129,18 +132,13 @@ Page3 - Community
 </script>
 
 <script>
-    $(document).ready(function () {
-
-        $('.profile-info-stats').addClass('selected-tab');
-
-
-    })
-
 
     var selected_gamer_profile;
     $('.gamer_profiles_all_stats_dropdown-container').css('display', 'none');
     $(document).ready(function () {
         document.getElementById("gamer_profiles-btn_to_show_all_stats").addEventListener("click", Toggle_Main_Dropdown_Display);
+        $('.profile-info-stats').addClass('selected-tab');
+
         selected_gamer_profile = $('.main_game').text();
         get_selected_game_stats();
         Toggle_Main_Dropdown_Display();
@@ -170,7 +168,7 @@ Page3 - Community
                 Toggle_Main_Dropdown_Display();
                 console.log(response['game_logo'])
                 $('.gamer_profiles-btn_to_show_all_stats_text').text(selected_gamer_profile);
-                $('.main_gamer_profiles-btn-img').attr("src", response['game_logo']);
+                $('.gamer_profiles-btn_to_show_all_stats-img').attr("src", response['game_logo']);
 
             }
         })
