@@ -47,13 +47,32 @@ Create Gamer Profile
                         </div>
                         <div class="profile-item">
                             <div class="roles">
-
                             </div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="label">Additional Information</div>
+
+                            <textarea name="remarks" class="remarks"></textarea>
+
+                        </div>
+
+                        <div class="profile-item">
+                            <input type="checkbox" name="is_looking_for_friends" id="is_looking_for_friends">
+                            <label for="is_looking_for_friends" class="label">Are you looking for people to play with
+                                ?</label>
                         </div>
                         <div class="profile-item">
                             <input type="checkbox" id="is_main" name="is_main">
                             <label for="is_main" class="label"> Is this your main gamer profile</label>
 
+                        </div>
+                        <div class="profile-item">
+                            <div class="label">Time Available to Play with others</div>
+                            <input name="time_available" class="time_available">
+                        </div>
+                        <div class="profile-item">
+                            <div class="label">In game communication skill</div>
+                            <input type="range" min="0" max="5" class="comm_rating input" name="comm_rating">
                         </div>
                         <input type="checkbox" name="is_post" id="is_post">Post it for your followers to see!
                         <div class="post_form">
@@ -91,9 +110,7 @@ Login first!
     $(document).ready(function () {
         pref_game = $('.game_to_edit').find(":selected").text();
         get_saved_game_profile_data();
-        document.getElementById("role_slider").addEventListener("change", function () {
-            console.log("HII")
-        })
+
     });
 
     $(".post_form").hide();
@@ -108,8 +125,6 @@ Login first!
     $('select.game_to_edit').change(function () {
         pref_game = $(this).children("option:selected").text();
         get_saved_game_profile_data();
-
-
     })
 
     function get_saved_game_profile_data() {
@@ -165,10 +180,9 @@ Login first!
                     let role = response['default_roles'][i];
                     let roles_zero_values = new Array(response['default_roles'].length).fill(0)
                     $('.roles').append(`<div class="label">${response['default_roles'][i]}</div>
-                        <span><input type="range" min="0" max="10" name=role_${i} class="role_${i} input" id="role_slider"></input>
+                        <span><input type="range" min="0" max="5" name=role_${i} class="role_${i} input" id="role_slider"></input>
                         <div class="role_slider_${i}"></div></span>`);
 
-                    console.log(response['roles_rating'][i])
                     if (typeof response['roles_rating'][i] === 'undefined') {
                         $(`.role_${i}`).val(roles_zero_values[i])
 
@@ -177,8 +191,16 @@ Login first!
 
                         $(`.role_${i}`).val(response['roles_rating'][i])
                     }
-                    //$(`.role_${i}`).val(response['roles_rating'][i]);
                 }
+
+                $('.remarks').val(response['remarks']);
+
+                if (response['looking_for_friends'] == true)
+                    $('#is_looking_for_friends').prop('checked', true);
+                else $('#is_looking_for_friends').prop('checked', false);
+
+                $('.time_available').val(response['time_available']);
+                $('.comm_rating').val(response['communication_level']);
             }
         })
     }

@@ -266,7 +266,7 @@ class GameProfile(models.Model):
                   ('LOL', LOLRanks.choices), ('CS', CSRanks.choices)]
 
     Valorant_additional_fields = [
-        'Preferred Agents', 'Role', 'Peak Rank', 'Tracker Link']
+        'Preferred Agents', 'Peak Rank', 'Tracker Link']
     LOL_additional_fields = ['Agents', 'Abilities', 'Role', 'Hours Played']
     COD_additional_fields = ['Guns', 'Maps', 'Role']
     CS_GO_additional_fields = ['Guns', 'Maps', 'Role']
@@ -291,11 +291,8 @@ class GameProfile(models.Model):
     achievements = models.CharField(max_length=400, blank=True, default="")
 
     looking_for_friends = models.BooleanField(default=False)
-    free_time_slots_start_time = models.TimeField(default=None, null=True)
-    free_time_slots_end_time = models.TimeField(default=None, null=True)
-    time_slots = ArrayField(models.TimeField(
-        default=None, null=True), blank=True, null=True, default=list)
-    communication_level = models.IntegerField(default=0, blank=True)
+    time_available = models.CharField(max_length=300, blank=True, null=True)
+    communication_level = models.IntegerField(default=0, blank=True, null=True)
 
     additional_info = ArrayField(ArrayField(models.CharField(
         max_length=500, null=True, blank=True, default=""), blank=True, null=True, default=list),

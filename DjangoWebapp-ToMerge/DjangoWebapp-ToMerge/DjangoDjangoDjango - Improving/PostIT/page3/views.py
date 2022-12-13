@@ -924,9 +924,19 @@ def create_game_profile(request, user):
         if(request.method == 'POST'):
 
             additional_info = []
+            roles = []
+            is_looking_for_friends = False
+
             for i in request.POST.items():
                 if "field" in i[0]:
                     additional_info.append(i[1])
+                if "role" in i[0]:
+                    roles.append(i[1])
+
+            if(request.POST.get('is_looking_for_friends') == 'on'):
+                is_looking_for_friends = True
+
+            comm_rating = request.POST.get("comm_rating")
 
             if(GameProfile.objects.filter(user=user.id, game=request.POST.get("game"))):
 
@@ -934,7 +944,10 @@ def create_game_profile(request, user):
                                                           game=request.POST.get("game"))
                 game_profile.update(
                     server=request.POST.get("server"), rank=request.POST.get("rank"),
-                    additional_info=additional_info)
+                    additional_info=additional_info, roles_rating=roles,
+                    remarks=request.POST.get("remarks"), looking_for_friends=is_looking_for_friends,
+                    time_available=request.POST.get('time_available'),
+                    communication_level=int(comm_rating))
 
                 if Main_Profile.objects.filter(user=user.id).exists():
 
@@ -957,7 +970,13 @@ def create_game_profile(request, user):
 
                 new_gamer_profile = GameProfile(user=user, game=request.POST.get('game'),
                                                 server=request.POST.get('server'), rank=request.POST.get('rank'),
-                                                additional_info=additional_info)
+                                                additional_info=additional_info, roles_rating=roles,
+                                                remarks=request.POST.get(
+                                                    "remarks"),
+                                                looking_for_friends=is_looking_for_friends,
+                                                time_available=request.POST.get(
+                                                    'time_available'),
+                                                communication_level=int(comm_rating))
                 new_gamer_profile.save()
 
                 if Main_Profile.objects.filter(user=user).exists():
@@ -1019,11 +1038,18 @@ def edit_gamer_profile(request, user):
 
             additional_info = []
             roles = []
+            is_looking_for_friends = False
+
             for i in request.POST.items():
                 if "field" in i[0]:
                     additional_info.append(i[1])
                 if "role" in i[0]:
                     roles.append(i[1])
+
+            if(request.POST.get('is_looking_for_friends') == 'on'):
+                is_looking_for_friends = True
+
+            comm_rating = request.POST.get("comm_rating")
 
             if(GameProfile.objects.filter(user=user.id, game=request.POST.get("game_to_edit"))):
 
@@ -1032,7 +1058,10 @@ def edit_gamer_profile(request, user):
 
                 game_profile.update(
                     server=request.POST.get("server"), rank=request.POST.get("rank"),
-                    additional_info=additional_info, roles_rating=roles)
+                    additional_info=additional_info, roles_rating=roles,
+                    remarks=request.POST.get("remarks"), looking_for_friends=is_looking_for_friends,
+                    time_available=request.POST.get('time_available'),
+                    communication_level=int(comm_rating))
 
                 if Main_Profile.objects.filter(user=user.id).exists():
 
@@ -1202,36 +1231,46 @@ def get_game_rank_server(request, game):
     ranks = []
     servers = []
     additional_info_fields = []
+    default_roles = []
     if game == "Valorant":
         ranks = GameProfile.ValorantRanks.choices
         servers = GameProfile.ValorantServers.choices
         additional_info_fields = GameProfile.Valorant_additional_fields
+        default_roles = GameProfile.Valorant_Roles
 
     if game == "Call of Duty":
         ranks = GameProfile.CODRanks.choices
         servers = GameProfile.CODServers.choices
         additional_info_fields = GameProfile.COD_additional_fields
+        default_roles = GameProfile.COD_Roles
 
     if game == "League of Legends":
         ranks = GameProfile.LOLRanks.choices
         servers = GameProfile.LOLServers.choices
         additional_info_fields = GameProfile.LOL_additional_fields
+        default_roles = GameProfile.LOL_Roles
 
     if game == "Counter Strike: GO":
         ranks = GameProfile.CSRanks.choices
         servers = GameProfile.CSServers.choices
         additional_info_fields = GameProfile.CS_GO_additional_fields
+        default_roles = GameProfile.CS_GO_Roles
 
+    is_profile_exists = GameProfile.objects.filter(user=request.user,
+                                                   game=game).exists()
     print(game, ranks, servers, additional_info_fields)
     return JsonResponse({"ranks": ranks, "servers": servers,
-                        "additional_fields": additional_info_fields})
+                        "additional_fields": additional_info_fields,
+                         "default_roles": default_roles,
+                         "is_profile_exists": is_profile_exists})
 
 
 def get_saved_game_rank_server(request, game):
     ranks = []
     servers = []
     default_additonal_fields = []
-    roles = []
+    default_roles = []
+    remarks = ""
 
     if game == "Valorant":
         ranks = GameProfile.ValorantRanks.choices
@@ -1267,6 +1306,10 @@ def get_saved_game_rank_server(request, game):
                          "default_additonal_fields": default_additonal_fields,
                          "default_roles": default_roles,
                          "roles_rating": saved_gamer_profile.roles_rating,
+                         "remarks": saved_gamer_profile.remarks,
+                         "looking_for_friends": saved_gamer_profile.looking_for_friends,
+                         "time_available": saved_gamer_profile.time_available,
+                         "communication_level": saved_gamer_profile.communication_level,
                          })
 
 
