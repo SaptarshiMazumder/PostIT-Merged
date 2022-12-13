@@ -1042,6 +1042,7 @@ def edit_gamer_profile(request, user):
             roles = []
             is_looking_for_friends = False
 
+            print(request.POST, "CR7")
             for i in request.POST.items():
                 if "field" in i[0]:
                     additional_info.append(i[1])
@@ -1052,7 +1053,7 @@ def edit_gamer_profile(request, user):
                 is_looking_for_friends = True
 
             comm_rating = request.POST.get("comm_rating")
-            print(request.POST, "Chester")
+
             if(GameProfile.objects.filter(user=user.id, game=request.POST.get("game_to_edit"))):
 
                 game_profile = GameProfile.objects.filter(user=user.id,
@@ -1064,7 +1065,8 @@ def edit_gamer_profile(request, user):
                     remarks=request.POST.get("remarks"), looking_for_friends=is_looking_for_friends,
                     time_available=request.POST.get('time_available'),
                     communication_level=int(comm_rating),
-                    user_status=request.POST.get("user_status"))
+                    user_status=request.POST.get("user_status"),
+                    in_game_user_id=request.POST.get('in_game_user_id'))
 
                 if Main_Profile.objects.filter(user=user.id).exists():
 
@@ -1318,7 +1320,8 @@ def get_saved_game_rank_server(request, game):
                          "time_available": saved_gamer_profile.time_available,
                          "communication_level": saved_gamer_profile.communication_level,
                          "default_user_status": default_user_status,
-                         "saved_user_status": saved_gamer_profile.user_status
+                         "saved_user_status": saved_gamer_profile.user_status,
+                         'in_game_user_id': saved_gamer_profile.in_game_user_id,
                          })
 
 

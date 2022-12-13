@@ -285,6 +285,8 @@ class GameProfile(models.Model):
     user_status = models.CharField(
         max_length=50, choices=User_Status.choices, default='none')
 
+    in_game_user_id = models.CharField(
+        max_length=400, default="", blank=True, null=True)
     years_of_exp = models.IntegerField(default=0, blank=True)
     roles_rating = ArrayField(models.IntegerField(
         default=0, null=True), blank=True, null=True, default=list)

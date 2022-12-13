@@ -1,0 +1,56 @@
+.divided_section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.gamer_profile_all_stats_section {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--secondary_bg_color);
+    width: 90%;
+    margin: 10px auto;
+    padding: 20px 0;
+    border-radius: 10px;
+}
+
+.section_info {
+    width: 100%;
+}
+
+.left_section {
+    border-right: 1px solid var(--border-color);
+}
+
+.gamer_profile_all_stats_section .game_stat {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    margin: 5px 20px;
+    justify-items: start;
+    align-items: center;
+    min-height: 40px;
+    border-bottom: 1px solid var(--tertiary1_bg_color);
+    position: relative;
+
+}
+
+.gamer_profile_all_stats_section .game_stat div {
+    display: flex;
+    width: 100%;
+}
+
+.gamer_profile_all_stats_section .game_stat i {
+    padding: 0 5px 0 0;
+}
+
+.gamer_profile_all_stats_section .game_stat .label {
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    position: relative;
+    background-color: var(--primary_color);
+    justify-self: start;
+}
+
+.gamer_profile_all_stats_section .game_stat .value {
+    padding-left: 10px;
+}

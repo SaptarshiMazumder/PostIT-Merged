@@ -1,31 +1,55 @@
 {%for g in selected_gamer_profiles%}
-<div>
-    <div class="game_display_name" style="display: none;">{{g.game}}</div>
-    <div class="game_stat">
-        <span class="label"><i class="fa-solid fa-ranking-star"></i>Rank:</span>
-        <span>
-            {{g.rank}}</span>
+<div class="divided_section">
+    <div class="section_info left_section">
+        <div class="game_display_name" style="display: none;">{{g.game}}</div>
+
+        <div class="game_stat">
+            <div class="label"><i class="fa-solid fa-user"></i>{{g.game}} User ID :</div>
+            <div class="value">{{g.in_game_user_id}}</div>
+        </div>
+
+        <div class="game_stat">
+            <div class="label"><i class="fa-solid fa-ranking-star"></i>Rank :</div>
+            <div class="value">{{g.rank}}</div>
+        </div>
+
+        <div class="game_stat">
+            <div class="label"><i class="fa-solid fa-location-dot"></i> Server :</div>
+            <div class="value"> {{g.server}}</div>
+        </div>
+
     </div>
-    <div class="game_stat">
-        <span class="label"><i class="fa-solid fa-server"></i>Server:</span>
-        <span>
-            {{g.server}}</span>
-    </div>
-    <div class="game_stat">
-        <span class="label"><i class="fa-solid fa-server"></i>Allow Matchmaking:</span>
-        <span>
-            <i class="fa-solid fa-toggle-on"></i></span>
+    <div class="section_info right_section">
+        <div class="game_stat">
+            <div class="label"><i class="fa-solid fa-server"></i>Allow Matchmaking :</div>
+            {%if g.looking_for_friends %}
+            <div class="value"><i class="fa-solid fa-toggle-on"></i></div>
+            {%else%}
+            <div class="value"><i class="fa-solid fa-toggle-off"></i></div>
+            {%endif%}
+
+        </div>
+
+        <div class="game_stat">
+            <div class="label"><i class="fa-solid fa-mars-stroke-up"></i> Status : </div>
+            <div class="value">{{g.user_status}}</div>
+        </div>
     </div>
 </div>
 {%endfor%}
+<div class="mid_section">
 
-{%for item in additional_info%}
-{% if item.game == 'Valorant' %}
-Preferred Agents:
-{{item.info.0}}
-<br>
-Peak Rank
-{{item.info.1}}
-{%endif%}
-<br>
+    {%for item in additional_info%}
+    {% if item.game == 'Valorant' %}
+    <div class="game_stat">
+        Preferred Agents:
+        {{item.info.0}}
+    </div>
+    <div class="game_stat">
+        Peak Rank
+        {{item.info.1}}
+    </div>
+    {%endif%}
+
+</div>
 {%endfor%}

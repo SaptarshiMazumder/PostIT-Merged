@@ -20,13 +20,8 @@ Page3 - Community
 
             <div class="profile-stats">
                 <div class="logged_in_user">{{user.username}}</div>
-                <div class="display_info">
-                    <div class="user_page_profile_pic"><img src="/media/{{profile.profile_pic}}" /></div>
-                    <div class="info_right">
-                        <h2 class="user_name">{{profile_owner.username}}</h2>
-                        <div class="followers">Followers{{profile.followers.count}}</div>
-                        <div class="followers">Following{{profile.following.count}}</div>
-                    </div>
+                <div class="not_display_info">
+                    <h2 class="user_name" style="display: none;">{{profile_owner.username}}</h2>
                 </div>
 
 

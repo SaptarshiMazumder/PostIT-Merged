@@ -33,6 +33,10 @@ Create Gamer Profile
                             </select>
                         </div>
                         <div class="profile-item">
+                            <div class="label"> In Game User ID</div>
+                            <input type="text" class="in_game_user_id" name="in_game_user_id" form="gamerprofile_form">
+                        </div>
+                        <div class="profile-item">
                             <div class="label"> Preferred Server</div>
                             <select class="servers" name="server" form="gamerprofile_form"></select>
                         </div>
@@ -138,7 +142,8 @@ Login first!
             type: 'GET',
             url: `/get_saved_gamerank_server/${pref_game}`,
             success: function (response) {
-                console.log(response['saved_rank']);
+
+                $('.in_game_user_id').val(response['in_game_user_id']);
 
                 $('.servers').empty();
                 for (let i = 0; i < response['servers'].length; i++) {
