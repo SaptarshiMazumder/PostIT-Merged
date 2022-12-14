@@ -88,6 +88,21 @@
             </div>
             {%endfor%}
         </div>
+        <div class="game_stat vertical">
+            <div class="label"><i class="fa-solid fa-book"></i> Note : </div>
+            <div class="value">{{g.remarks}}</div>
+        </div>
+
+        <div class="bar_stats">
+            <div class="label"><i class="fa-brands fa-magento"></i>Communication level :</div>
+            <div class="stat_container">
+
+                <div class="bar_holder" id="communication_level_bar">
+                    <div class="bar_display"></div>
+                    <div class="bar_value" style="display: none;">{{g.communication_level}}</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {%endfor%}
@@ -105,6 +120,10 @@
                     $(`#${response['default_roles'][i]}_bar`)
                         .find('.bar_display').css('width', `${(multiplier_value / 5) * 100}%`)
                 }
+
+                let communication_level_val = $('#communication_level_bar').
+                    find($('.bar_value')).text();
+                $('#communication_level_bar').find('.bar_display').css('width', `${(communication_level_val / 5) * 100}%`)
             }
         })
     })
