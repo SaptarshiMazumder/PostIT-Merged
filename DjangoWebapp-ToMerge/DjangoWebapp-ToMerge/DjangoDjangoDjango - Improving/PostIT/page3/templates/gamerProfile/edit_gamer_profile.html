@@ -45,6 +45,12 @@ Create Gamer Profile
                             <select class="ranks" name="rank" form="gamerprofile_form"></select>
                         </div>
                         <div class="profile-item">
+                            <div class="label"> Achievements</div>
+                            <textarea class="achievements" name="achievements"
+                                placeholder="eg. I have been a Radiant player for 2 years, I have played in Tier 2 LAN tournaments"
+                                form="gamerprofile_form"></textarea>
+                        </div>
+                        <div class="profile-item">
                             <div class="additional-fields">
 
                             </div>
@@ -161,6 +167,10 @@ Login first!
                     else
                         $('.ranks').append(`<option>${response['ranks'][i][0]}</option>`)
 
+                }
+
+                if (response['achievements'].length > 1) {
+                    $('.achievements').val(response['achievements']);
                 }
 
                 $('.user_status').empty();

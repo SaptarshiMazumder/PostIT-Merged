@@ -949,7 +949,8 @@ def create_game_profile(request, user):
                     additional_info=additional_info, roles_rating=roles,
                     remarks=request.POST.get("remarks"), looking_for_friends=is_looking_for_friends,
                     time_available=request.POST.get('time_available'),
-                    communication_level=int(comm_rating))
+                    communication_level=int(comm_rating),
+                    achievements=request.POST.get('achievements'))
 
                 if Main_Profile.objects.filter(user=user.id).exists():
 
@@ -978,7 +979,9 @@ def create_game_profile(request, user):
                                                 looking_for_friends=is_looking_for_friends,
                                                 time_available=request.POST.get(
                                                     'time_available'),
-                                                communication_level=int(comm_rating))
+                                                communication_level=int(
+                                                    comm_rating),
+                                                achievements=request.POST.get('achievements'))
                 new_gamer_profile.save()
 
                 if Main_Profile.objects.filter(user=user).exists():
@@ -1066,7 +1069,8 @@ def edit_gamer_profile(request, user):
                     time_available=request.POST.get('time_available'),
                     communication_level=int(comm_rating),
                     user_status=request.POST.get("user_status"),
-                    in_game_user_id=request.POST.get('in_game_user_id'))
+                    in_game_user_id=request.POST.get('in_game_user_id'),
+                    achievements=request.POST.get('achievements'))
 
                 if Main_Profile.objects.filter(user=user.id).exists():
 
@@ -1166,7 +1170,8 @@ def Gamer_Profile_Data(request, user):
         'selected_gamer_profiles': gamer_profiles,
         'main_gamer_profile': main_gamer_profile,
         'additional_info': additional_info,
-        'game_logos': GameProfile.games_logo_list, }
+        'game_logos': GameProfile.games_logo_list,
+    }
 
     html = render_to_string(
         'gamerProfile/gamer_profile_stats.html', context, request=request)
@@ -1191,12 +1196,27 @@ def User_Profile_Page_Data(request, user, game):
             dict_obj[i] = info_obj[i]
         additional_info.append({'game': g.game,
                                 'info': dict_obj})
+    saved_roles_rating = []
+
+    if game == "Valorant":
+        default_game_role = GameProfile.Valorant_Roles
+    elif game == "League of Legends":
+        default_game_role = GameProfile.LOL_Roles
+    elif game == "Call of Duty":
+        default_game_role = GameProfile.COD_Roles
+    elif game == "Counter Strike: GO":
+        default_game_role = GameProfile.CS_GO_Roles
+
+    for i in range(0, len(gamer_profiles[0].roles_rating)):
+        saved_roles_rating.append(
+            (default_game_role[i], gamer_profiles[0].roles_rating[i]))
 
     context = {
         'selected_gamer_profiles': gamer_profiles,
         'main_gamer_profile': main_gamer_profile,
         'additional_info': additional_info,
-        'game_logos': GameProfile.games_logo_list, }
+        'game_logos': GameProfile.games_logo_list,
+        'saved_roles_rating': saved_roles_rating}
 
     if(game == 'Valorant'):
 
@@ -1322,6 +1342,7 @@ def get_saved_game_rank_server(request, game):
                          "default_user_status": default_user_status,
                          "saved_user_status": saved_gamer_profile.user_status,
                          'in_game_user_id': saved_gamer_profile.in_game_user_id,
+                         'achievements': saved_gamer_profile.achievements,
                          })
 
 

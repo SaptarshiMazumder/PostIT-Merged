@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: column;
     background-color: var(--secondary_bg_color);
-    width: 90%;
+    width: 95%;
     margin: 10px auto;
     padding: 20px 0;
     border-radius: 10px;
@@ -19,6 +19,16 @@
 
 .left_section {
     border-right: 1px solid var(--border-color);
+}
+
+.mid_section {
+    width: 100%;
+    display: flex;
+}
+
+.mid_section .section_info .game_stat {
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
 }
 
 .gamer_profile_all_stats_section .game_stat {
@@ -33,9 +43,11 @@
 
 }
 
+
+
 .gamer_profile_all_stats_section .game_stat div {
     display: flex;
-    width: 100%;
+
 }
 
 .gamer_profile_all_stats_section .game_stat i {
@@ -49,8 +61,65 @@
     position: relative;
     background-color: var(--primary_color);
     justify-self: start;
+    width: 100%;
 }
 
 .gamer_profile_all_stats_section .game_stat .value {
     padding-left: 10px;
+}
+
+.section_divider {
+    width: 90%;
+    height: 2px;
+    background-color: var(--primary_color);
+    margin: 20px auto;
+}
+
+.flexible {
+    height: 100%;
+    display: flex !important;
+
+}
+
+.flexible div {
+    width: 100%;
+}
+
+.value {
+    text-align: left;
+}
+
+.clip_text {
+    word-wrap: break-word;
+}
+
+.stat_container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.bar_label {
+    margin-left: 35px;
+}
+
+.bar_stats .bar_holder {
+    width: 90%;
+    background-color: var(--tertiary1_bg_color);
+    height: 10px;
+    position: relative;
+    z-index: 1;
+    border-radius: 10px;
+    margin: 10px auto;
+}
+
+.bar_stats .bar_display {
+    width: 70%;
+    background-color: var(--primary_color);
+    height: 10px;
+    position: absolute;
+    z-index: 2;
+    top: 0px;
+    left: 0px;
+    border-radius: 10px;
 }
