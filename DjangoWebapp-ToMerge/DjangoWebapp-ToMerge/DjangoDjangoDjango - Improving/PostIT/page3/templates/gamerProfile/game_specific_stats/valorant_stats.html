@@ -46,6 +46,26 @@
 
 <div class="section_divider"></div>
 <div class="divided_section mid_section">
+    <div class="section_info experience_info">
+        {%for item in g.experience%}
+        <div class="game_stat">
+            <div class="label">
+                Team/ Org
+            </div>
+            <div class="value">
+                {{item.0}}
+            </div>
+        </div>
+        <div class="game_stat">
+            <div class="label">
+                Experience/ Role
+            </div>
+            <div class="value">
+                {{item.1}}
+            </div>
+        </div>
+        {%endfor%}
+    </div>
     <div class="section_info ">
         {%for item in additional_info%}
         {% if item.game == 'Valorant' %}
