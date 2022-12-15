@@ -1044,14 +1044,31 @@ def edit_gamer_profile(request, user):
             additional_info = []
             roles = []
             is_looking_for_friends = False
+            experience = []
 
-            print(request.POST, "CR7")
+            teams = []
+            positions = []
+
+            # for additional fields---------------
             for i in request.POST.items():
                 if "field" in i[0]:
                     additional_info.append(i[1])
                 if "role" in i[0]:
                     roles.append(i[1])
+            # END for additional fields---------------
 
+            # for experience fields---------------
+                if "Team/ Org Name" in i[0]:
+                    teams.append(i[1])
+                if "Position/Role" in i[0]:
+                    positions.append(i[1])
+            # END for experience fields---------------
+
+            for i in range(len(teams)):
+                experience.append([teams[i], positions[i]])
+
+            print(experience, "Icarus")
+            print(request.POST, "Suns")
             if(request.POST.get('is_looking_for_friends') == 'on'):
                 is_looking_for_friends = True
 
@@ -1070,7 +1087,8 @@ def edit_gamer_profile(request, user):
                     communication_level=int(comm_rating),
                     user_status=request.POST.get("user_status"),
                     in_game_user_id=request.POST.get('in_game_user_id'),
-                    achievements=request.POST.get('achievements'))
+                    achievements=request.POST.get('achievements'),
+                    experience=experience)
 
                 if Main_Profile.objects.filter(user=user.id).exists():
 
@@ -1105,8 +1123,8 @@ def edit_gamer_profile(request, user):
         'main_game_profile': main_game_profile,
         'gamer_profiles': gamer_profiles,
         'game_logos': GameProfile.games_logo_list,
-        'page': 'edit-gamer-profile'
-
+        'page': 'edit-gamer-profile',
+        'Game_Profile_Class': GameProfile,
     }
 
     return render(request, 'gamerProfile/edit_gamer_profile.html', context)
@@ -1343,6 +1361,8 @@ def get_saved_game_rank_server(request, game):
                          "saved_user_status": saved_gamer_profile.user_status,
                          'in_game_user_id': saved_gamer_profile.in_game_user_id,
                          'achievements': saved_gamer_profile.achievements,
+                         'experience_fields': GameProfile.experience_fields,
+                         'experience': saved_gamer_profile.experience
                          })
 
 

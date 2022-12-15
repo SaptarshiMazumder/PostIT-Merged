@@ -50,6 +50,15 @@ Create Gamer Profile
                                 placeholder="eg. I have been a Radiant player for 2 years, I have played in Tier 2 LAN tournaments"
                                 form="gamerprofile_form"></textarea>
                         </div>
+                        <div class="experience">
+                            <div class="profile-item">
+                                <div class="label">Experience</div>
+                                <div class="add_exp_button">Add Experience</div>
+                                <div class="experience_container"></div>
+
+
+                            </div>
+                        </div>
                         <div class="profile-item">
                             <div class="additional-fields">
 
@@ -235,6 +244,36 @@ Login first!
             }
         })
     }
+
+    var exp_counter = 0;
+
+    $('.add_exp_button').click(function () {
+
+        $.ajax({
+            type: 'GET',
+            url: `/get_saved_gamerank_server/${pref_game}`,
+            success: function (response) {
+
+                $('.experience_container').append(`<div class="exp_no${exp_counter}"></div>`)
+                for (let i = 0; i < response['experience_fields'].length; i++) {
+                    $(`.exp_no${exp_counter}`).append(`<div class="label">
+                                               ${response['experience_fields'][i]}
+                                            </div>
+                                            <textarea name="${response['experience_fields'][i]}_${exp_counter}"
+                                             class="exp_input"></textarea>`);
+
+                }
+                $(`.exp_no${exp_counter}`).append(`<button type="button" class="remove_exp_button ">Remove Experience</button>`)
+                exp_counter++;
+
+                $('.remove_exp_button').on('click', function () {
+                    console.log("Remove Exp clicked!");
+                    $(this).parent().remove();
+                })
+            }
+        })
+    });
+
     let is_main = false;
     $('#is_main').click(function () {
 
@@ -270,6 +309,9 @@ Login first!
     }
 
 </script>
+
+
+
 <script>
     var selected_gamer_profile;
     $('.gamer_profiles_dropdown-container').css('display', 'none');

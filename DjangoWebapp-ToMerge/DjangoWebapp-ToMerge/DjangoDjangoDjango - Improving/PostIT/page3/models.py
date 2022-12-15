@@ -254,6 +254,8 @@ class GameProfile(models.Model):
         LFTalent = 'Looking for talent', 'Looking for talent'
         none = 'none', 'none'
 
+    experience_fields = ['Team/ Org Name', 'Position/Role']
+
     games_logo_list = {'League of Legends': '/media/images/logos/LoL_icon.svg.png',
                        'Valorant': '/media/images/logos/Val_icon.png',
                        'Call of Duty': '/media/images/logos/COD_icon.jpg',
@@ -291,6 +293,10 @@ class GameProfile(models.Model):
     roles_rating = ArrayField(models.IntegerField(
         default=0, null=True), blank=True, null=True, default=list)
     achievements = models.CharField(max_length=400, blank=True, default="")
+
+    experience = ArrayField(ArrayField(models.CharField(
+        max_length=300, null=True, blank=True), blank=True, null=True, default=list),
+        blank=True, null=True, default=list)
 
     looking_for_friends = models.BooleanField(default=False)
     time_available = models.CharField(max_length=300, blank=True, null=True)
