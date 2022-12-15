@@ -929,12 +929,23 @@ def create_game_profile(request, user):
             roles = []
             is_looking_for_friends = False
 
+            experience = []
+            teams = []
+            positions = []
             for i in request.POST.items():
                 if "field" in i[0]:
                     additional_info.append(i[1])
                 if "role" in i[0]:
                     roles.append(i[1])
+             # for experience fields---------------
+                if "Team/ Org Name" in i[0]:
+                    teams.append(i[1])
+                if "Position/Role" in i[0]:
+                    positions.append(i[1])
+            # END for experience fields---------------
 
+            for i in range(len(teams)):
+                experience.append([teams[i], positions[i]])
             if(request.POST.get('is_looking_for_friends') == 'on'):
                 is_looking_for_friends = True
 
@@ -950,7 +961,8 @@ def create_game_profile(request, user):
                     remarks=request.POST.get("remarks"), looking_for_friends=is_looking_for_friends,
                     time_available=request.POST.get('time_available'),
                     communication_level=int(comm_rating),
-                    achievements=request.POST.get('achievements'))
+                    achievements=request.POST.get('achievements'),
+                    experience=experience)
 
                 if Main_Profile.objects.filter(user=user.id).exists():
 
@@ -981,7 +993,9 @@ def create_game_profile(request, user):
                                                     'time_available'),
                                                 communication_level=int(
                                                     comm_rating),
-                                                achievements=request.POST.get('achievements'))
+                                                achievements=request.POST.get(
+                                                    'achievements'),
+                                                experience=experience)
                 new_gamer_profile.save()
 
                 if Main_Profile.objects.filter(user=user).exists():
@@ -1307,7 +1321,8 @@ def get_game_rank_server(request, game):
                         "additional_fields": additional_info_fields,
                          "default_roles": default_roles,
                          "is_profile_exists": is_profile_exists,
-                         "default_user_status": default_user_status})
+                         "default_user_status": default_user_status,
+                         'experience_fields': GameProfile.experience_fields, })
 
 
 def get_saved_game_rank_server(request, game):

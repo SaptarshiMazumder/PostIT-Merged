@@ -55,8 +55,6 @@ Create Gamer Profile
                                 <div class="label">Experience</div>
                                 <div class="add_exp_button">Add Experience</div>
                                 <div class="experience_container"></div>
-
-
                             </div>
                         </div>
                         <div class="profile-item">
@@ -151,7 +149,7 @@ Login first!
         pref_game = $(this).children("option:selected").text();
         get_saved_game_profile_data();
     })
-
+    var exp_counter = 0;
     function get_saved_game_profile_data() {
         $.ajax({
             type: 'GET',
@@ -181,6 +179,25 @@ Login first!
                 if (response['achievements'].length > 1) {
                     $('.achievements').val(response['achievements']);
                 }
+
+                $('.experience_container').empty();
+                exp_counter = 0;
+                if (response['experience'].length > 0) {
+                    for (let i = 0; i < response['experience'].length; i++) {
+                        $('.experience_container').append(`<div class="exp_no${exp_counter}"></div>`)
+                        for (let j = 0; j < response['experience_fields'].length; j++) {
+                            $(`.exp_no${exp_counter}`).append(`<div class="label">
+                                               ${response['experience_fields'][j]}
+                                            </div>
+                                            <textarea name="${response['experience_fields'][j]}_${exp_counter}"
+                                             class="exp_input">${response['experience'][i][j]}</textarea>`);
+
+                        }
+                        exp_counter++;
+                    }
+                    $(`.exp_no${exp_counter}`).append(`<button type="button" class="remove_exp_button ">Remove Experience</button>`)
+                }
+
 
                 $('.user_status').empty();
                 console.log(response['default_user_status'])
@@ -245,7 +262,7 @@ Login first!
         })
     }
 
-    var exp_counter = 0;
+
 
     $('.add_exp_button').click(function () {
 
