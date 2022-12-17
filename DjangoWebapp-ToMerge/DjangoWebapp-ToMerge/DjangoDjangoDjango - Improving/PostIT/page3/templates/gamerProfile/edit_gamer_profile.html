@@ -193,9 +193,9 @@ Login first!
                                              class="exp_input">${response['experience'][i][j]}</textarea>`);
 
                         }
+                        $(`.exp_no${exp_counter}`).append(`<button type="button" class="remove_exp_button ">Remove Experience</button>`)
                         exp_counter++;
                     }
-                    $(`.exp_no${exp_counter}`).append(`<button type="button" class="remove_exp_button ">Remove Experience</button>`)
                 }
 
 
