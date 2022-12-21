@@ -159,6 +159,24 @@ def upload_reply(request, pk):
         replies_to_post = replies_obj[::-1]
 
     profiles = Profile.objects.all()
+
+    # Sidebar data
+    communities = Community.objects.all()[:5]
+    try:
+        main_game_profile = Main_Profile.objects.get(user=request.user)
+
+        gamer_profiles = GameProfile.objects.filter(user=request.user)
+        print("User's GAME PROFILES: ", gamer_profiles)
+    except:
+        main_game_profile = None
+        print("MAIN GAME PROFILE: ", main_game_profile)
+        gamer_profiles = None
+
+    # joined_communities = request.user.profile.communities.all()
+    try:
+        joined_communities = request.user.profile.communities.all()
+    except:
+        joined_communities = ""
     context = {
         'form1': form1,
         'form2': form2,
@@ -167,6 +185,12 @@ def upload_reply(request, pk):
         'replies_to_post': replies_to_post,
         'show_replies_button': True,
         'profiles': profiles,
+        'communities': communities,
+        'joined_communities': joined_communities,
+        'main_game_profile': main_game_profile,
+        'gamer_profiles': gamer_profiles,
+        'game_logos': GameProfile.games_logo_list,
+        'page': 'replies-page',
     }
     print('')
     context.update(post_data)
@@ -733,6 +757,48 @@ def set_likes(request):
         # print(post.body, post.like_count)
         result = post.like_count
         # print(request.POST.get('elem'))
+
+        return JsonResponse({'result': result, })
+
+
+@login_required
+@csrf_exempt
+def liked_by(request, post_id):
+    print("HEREEEE!!")
+    post = Post.objects.get(id=post_id)
+    liked_by = post.likes.all()
+    print("LIKEDBY: ", liked_by)
+    context = {
+        'liked_by': liked_by,
+    }
+    return render(request, 'post/liked_by.html', context)
+
+
+@login_required
+@csrf_exempt
+def vouch(request):
+    if request.POST.get('action') == 'post':
+        result = ''
+        id = int(request.POST.get('postid'))
+        post = get_object_or_404(Post, id=id)
+        print(id)
+        # print(post.like_count)
+        test = post.vouches.filter(id=request.user.id)
+        print(test)
+        # print(request.POST.get('elem'))
+        # request.session['post_in_view'] = id
+        if post.vouches.filter(id=request.user.id).exists():
+            print("Exists")
+            post.vouches.remove(request.user)
+            post.vouch_count -= 1
+            result = post.vouch_count
+            post.save()
+        else:
+            print("Doesn't exist")
+            post.vouches.add(request.user)
+            post.vouch_count += 1
+            result = post.vouch_count
+            post.save()
 
         return JsonResponse({'result': result, })
 

@@ -19,7 +19,7 @@ class PostForm(ModelForm):
     class Meta:
         model = Post
         # fields = '__all__'
-        fields = ('body', 'category', 'tags')
+        fields = ('body', 'category', 'tags', 'is_lft_lfp_post')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}),
             # 'author': forms.TextInput(attrs={'class': 'form-control', 'value': '', 'id': 'author-name', 'type': 'hidden'}),
@@ -34,7 +34,7 @@ class PostImageForm(ModelForm):
     class Meta:
         model = Post
         # fields = '__all__'
-        fields = ('body', 'category', 'tags')
+        fields = ('body', 'category', 'tags', 'is_lft_lfp_post')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}),
             'category': forms.Select(choices=choice_list, attrs={'class': 'form-control'}),
@@ -47,7 +47,7 @@ class PostVideoForm(ModelForm):
     class Meta:
         model = Post
         # fields = '__all__'
-        fields = ('body', 'category', 'video', 'tags')
+        fields = ('body', 'category', 'video', 'tags', 'is_lft_lfp_post')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}),
             # 'author': forms.TextInput(attrs={'class': 'form-control', 'value': '', 'id': 'author-name', 'type': 'hidden'}),

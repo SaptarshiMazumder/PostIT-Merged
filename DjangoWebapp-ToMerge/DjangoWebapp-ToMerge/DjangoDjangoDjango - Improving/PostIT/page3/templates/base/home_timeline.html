@@ -276,5 +276,39 @@ Page3 Homepage
 </script>
 <script src="{% static 'PostIT/js/togglePostOptions.js'%}"></script>
 
+<script>
+    function updateVouchText(btn, no_of_vouches) {
+
+        elem = "Vouch"
+        btn[0].innerHTML = no_of_vouches + elem
+        console.log(btn[0].innerHTML)
+    }
+
+
+    $(document).on('click', '#vouch-button', function (e) {
+        e.preventDefault();
+
+        var this_ = $(this)
+        postid = this_.attr("value").valueOf()
+
+        // var somevar = this_.attr()
+        $.ajax({
+            type: 'POST',
+            url: '{% url "vouch" %}',
+            data: {
+                postid: postid,
+                action: 'post',
+            },
+            success: function (json) {
+                no_of_vouches = json['result'];
+                console.log(json)
+                updateVouchText(this_, no_of_vouches)
+            },
+            error: function (xhr, errmsg, err) {
+
+            }
+        });
+    })
+</script>
 
 {% endblock content %}

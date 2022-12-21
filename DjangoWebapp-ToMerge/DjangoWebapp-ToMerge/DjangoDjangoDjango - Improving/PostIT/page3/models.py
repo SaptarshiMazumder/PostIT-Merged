@@ -112,6 +112,10 @@ class Post(models.Model):
         null=True, blank=True, default=-1), blank=True, null=True, default=list)
     images_urls_list = ArrayField(models.CharField(
         max_length=500, null=True, blank=True, default=""), blank=True, null=True, default=list)
+    is_lft_lfp_post = models.BooleanField(null=True, default=False, blank=True)
+    vouches = models.ManyToManyField(
+        User, default=None, blank=True, related_name='vouches')
+    vouch_count = models.BigIntegerField(default='0')
 
     def set_Tag(self, lst):
         self.tags = json.dumps(lst)
@@ -254,7 +258,8 @@ class GameProfile(models.Model):
         LFTalent = 'Looking for talent', 'Looking for talent'
         none = 'none', 'none'
 
-    experience_fields = ['Team/ Org Name', 'Position/Role']
+    # Adding or changing fields here requires changes in views.py
+    experience_fields = ['Team/ Org Name', 'Role/ Experience']
 
     games_logo_list = {'League of Legends': '/media/images/logos/LoL_icon.svg.png',
                        'Valorant': '/media/images/logos/Val_icon.png',

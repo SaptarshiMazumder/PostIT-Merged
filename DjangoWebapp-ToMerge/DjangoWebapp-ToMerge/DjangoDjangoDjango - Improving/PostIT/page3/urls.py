@@ -25,6 +25,8 @@ urlpatterns = [
     # path('like/<int:pk>', views.like_post_details, name='like-post-details'),
     path('like/', views.like, name='like'),
     path('setLikes/', views.set_likes, name='set_likes'),
+    path('liked-by/<int:post_id>', views.liked_by, name='liked-by'),
+    path('vouch/', views.vouch, name='vouch'),
     path('updateSession/', views.update_session, name='update_session'),
     path('getSessionData/', views.get_session_data, name='get_session_data'),
 

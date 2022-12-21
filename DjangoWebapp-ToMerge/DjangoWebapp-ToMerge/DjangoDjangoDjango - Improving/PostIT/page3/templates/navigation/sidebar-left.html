@@ -53,10 +53,13 @@
             <div class="sidebar-profile-pic">
                 <a href="{%url 'user-posts-page' user %}">
                     {% if user.profile.profile_pic.name %}
-                    <img src="{{ user.profile.profile_pic.url}}" width="200"></a>
-                {% else %}
-                <img src="{% static 'PostIT/images/profilepic.jpg' %}" width="200">
-                {% endif %}
+                    <img src="{{ user.profile.profile_pic.url}}" width="200">
+                    {% else %}
+
+                    <img src="{% static 'PostIT/images/profilepic.jpg' %}" width="200">
+                    {% endif %}
+                </a>
+
 
             </div>
 
