@@ -1,6 +1,6 @@
 .divided_section {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 
 .gamer_profile_all_stats_section {
@@ -17,8 +17,9 @@
     width: 100%;
 }
 
-.left_section {
-    border-right: 1px solid var(--border-color);
+.left_top_section {
+    /* border-right: 1px solid var(--border-color); */
+    padding: 10px;
 }
 
 .mid_section {
@@ -29,6 +30,10 @@
 .mid_section .section_info .game_stat {
     display: grid;
     grid-template-columns: 1.5fr 2fr;
+}
+
+.top_game_stat {
+    grid-template-columns: 1fr 1fr !important;
 }
 
 .gamer_profile_all_stats_section .game_stat {
@@ -155,4 +160,15 @@
     top: 0px;
     left: 0px;
     border-radius: 10px;
+}
+
+.game_logo {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+}
+
+.mid_left_info {
+    padding-right: 15px;
+    border-right: 1px solid var(--text-secondary-color);
 }
