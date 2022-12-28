@@ -1,20 +1,3 @@
-
-
-from cgitb import html, reset
-from dataclasses import fields
-from email import message
-from email.mime import image
-from ftplib import all_errors
-from multiprocessing import reduction
-from operator import is_
-import os
-import re
-from telnetlib import GA
-from tkinter import Image
-from turtle import pos, title
-from unicodedata import name
-from unittest import result
-from urllib.request import Request
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse, HttpResponseNotAllowed
 from django.views.generic import ListView, DetailView, UpdateView
@@ -38,7 +21,6 @@ from .serializers import PostSerializer
 from django.core import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-import json
 
 
 def is_ajax(request):
@@ -1006,7 +988,7 @@ def create_game_profile(request, user):
              # for experience fields---------------
                 if "Team/ Org Name" in i[0]:
                     teams.append(i[1])
-                if "Position/Role" in i[0]:
+                if "Role/ Experience" in i[0]:
                     positions.append(i[1])
             # END for experience fields---------------
 
@@ -1140,7 +1122,7 @@ def edit_gamer_profile(request, user):
             # for experience fields---------------
                 if "Team/ Org Name" in i[0]:
                     teams.append(i[1])
-                if "Position/Role" in i[0]:
+                if "Role/ Experience" in i[0]:
                     positions.append(i[1])
             # END for experience fields---------------
 

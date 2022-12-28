@@ -46,8 +46,8 @@ class Community(models.Model):
     community_admins = models.ManyToManyField(
         User, default=None, blank=True, related_name='community_admins')
 
-    post_date = models.DateField(auto_now_add=True)
-    post_datetime = models.DateTimeField(auto_now_add=True)
+    post_date = models.DateField(auto_now_add=True, null=True)
+    post_datetime = models.DateTimeField(auto_now_add=True, null=True)
     rules = ArrayField(models.CharField(
         max_length=500, null=True, blank=True, default=""), blank=True, null=True, default=list)
     # post = models.ManyToManyField(
@@ -91,8 +91,8 @@ class Post(models.Model):
     is_parent_a_reply = models.BooleanField(
         null=True, default=False, blank=True)
     reply_root = models.IntegerField(null=True, blank=True, default=-1)
-    post_date = models.DateField(auto_now_add=True)
-    post_datetime = models.DateTimeField(auto_now_add=True)
+    post_date = models.DateField(auto_now_add=True, null=True)
+    post_datetime = models.DateTimeField(auto_now_add=True, null=True)
     category = models.CharField(max_length=50, default='none', null=True)
     tags = models.CharField(
         max_length=255, default='', blank=True)

@@ -131,6 +131,7 @@ Page3 - Community
     $(document).ready(function () {
 
         $('.follow_btn').click(function () {
+            console.log('Follow btn clicked')
             $.ajax({
                 type: 'POST',
                 url: `/start_following/${$('.user_name').text()}`,

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-z_q^@8i3gxi*)e8(zza+0*5b#)9&61*$cszd5i62w_m9$xtxki
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -92,17 +92,37 @@ WSGI_APPLICATION = 'PostIT.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'postit',
+#         'USER': 'postgres',
+#         'PASSWORD': 'Madrid2018',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postit',
-        'USER': 'postgres',
+        'USER': 'sapmazumder',
         'PASSWORD': 'Madrid2018',
-        'HOST': 'localhost',
+        'HOST': 'database-1.ct5zpvdqwdor.us-east-1.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': 'kh02UDLZNJ96XJZx2Nrn',
+#         'HOST': 'containers-us-west-111.railway.app',
+#         'PORT': '5940',
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 

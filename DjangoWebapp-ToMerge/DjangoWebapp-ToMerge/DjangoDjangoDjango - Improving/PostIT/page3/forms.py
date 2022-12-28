@@ -6,8 +6,9 @@ from .models import Post, Category, ImageFiles, GameProfile, Community, User
 from django import forms
 
 
-# choices = [('VALORANT', 'VALORANT'), ('CSGO', 'CSGO'), ('COD', 'COD')]
-choices = Category.objects.all().values_list('name', 'name')
+choices = [('VALORANT', 'VALORANT'), ('CSGO', 'CSGO'), ('COD', 'COD')]
+# tags = [('tags', 'tags')]
+# choices = Category.objects.all().values_list('name', 'name')
 tags = Category.objects.all().values_list('tags', 'tags')
 choice_list = []
 
@@ -123,6 +124,7 @@ class MatchmakingForm(ModelForm):
 # Community
 
 all_users = User.objects.all().values_list('username', 'username')
+# all_users = []
 # users_list = []
 
 # for item in all_users:
