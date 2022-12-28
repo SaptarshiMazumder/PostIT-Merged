@@ -17,6 +17,7 @@
     --text-primary-color: rgb(255, 255, 255);
     --text-secondary-color: rgb(173, 173, 173);
     --text-secondary2-color: rgb(212, 211, 211);
+    --text-secondary3-color: rgb(212, 212, 212);
 }
 
 a {
@@ -1457,6 +1458,7 @@ h2::-webkit-scrollbar {
 
 .profile-stats {
     background-color: var(--post_bg_color);
+
     width: 680px;
     margin: 0 auto;
 }
