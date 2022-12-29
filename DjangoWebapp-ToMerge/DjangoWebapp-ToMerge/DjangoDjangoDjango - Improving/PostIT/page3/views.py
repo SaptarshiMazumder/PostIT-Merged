@@ -758,6 +758,19 @@ def liked_by(request, post_id):
 
 @login_required
 @csrf_exempt
+def vouched_by(request, post_id):
+    print("VOUCHINGG!!")
+    post = Post.objects.get(id=post_id)
+    vouched_by = post.likes.all()
+    print("VOUCHED BY: ", vouched_by)
+    context = {
+        'vouched_by': vouched_by,
+    }
+    return render(request, 'post/liked_by.html', context)
+
+
+@login_required
+@csrf_exempt
 def vouch(request):
     if request.POST.get('action') == 'post':
         result = ''
