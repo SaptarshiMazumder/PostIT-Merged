@@ -12,31 +12,34 @@ Page3 - Liked By
 <div class="main-body">
 
     {% include 'navigation/sidebar-left.html' %}
+
     <div class="page-contents">
 
         <div class="posts-timeline">
+            <div class="page-title">Likes</div>
+            <br />
             {% for user in liked_by %}
-            <div>
+            <div class="account-list-item">
 
-                <div>
+                <div class="profile-pic">
                     <a href="{%url 'user-posts-page' user %}">
                         {% if user.profile.profile_pic.name %}
-                        <img src="{{ user.profile.profile_pic.url}}" width="50px">
+                        <img src="{{ user.profile.profile_pic.url}}">
                         {% else %}
 
-                        <img src="{% static 'PostIT/images/profilepic.jpg' %}" width="50px">
+                        <img src="{% static 'PostIT/images/profilepic.jpg' %}">
                         {% endif %}
                     </a>
                 </div>
-                <div>
-                    <div>
+                <div class="info">
+                    <div class="username">
                         <a href="{%url 'user-posts-page' user %}">@{{user.username}}</a>
                     </div>
-                    <div>
+                    <div class="bio">
                         {{user.profile.bio}}
                     </div>
                 </div>
-                <div>
+                <div class="interact-button button-1" value="{{user.id}}">
                     Follow
                 </div>
 

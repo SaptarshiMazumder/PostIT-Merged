@@ -27,9 +27,11 @@
                     <td>
                         {% if community in joined_communities %}
                         <!-- Previosuly class was "button" -->
-                        <b><button id="join-community-button" value="{{community.id}}"><b>Joined</b></button></b>
+                        <b><button id="join-community-button" class="button-1"
+                                value="{{community.id}}"><b>Joined</b></button></b>
                         {% else %}
-                        <b><button id="join-community-button" value="{{community.id}}"><b>Join</b></button></b>
+                        <b><button id="join-community-button" class="button-1"
+                                value="{{community.id}}"><b>Join</b></button></b>
                         {% endif %}
                     </td>
                 </div>
@@ -40,7 +42,7 @@
             {% endfor %}
         </table>
         <br />
-        <button><b>View All</b></button>
+        <div class="button-2"><b>View All</b></div>
         {% endif %}
         <!-- {%for joined_community in joined_communities %}
 

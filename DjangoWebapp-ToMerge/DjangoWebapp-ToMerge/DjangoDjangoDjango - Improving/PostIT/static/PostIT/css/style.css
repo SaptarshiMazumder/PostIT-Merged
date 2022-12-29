@@ -762,6 +762,13 @@ p::-webkit-scrollbar {
 
 }
 
+.page-title {
+    /* background-color: aqua; */
+    text-align: left;
+    margin-left: 20px;
+    font-weight: bold;
+}
+
 .community-page-contents {
     margin: 0 auto;
 }
@@ -1464,6 +1471,71 @@ h2::-webkit-scrollbar {
 }
 
 /*  Profile Stats End */
+
+
+/* Account list items start */
+
+.account-list-item {
+    /* background-color: aqua; */
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 1fr;
+    grid-gap: 5px;
+    margin: 20px;
+    padding: 0 20px;
+    width: 85%;
+    align-items: start;
+    background-color: var(--secondary_bg_color);
+
+}
+
+.account-list-item div {
+    margin-right: auto;
+}
+
+.account-list-item .profile-pic img {
+    height: 70px;
+    width: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+
+}
+
+.account-list-item .info {
+    margin-top: 20px;
+    /* background-color: pink; */
+    /* padding-top: 15px; */
+    /* position: relative; */
+}
+
+.account-list-item .info .username {
+    /* background-color: blue; */
+    position: relative;
+
+    text-align: left;
+    /* margin-left: -90px; */
+    font-size: small;
+    color: var(--text-primary-color);
+    font-weight: bold;
+}
+
+.account-list-item .info .bio {
+    color: var(--text-secondary-color);
+    font-weight: bold;
+    place-items: center;
+    padding-bottom: 10px;
+    text-align: left;
+    /* max-width: 70%; */
+}
+
+.account-list-item .interact-button {
+    margin-left: auto;
+    margin-top: 30px;
+
+}
+
+
+/* Account list items end */
 
 /* Media Queries */
 
