@@ -769,7 +769,6 @@ def liked_by(request, post_id):
 @login_required
 @csrf_exempt
 def vouched_by(request, profile_id):
-    print("VOUCHINGG!!")
     profile = Profile.objects.get(id=profile_id)
     vouched_by = profile.vouched_by.all()
     print("VOUCHED BY: ", vouched_by)
@@ -1016,7 +1015,7 @@ def user_posts_page(request, user):
 @api_view(['GET', 'POST'])
 def start_following(request, who_to_follow):
     # print(who_to_follow, request.POST['user'])
-    print(request.POST['user'], 'INIESTAA')
+    print('XAVI', request.POST['user'], 'INIESTAA')
     profile = Profile.objects.filter(
         user=User.objects.get(username=request.POST['user']).id)
     profile[0].following.add(User.objects.get(username=who_to_follow))
@@ -1026,7 +1025,12 @@ def start_following(request, who_to_follow):
     profile_followed[0].followers.add(
         User.objects.get(username=request.POST['user']))
     print(profile_followed, request.POST['user'])
-    return Response(who_to_follow)
+
+    followers_list = []
+    for item in profile_followed[0].followers.all():
+        followers_list.append(item.username)
+
+    return JsonResponse({'followers_list': followers_list})
 
 
 def create_game_profile(request, user):
@@ -1854,3 +1858,37 @@ def add_video_post_community(request, community_id):
         form = PostVideoForm()
 
     return render(request, 'post/addPost/add_video_post.html', context)
+
+    # Retrieve/ Update Followers Count Start
+
+
+def Get_Following_Info(request):
+    logged_in_user = request.user.username
+    user_profile = Profile.objects.filter(
+        user=User.objects.get(username=request.user.username))
+    following_list = []
+    for item in user_profile[0].following.all():
+        following_list.append(item.username)
+
+    print("Drury", following_list)
+    return JsonResponse({'following_list': following_list})
+
+
+@api_view(('POST',))
+def Unfollow(request, who_to_unfollow):
+
+    profile = Profile.objects.filter(
+        user=User.objects.get(username=request.POST['user']).id)
+    profile[0].following.remove(User.objects.get(username=who_to_unfollow))
+
+    profile_unfollowed = Profile.objects.filter(
+        user=User.objects.get(username=who_to_unfollow))
+    profile_unfollowed[0].followers.remove(
+        User.objects.get(username=request.POST['user']))
+
+    followers_list = []
+    for item in profile_unfollowed[0].followers.all():
+        followers_list.append(item.username)
+
+    return JsonResponse({'followers_list': followers_list})
+# Retrieve/ Update Followers Count End

@@ -84,5 +84,11 @@ urlpatterns = [
     path('get_gamer_profile_stats/<str:user>',
          views.Gamer_Profile_Data, name="get-gamer-profile-data"),
     path('get_user_profile_stats/<str:user>/<str:game>',
-         views.User_Profile_Page_Data, name='get-user-profile-data')
+         views.User_Profile_Page_Data, name='get-user-profile-data'),
+    # Get/ Update followers start
+    path('get_following',
+         views.Get_Following_Info, name='get-following'),
+    path('unfollow/<str:who_to_unfollow>',
+         views.Unfollow, name="unfollow"),
+    # Get/ Update followers end
 ]

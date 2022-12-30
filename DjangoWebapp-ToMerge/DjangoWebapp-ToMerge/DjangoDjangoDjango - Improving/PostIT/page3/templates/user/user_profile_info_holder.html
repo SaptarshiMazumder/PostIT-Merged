@@ -1,7 +1,7 @@
 {% load static %}
 
 <div class="profile-info-holder">
-    <div class="logged_in_user" style="display: none;">{{user.username}}</div>
+    <div class="profile_page_logged_in_user" style="display: none;">{{user.username}}</div>
     <div class="profile-info">
         <div class="profile-pic">
             {% if profile.profile_pic.name %}
@@ -19,7 +19,7 @@
                 </div>
                 <div>
                     <!-- <button class="profile-interct-button follow_btn">Follow</button> -->
-                    <button class="profile-interct-button button-1">Follow</button>
+                    <button class="profile-interct-button button-1 follow_btn">Follow</button>
                 </div>
                 <br />
                 <div>
@@ -43,7 +43,7 @@
             <div class="profile-info-menu-right">
 
                 <div class="info">
-                    <div class="number">{{profile.followers.count}}</div>
+                    <div class="number followers_count">{{profile.followers.count}}</div>
                     <div class="label">Followers</div>
                 </div>
                 <div class="info">
@@ -74,28 +74,77 @@
 </div>
 
 <script>
+    var is_following = false
     $(document).ready(function () {
+        $.ajax({
+            type: 'GET',
+            url: '{% url "get-following" %}',
+            success: function (response) {
+                console.log(response['following_list'])
+                for (let i = 0; i < response['following_list'].length; i++) {
+                    if (response['following_list'][i] == $('.name').text().trim()) {
+                        is_following = true
+                        $('.follow_btn').text('Following');
+                        console.log("is_following: ", is_following)
 
-        console.log("Doc readyy!!")
-        $('.profile-interct-button').click(function () {
-            console.log("Follow btn clicked")
-            $.ajax({
-                type: 'POST',
-                url: `/start_following/${$('.name').text().trim()}`,
-                data: {
-                    'user': $('.logged_in_user').text(),
-                    // csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                    'csrfmiddlewaretoken': '{{ csrf_token }}',
-                },
-                success: function (response) {
-
-                },
-                error: function (response) {
-                    //alert("Error getting ranks and servers")
+                    }
                 }
-            })
+            }
         })
+        console.log("Doc readyy!!", is_following)
+
+        $('.profile-interct-button').click(ToggleFollow)
     })
+
+    function ToggleFollow() {
+        console.log(is_following)
+        if (is_following) {
+            Unfollow_Profile();
+        }
+        else Follow_Profile();
+    }
+    function Follow_Profile() {
+
+        $.ajax({
+            type: 'POST',
+            url: `/start_following/${$('.name').text().trim()}`,
+            data: {
+                'user': $('.profile_page_logged_in_user').text(),
+                // csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            success: function (response) {
+                $('.follow_btn').text('Following');
+                is_following = true
+                $('.followers_count').text(response['followers_list'].length)
+                console.log(response['followers_list'])
+            },
+            error: function (response) {
+                console.log("ERROORRRR in follow")
+            }
+        })
+    }
+    function Unfollow_Profile() {
+
+        $.ajax({
+            type: 'POST',
+            url: `/unfollow/${$('.name').text().trim()}`,
+            data: {
+                'user': $('.profile_page_logged_in_user').text(),
+                // csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            success: function (response) {
+                $('.follow_btn').text('Follow');
+                is_following = false
+                $('.followers_count').text(response['followers_list'].length)
+                console.log(response['followers_list'])
+            },
+            error: function (response) {
+                console.log("ERROORRRR in unfollow")
+            }
+        })
+    }
 </script>
 
 
