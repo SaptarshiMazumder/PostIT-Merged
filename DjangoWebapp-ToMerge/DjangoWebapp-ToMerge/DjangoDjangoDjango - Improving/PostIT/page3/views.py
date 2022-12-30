@@ -768,15 +768,15 @@ def liked_by(request, post_id):
 
 @login_required
 @csrf_exempt
-def vouched_by(request, post_id):
+def vouched_by(request, profile_id):
     print("VOUCHINGG!!")
-    post = Post.objects.get(id=post_id)
-    vouched_by = post.likes.all()
+    profile = Profile.objects.get(id=profile_id)
+    vouched_by = profile.vouched_by.all()
     print("VOUCHED BY: ", vouched_by)
     context = {
         'vouched_by': vouched_by,
     }
-    return render(request, 'post/vouched_by.html', context)
+    return render(request, 'gamerProfile/vouched_by.html', context)
 
 
 @login_required

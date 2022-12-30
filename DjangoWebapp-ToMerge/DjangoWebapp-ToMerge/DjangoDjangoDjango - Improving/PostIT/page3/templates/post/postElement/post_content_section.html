@@ -21,9 +21,10 @@
         <div class="row-1">
             {{post.author}}
             {% if post.is_lft_lfp_post %}
-            <div class="vouch-info"><i class="fa-solid fa-award"></i>
+            <a href="{% url 'vouched-by' post.author.profile.id %}" class="vouch-info"><i class="fa-solid fa-award"></i>
                 {{post.author.profile.vouched_by.count}}
-            </div>
+                {{post.author.profile.id}}
+            </a>
             {% endif %}
         </div>
         <span class="date">
