@@ -943,10 +943,10 @@ def user_profile_stats(request, user):
                 dict_obj[i] = info_obj[i]
             additional_info.append({'game': g.game,
                                     'info': dict_obj})
-            if user.profile.vouched_by.filter(id=request.user.id).exists():
-                vouched_for_user = True
-            else:
-                vouched_for_user = False
+        if user.profile.vouched_by.filter(id=request.user.id).exists():
+            vouched_for_user = True
+        else:
+            vouched_for_user = False
 
         context = {'posts': posts, 'profile_owner': user,
                    'profile': profile, 'image_list': image_list,
