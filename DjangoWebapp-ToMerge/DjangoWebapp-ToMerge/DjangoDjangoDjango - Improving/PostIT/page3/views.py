@@ -766,7 +766,34 @@ def vouched_by(request, post_id):
     context = {
         'vouched_by': vouched_by,
     }
-    return render(request, 'post/liked_by.html', context)
+    return render(request, 'post/vouched_by.html', context)
+
+
+@login_required
+@csrf_exempt
+def vouch_user(request):
+    if request.POST.get('action') == 'post':
+        result = ''
+        print("HERE")
+        id = int(request.POST.get('userid'))
+        profile = get_object_or_404(Profile, id=id)
+        print("Vouching for: ", profile)
+        print("My id:", request.user.id)
+
+        vouched_for_user = False
+        if profile.vouched_by.filter(id=request.user.id).exists():
+            profile.vouched_by.remove(request.user)
+            print(profile.vouched_by.count())
+            vouched_for_user = False
+        else:
+            profile.vouched_by.add(request.user)
+            print(profile.vouched_by.count())
+            vouched_for_user = True
+
+        # print(post.like_count)
+        # test = post.vouches.filter(id=request.user.id)
+        # print(test)
+        return JsonResponse({'result': profile.vouched_by.count(), 'vouched_for_user': vouched_for_user})
 
 
 @login_required
@@ -907,6 +934,10 @@ def user_profile_stats(request, user):
                 dict_obj[i] = info_obj[i]
             additional_info.append({'game': g.game,
                                     'info': dict_obj})
+            if user.profile.vouched_by.filter(id=request.user.id).exists():
+                vouched_for_user = True
+            else:
+                vouched_for_user = False
 
         context = {'posts': posts, 'profile_owner': user,
                    'profile': profile, 'image_list': image_list,
@@ -915,9 +946,12 @@ def user_profile_stats(request, user):
                    'additional_info': additional_info,
                    'game_logos': GameProfile.games_logo_list,
                    'page': 'user_profile_page',
-                   'user_to_view': user.username}
+                   'user_to_view': user.username,
+                   'vouch_count': user.profile.vouched_by.count(),
+                   'vouched_for_user': vouched_for_user,
+                   }
 
-        return render(request, 'user/user_profile_stats.html', context)
+        return render(request, 'user/user_profile_stats.html', context=context)
     return render(request, 'user/user_profile_stats.html', context={})
 
 
@@ -945,12 +979,20 @@ def user_posts_page(request, user):
                 additional_info.append({'game': g.game,
                                         'info': dict_obj})
 
+                if user.profile.vouched_by.filter(id=request.user.id).exists():
+                    vouched_for_user = True
+                else:
+                    vouched_for_user = False
+
             context = {'posts': posts, 'profile_owner': user,
                        'profile': profile, 'image_list': image_list,
                        'gamer_profiles': gamer_profiles,
                        'main_game_profile': main_gamer_profile,
                        'additional_info': additional_info,
-                       'game_logos': GameProfile.games_logo_list, }
+                       'game_logos': GameProfile.games_logo_list,
+                       'vouch_count': user.profile.vouched_by.count(),
+                       'vouched_for_user': vouched_for_user,
+                       }
 
             return render(request, 'user/user_posts_page.html', context)
         else:

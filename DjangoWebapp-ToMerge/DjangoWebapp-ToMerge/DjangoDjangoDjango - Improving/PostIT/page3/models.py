@@ -69,6 +69,8 @@ class Profile(models.Model):
         User, default=None, blank=True, related_name='following')
     followers = models.ManyToManyField(
         User, default=None, blank=True, related_name='followers')
+    vouched_by = models.ManyToManyField(
+        User, default=None, blank=True, related_name='vouched_by')
     communities = models.ManyToManyField(
         Community, default=None, blank=True, related_name='communities')
     featured_communities = models.ManyToManyField(

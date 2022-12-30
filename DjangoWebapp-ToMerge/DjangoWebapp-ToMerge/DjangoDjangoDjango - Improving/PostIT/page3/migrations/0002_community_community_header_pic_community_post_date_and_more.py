@@ -17,7 +17,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='community',
             name='community_header_pic',
-            field=models.ImageField(blank=True, null=True, upload_to='images/profile'),
+            field=models.ImageField(
+                blank=True, null=True, upload_to='images/profile'),
         ),
         migrations.AddField(
             model_name='community',
@@ -32,124 +33,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='community',
             name='rules',
-            field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(blank=True, default='', max_length=500, null=True), blank=True, default=list, null=True, size=None),
+            field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(
+                blank=True, default='', max_length=500, null=True), blank=True, default=list, null=True, size=None),
         ),
-        migrations.AddField(
-            model_name='gameprofile',
-            name='achievements',
-            field=models.CharField(blank=True, default='', max_length=400),
-        ),
-        migrations.AddField(
-            model_name='gameprofile',
-            name='additional_info',
-            field=django.contrib.postgres.fields.ArrayField(base_field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(blank=True, default='', max_length=500, null=True), blank=True, default=list, null=True, size=None), blank=True, default=list, null=True, size=None),
-        ),
-        migrations.AddField(
-            model_name='gameprofile',
-            name='communication_level',
-            field=models.IntegerField(blank=True, default=0, null=True),
-        ),
-        migrations.AddField(
-            model_name='gameprofile',
-            name='experience',
-            field=django.contrib.postgres.fields.ArrayField(base_field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(blank=True, max_length=300, null=True), blank=True, default=list, null=True, size=None), blank=True, default=list, null=True, size=None),
-        ),
-        migrations.AddField(
-            model_name='gameprofile',
-            name='in_game_user_id',
-            field=models.CharField(blank=True, default='', max_length=400, null=True),
-        ),
-        migrations.AddField(
-            model_name='gameprofile',
-            name='looking_for_friends',
-            field=models.BooleanField(default=False),
-        ),
-        migrations.AddField(
-            model_name='gameprofile',
-            name='remarks',
-            field=models.CharField(blank=True, default='', max_length=400, null=True),
-        ),
-        migrations.AddField(
-            model_name='gameprofile',
-            name='roles_rating',
-            field=django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(default=0, null=True), blank=True, default=list, null=True, size=None),
-        ),
-        migrations.AddField(
-            model_name='gameprofile',
-            name='time_available',
-            field=models.CharField(blank=True, max_length=300, null=True),
-        ),
-        migrations.AddField(
-            model_name='gameprofile',
-            name='years_of_exp',
-            field=models.IntegerField(blank=True, default=0),
-        ),
-        migrations.AddField(
-            model_name='post',
-            name='is_lft_lfp_post',
-            field=models.BooleanField(blank=True, default=False, null=True),
-        ),
-        migrations.AddField(
-            model_name='post',
-            name='vouch_count',
-            field=models.BigIntegerField(default='0'),
-        ),
-        migrations.AddField(
-            model_name='post',
-            name='vouches',
-            field=models.ManyToManyField(blank=True, default=None, related_name='vouches', to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AddField(
-            model_name='profile',
-            name='featured_communities',
-            field=models.ManyToManyField(blank=True, default=None, related_name='featuredCommunities', to='page3.community'),
-        ),
-        migrations.AlterField(
-            model_name='gameprofile',
-            name='game',
-            field=models.CharField(choices=[('Valorant', 'Valorant'), ('Call of Duty', 'Call of Duty'), ('League of Legends', 'League of Legends'), ('Counter Strike: GO', 'Counter Strike: GO')], max_length=50),
-        ),
-        migrations.AlterField(
-            model_name='gameprofile',
-            name='server',
-            field=models.CharField(choices=[('Val', [('APAC', 'Asia Pacific'), ('EMEA', 'Europe'), ('NA', 'North America'), ('JA', 'Japan')]), ('COD', [('APAC', 'Asia Pacific'), ('EMEA', 'Europe'), ('NA', 'North America')]), ('LOL', [('APAC', 'Asia Pacific'), ('EMEA', 'Europe'), ('NA', 'North America')]), ('CS', [('EMEA', 'Europe'), ('NA', 'North America')])], max_length=50),
-        ),
-        migrations.AlterField(
-            model_name='gameprofile',
-            name='user',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AlterField(
-            model_name='post',
-            name='body',
-            field=models.CharField(blank=True, max_length=280, null=True),
-        ),
-        migrations.AlterField(
-            model_name='post',
-            name='category',
-            field=models.CharField(default='none', max_length=50, null=True),
-        ),
-        migrations.AlterField(
-            model_name='post',
-            name='post_date',
-            field=models.DateField(auto_now_add=True, null=True),
-        ),
-        migrations.AlterField(
-            model_name='post',
-            name='post_datetime',
-            field=models.DateTimeField(auto_now_add=True, null=True),
-        ),
-        migrations.AlterField(
-            model_name='profile',
-            name='communities',
-            field=models.ManyToManyField(blank=True, default=None, related_name='communities', to='page3.community'),
-        ),
-        migrations.CreateModel(
-            name='Main_Profile',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('main_gamer_profile', models.OneToOneField(default=None, on_delete=django.db.models.deletion.CASCADE, to='page3.gameprofile')),
-                ('user', models.OneToOneField(default=None, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
+
     ]

@@ -1243,7 +1243,7 @@ h2::-webkit-scrollbar {
     position: relative;
     display: flex;
     width: 100%;
-    top: -5px;
+    /* top: -5px; */
     justify-content: space-between;
 }
 
@@ -1254,6 +1254,10 @@ h2::-webkit-scrollbar {
 
 .profile-info-menu-left div {
     padding: 10px;
+}
+
+.profile-info-menu-left .fa-check {
+    padding: 0 !important;
 }
 
 .profile-info-menu-right .info {
