@@ -15,14 +15,7 @@
         <a class="reply-button" href="{% url 'upload_reply' post.pk %}" onclick="storeScroll()">
             {{post.reply_count}}<i class="fa-solid fa-comment"></i></a>
 
-        {% if post.is_lft_lfp_post %}
-        <!-- <button id="vouch-button" class="vouch-button" name="{{ post.vouch_count }}"
-            value="{{ post.id }}">{{post.vouch_count}}Vouch
-        </button> -->
 
-        <button class="vouch-user-button" value="{{post.author.profile.user.id}}">
-            {{post.author.profile.vouched_by.count}} <i class="fa-solid fa-award"></i></button>
-        {% endif %}
 
         {% endif %}
 

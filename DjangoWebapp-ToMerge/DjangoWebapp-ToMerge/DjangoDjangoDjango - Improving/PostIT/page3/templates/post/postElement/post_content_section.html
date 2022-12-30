@@ -17,9 +17,19 @@
         <!-- <img src="{{ post.user_profile.profile_pic.url }}" width="500"> -->
     </div>
 
-    <span class="post-profile-section">{{post.author}} <span class="date">
+    <span class="post-profile-section">
+        <div class="row-1">
+            {{post.author}}
+            {% if post.is_lft_lfp_post %}
+            <div class="vouch-info"><i class="fa-solid fa-award"></i>
+                {{post.author.profile.vouched_by.count}}
+            </div>
+            {% endif %}
+        </div>
+        <span class="date">
             {{post.post_date}}
-        </span> </span>
+        </span>
+    </span>
 
     <span class="post-options-button" value="{{post.id}}">
 
@@ -86,7 +96,7 @@
     {% for url in post.images_urls_list %}
     <!-- http://127.0.0.1:8000/media/{{url }}<br /> -->
     <!-- {% static media_url %} -->
-    <img src="http://127.0.0.1:8000/media/{{url }}" alt="Image">
+    <img src="/media/{{url }}" alt="Image">
     <!-- <img src="{% static url %}" alt="My image"> -->
 
     {% endfor %}

@@ -680,8 +680,24 @@ p::-webkit-scrollbar {
     color: var(--grey_color)
 }
 
+.post-header-section .post-profile-section .row-1 {
+    display: flex;
+    flex-direction: row;
+}
 
+.post-header-section .post-profile-section .row-1 .fa-award {
+    padding: 0 !important;
 
+    margin: 0px;
+    margin-left: 10px;
+    color: var(--primary_color);
+}
+
+.post-header-section .post-profile-section .row-1 .vouch-info {
+    font-size: small;
+    margin-top: 3px;
+    color: var(--primary_color);
+}
 
 /* .post-header-section .post-options-button:hover>.post-options-list {
     display: block;
