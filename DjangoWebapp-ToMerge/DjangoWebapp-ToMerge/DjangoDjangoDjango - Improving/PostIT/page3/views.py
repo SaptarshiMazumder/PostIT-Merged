@@ -159,6 +159,14 @@ def upload_reply(request, pk):
         joined_communities = request.user.profile.communities.all()
     except:
         joined_communities = ""
+    post = Post.objects.get(id=pk)
+
+    if post.author.profile.vouched_by.filter(id=request.user.id).exists():
+        vouched_for_user = True
+        print("vouched_for_user", vouched_for_user)
+    else:
+        vouched_for_user = False
+        print("vouched_for_user", vouched_for_user)
     context = {
         'form1': form1,
         'form2': form2,
@@ -173,6 +181,8 @@ def upload_reply(request, pk):
         'gamer_profiles': gamer_profiles,
         'game_logos': GameProfile.games_logo_list,
         'page': 'replies-page',
+        'vouched_for_user': vouched_for_user,
+        'vouch_count': post.author.profile.vouched_by.count()
     }
     print('')
     context.update(post_data)
@@ -777,17 +787,17 @@ def vouch_user(request):
         print("HERE")
         id = int(request.POST.get('userid'))
         profile = get_object_or_404(Profile, id=id)
-        print("Vouching for: ", profile)
+        print("Vouching for: ", profile.user)
         print("My id:", request.user.id)
 
         vouched_for_user = False
         if profile.vouched_by.filter(id=request.user.id).exists():
             profile.vouched_by.remove(request.user)
-            print(profile.vouched_by.count())
+            print("Vouch count: ", profile.vouched_by.count())
             vouched_for_user = False
         else:
             profile.vouched_by.add(request.user)
-            print(profile.vouched_by.count())
+            print("Vouch count: ", profile.vouched_by.count())
             vouched_for_user = True
 
         # print(post.like_count)
