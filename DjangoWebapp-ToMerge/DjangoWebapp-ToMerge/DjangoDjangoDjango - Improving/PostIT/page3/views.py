@@ -1636,6 +1636,8 @@ def community_page(request, community_id):
     image_list = ""
     profiles = Profile.objects.all()
     has_images_to_show = False
+    user_joined_community = request.user.profile.communities.all()
+    print("user_joined_community: ", user_joined_community)
     context = {
         'community': community,
         'object_list': object_list,

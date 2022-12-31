@@ -57,7 +57,9 @@
             </div>
             {% if post.is_lft_lfp_post %}
             <div>
-                View Vouches
+                <a href="{% url 'vouched-by' post.author.profile.id %}">View Vouches</a>
+
+
             </div>
             {% endif %}
         </div>
