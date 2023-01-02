@@ -1613,7 +1613,7 @@ def get_community_details(request, id):
 
 def community_page(request, community_id):
     community = Community.objects.get(id=community_id)
-    print(community)
+    print("Current Community", community)
     context = {
         'community': community
     }
@@ -1636,8 +1636,9 @@ def community_page(request, community_id):
     image_list = ""
     profiles = Profile.objects.all()
     has_images_to_show = False
-    user_joined_community = request.user.profile.communities.all()
-    print("user_joined_community: ", user_joined_community)
+    user_joined_communities = request.user.profile.communities.all()
+
+    print("user_joined_community: ", user_joined_communities)
     context = {
         'community': community,
         'object_list': object_list,
@@ -1647,9 +1648,22 @@ def community_page(request, community_id):
         'profiles': profiles,
         'game_profiles': game_profiles,
         'communities': communities,
+        'user_joined_communities': user_joined_communities,
+        'page': 'community_posts_page'
     }
 
     return render(request, 'community/community_page.html', context)
+
+
+def community_members(request, community_id):
+    community = Community.objects.get(id=community_id)
+    user_joined_communities = request.user.profile.communities.all()
+    context = {
+        'community': community,
+        'page': 'community_members_page',
+        'user_joined_communities': user_joined_communities,
+    }
+    return render(request, 'community/community_members.html', context)
 
 
 @login_required

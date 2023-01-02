@@ -52,6 +52,8 @@ urlpatterns = [
          views.get_community_details, name='get_community_data'),
     path('community/<int:community_id>',
          views.community_page, name='community-page'),
+    path('community-members/<int:community_id>',
+         views.community_members, name='community-members'),
     path('join_community', views.join_community, name='join_community'),
     path('add_post_community/<int:community_id>',
          views.add_post_community, name='add-post-community'),
