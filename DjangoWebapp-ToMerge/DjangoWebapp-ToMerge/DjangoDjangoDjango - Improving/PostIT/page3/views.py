@@ -1668,6 +1668,20 @@ def community_members(request, community_id):
 
 @login_required
 @csrf_exempt
+def show_communities(request):
+    communities = Community.objects.all()
+    user_joined_communities = request.user.profile.communities.all()
+    print("user_joined_communities: ", user_joined_communities)
+    context = {
+        'communities': communities,
+        'user_joined_communities': user_joined_communities,
+
+    }
+    return render(request, 'community/communities_list_all.html', context)
+
+
+@login_required
+@csrf_exempt
 def join_community(request):
     if request.POST.get('action') == 'post':
         result = ''
