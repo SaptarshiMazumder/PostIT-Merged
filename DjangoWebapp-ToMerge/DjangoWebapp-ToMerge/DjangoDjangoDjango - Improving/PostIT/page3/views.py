@@ -23,6 +23,10 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 
+# Utility functions import
+from .utilityFunctions import get_featured_communities
+
+
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
@@ -40,7 +44,6 @@ def home(request):
 def home_timeline(request, post_id=None):
 
     object_list = Post.objects.all().order_by('-post_datetime')
-    communities = Community.objects.all()[:5]
     try:
         main_game_profile = Main_Profile.objects.get(user=request.user)
 
@@ -52,10 +55,9 @@ def home_timeline(request, post_id=None):
         gamer_profiles = None
 
     # joined_communities = request.user.profile.communities.all()
-    try:
-        joined_communities = request.user.profile.communities.all()
-    except:
-        joined_communities = ""
+
+    featured_communities, joined_communities = get_featured_communities(
+        request)
     # Set up pagination
     # request.session['loaded_posts'] = object_list
     p = Paginator(object_list, 4)
@@ -87,7 +89,7 @@ def home_timeline(request, post_id=None):
             'last_viewed': last_viewed,
             'has_images_to_show': has_images_to_show,
             'profile': profile,
-            'communities': communities,
+            'featured_communities': featured_communities,
             'joined_communities': joined_communities,
             'media_url': "127.0.0.1: 8000/media",
             'main_game_profile': main_game_profile,
@@ -102,7 +104,7 @@ def home_timeline(request, post_id=None):
             'last_viewed': last_viewed,
             'has_images_to_show': has_images_to_show,
             'profiles': profiles,
-            'communities': communities,
+            'featured_communities': featured_communities,
             'joined_communities': joined_communities,
             'media_url': "127.0.0.1: 8000/media",
             'main_game_profile': main_game_profile,
@@ -111,7 +113,6 @@ def home_timeline(request, post_id=None):
             'page': 'home-timeline',
         }
     # print("SETTINGS: ", static(settings.MEDIA_URL))
-
     return render(request, 'base/home_timeline.html', context)
 
 
@@ -1686,6 +1687,8 @@ def show_communities(request):
     communities = Community.objects.all()
     user_joined_communities = request.user.profile.communities.all()
     print("user_joined_communities: ", user_joined_communities)
+    featured_communities, joined_communities = get_featured_communities(
+        request)
     # gamer_profiles = GameProfile.objects.filter(user=request.user)
     # try:
     #     main_gamer_profile = Main_Profile.objects.get(
@@ -1695,6 +1698,8 @@ def show_communities(request):
     context = {
         'communities': communities,
         'user_joined_communities': user_joined_communities,
+        'featured_communities': featured_communities,
+        'joined_communities': joined_communities,
         # 'gamer_profiles': gamer_profiles,
         # 'main_game_profile': main_gamer_profile,
         # 'game_logos': GameProfile.games_logo_list,
