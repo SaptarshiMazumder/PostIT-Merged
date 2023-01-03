@@ -296,7 +296,7 @@ def upload_reply(request, pk):
         form1 = PostImageForm()
         form2 = PostVideoForm()
         imageform = ImageForm()
-
+    context.update(get_featured_communities(request))
     return render(request, 'post/replies/replies_page.html', context)
 
 
@@ -760,6 +760,7 @@ def liked_by(request, post_id):
     context = {
         'liked_by': liked_by,
     }
+    context.update(get_featured_communities(request))
     return render(request, 'post/liked_by.html', context)
 
 
@@ -772,6 +773,7 @@ def vouched_by(request, profile_id):
     context = {
         'vouched_by': vouched_by,
     }
+    context.update(get_featured_communities(request))
     return render(request, 'gamerProfile/vouched_by.html', context)
 
 
@@ -954,6 +956,7 @@ def user_profile_stats(request, user):
                    }
         context.update(
             Get_Gamer_Profiles_For_User_profiles_Page(request, user))
+        context.update(get_featured_communities(request))
         print("Parry ", context)
         return render(request, 'user/user_profile_stats.html', context=context)
     return render(request, 'user/user_profile_stats.html', context={})
@@ -995,6 +998,7 @@ def user_posts_page(request, user):
                        }
             context.update(
                 Get_Gamer_Profiles_For_User_profiles_Page(request, user))
+            context.update(get_featured_communities(request))
             return render(request, 'user/user_posts_page.html', context)
         else:
             return redirect('home-page')
