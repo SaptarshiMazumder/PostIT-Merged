@@ -59,15 +59,32 @@
     </div>
     <div class="profile-info-tabs">
         {%if profile.user.username%}
-        <div class="item profile-info-posts"
-            onclick="location.href=`{% url 'user-posts-page' profile.user.username %}`">
+
+        {% if page == 'user_posts_page' %}
+        <div class="item selected-tab" onclick="location.href=`{% url 'user-posts-page' profile.user.username %}`">
+            Posts
+        </div>
+        {% else %}
+        <div class="item" onclick="location.href=`{% url 'user-posts-page' profile.user.username %}`">
             Posts
         </div>
         {% endif %}
+
+        {% endif %}
+
+
         {%if profile.user.username%}
-        <div class="item profile-info-stats"
-            onclick="location.href=`{% url 'user-profile-stats' profile.user.username %}`">Profile
+
+        {% if page == 'user_profile_page' %}
+        <div class="item selected-tab" onclick="location.href=`{% url 'user-profile-stats' profile.user.username %}`">
+            Profile
         </div>
+        {% else %}
+        <div class="item" onclick="location.href=`{% url 'user-profile-stats' profile.user.username %}`">
+            Profile
+        </div>
+        {% endif %}
+
         {% endif %}
         <div class="item profile-info-following">Following</div>
         <div class="item profile-info-followers">Followers</div>

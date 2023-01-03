@@ -952,7 +952,7 @@ def user_profile_stats(request, user):
                    'user_to_view': user.username,
                    'vouch_count': user.profile.vouched_by.count(),
                    'vouched_for_user': vouched_for_user,
-                   'page': 'user_profile'
+                   'page': 'user_profile_page'
                    }
         context.update(
             Get_Gamer_Profiles_For_User_profiles_Page(request, user))
@@ -994,7 +994,7 @@ def user_posts_page(request, user):
                        'game_logos': GameProfile.games_logo_list,
                        'vouch_count': user.profile.vouched_by.count(),
                        'vouched_for_user': vouched_for_user,
-                       'page': 'user_profile',
+                       'page': 'user_posts_page',
                        }
             context.update(
                 Get_Gamer_Profiles_For_User_profiles_Page(request, user))
