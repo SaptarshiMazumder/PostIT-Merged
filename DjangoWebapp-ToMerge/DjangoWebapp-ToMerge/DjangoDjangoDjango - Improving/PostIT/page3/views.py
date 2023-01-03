@@ -56,8 +56,6 @@ def home_timeline(request, post_id=None):
 
     # joined_communities = request.user.profile.communities.all()
 
-    featured_communities, joined_communities = get_featured_communities(
-        request)
     # Set up pagination
     # request.session['loaded_posts'] = object_list
     p = Paginator(object_list, 4)
@@ -89,8 +87,6 @@ def home_timeline(request, post_id=None):
             'last_viewed': last_viewed,
             'has_images_to_show': has_images_to_show,
             'profile': profile,
-            'featured_communities': featured_communities,
-            'joined_communities': joined_communities,
             'media_url': "127.0.0.1: 8000/media",
             'main_game_profile': main_game_profile,
             'game_logos': GameProfile.games_logo_list,
@@ -104,8 +100,6 @@ def home_timeline(request, post_id=None):
             'last_viewed': last_viewed,
             'has_images_to_show': has_images_to_show,
             'profiles': profiles,
-            'featured_communities': featured_communities,
-            'joined_communities': joined_communities,
             'media_url': "127.0.0.1: 8000/media",
             'main_game_profile': main_game_profile,
             'gamer_profiles': gamer_profiles,
@@ -113,6 +107,8 @@ def home_timeline(request, post_id=None):
             'page': 'home-timeline',
         }
     # print("SETTINGS: ", static(settings.MEDIA_URL))
+    context.update(get_featured_communities(
+        request))
     return render(request, 'base/home_timeline.html', context)
 
 
@@ -1668,23 +1664,27 @@ def show_communities(request):
     communities = Community.objects.all()
     user_joined_communities = request.user.profile.communities.all()
     print("user_joined_communities: ", user_joined_communities)
-    featured_communities, joined_communities = get_featured_communities(
-        request)
+
     # gamer_profiles = GameProfile.objects.filter(user=request.user)
     # try:
     #     main_gamer_profile = Main_Profile.objects.get(
     #         user=User.objects.get(username=request.user))
     # except:
     #     main_gamer_profile = None
+
     context = {
         'communities': communities,
         'user_joined_communities': user_joined_communities,
-        'featured_communities': featured_communities,
-        'joined_communities': joined_communities,
+
+
         # 'gamer_profiles': gamer_profiles,
         # 'main_game_profile': main_gamer_profile,
         # 'game_logos': GameProfile.games_logo_list,
     }
+
+    context.update(get_featured_communities(
+        request))
+    print(context)
     return render(request, 'community/communities_list_all.html', context)
 
 

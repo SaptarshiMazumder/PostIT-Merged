@@ -24,14 +24,17 @@ from rest_framework.decorators import api_view
 
 
 def get_featured_communities(request):
-    communities = Community.objects.all()[:5]
+    featured_communities = Community.objects.all()[:5]
     joined_communities = ""
     try:
         joined_communities = request.user.profile.communities.all()
     except:
         joined_communities = ""
-
-    return communities, joined_communities
+    context = {
+        'featured_communities': featured_communities,
+        'joined_communities': joined_communities,
+    }
+    return context
 
 
 def Get_Gamer_Profiles_For_User_profiles_Page(request, user):
