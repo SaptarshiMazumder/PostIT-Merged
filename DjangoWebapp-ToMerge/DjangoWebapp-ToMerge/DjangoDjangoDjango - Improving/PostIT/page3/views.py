@@ -24,7 +24,7 @@ from rest_framework.decorators import api_view
 
 
 # Utility functions import
-from .utilityFunctions import get_featured_communities
+from .utilityFunctions import get_featured_communities, Get_Gamer_Profiles_For_User_profiles_Page
 
 
 def is_ajax(request):
@@ -928,16 +928,9 @@ def user_profile_stats(request, user):
         posts = Post.objects.filter(author=user)
         profile = Profile.objects.filter(user=user)[0]
         image_list = ImageFiles.objects.all()
-        desired_gamer_profiles = GameProfile.objects.filter(user=user)
-        gamer_profiles = GameProfile.objects.filter(user=request.user)
-        try:
-            desired_main_gamer_profile = Main_Profile.objects.get(
-                user=User.objects.get(username=user))
-            main_gamer_profile = Main_Profile.objects.get(
-                user=User.objects.get(username=request.user))
-        except:
-            main_gamer_profile = None
-            desired_main_gamer_profile = None
+
+        gamer_profiles = Get_Gamer_Profiles_For_User_profiles_Page(request, user)[
+            'gamer_profiles']
 
         additional_info = []
         for g in gamer_profiles:
@@ -955,19 +948,17 @@ def user_profile_stats(request, user):
 
         context = {'posts': posts, 'profile_owner': user,
                    'profile': profile, 'image_list': image_list,
-                   'desired_gamer_profiles': desired_gamer_profiles,
-                   'gamer_profiles': gamer_profiles,
-                   'desired_main_gamer_profile': desired_main_gamer_profile,
-                   'main_game_profile': main_gamer_profile,
                    'additional_info': additional_info,
                    'game_logos': GameProfile.games_logo_list,
                    'page': 'user_profile_page',
                    'user_to_view': user.username,
                    'vouch_count': user.profile.vouched_by.count(),
                    'vouched_for_user': vouched_for_user,
-                   'page': 'user_profile',
+                   'page': 'user_profile'
                    }
-
+        context.update(
+            Get_Gamer_Profiles_For_User_profiles_Page(request, user))
+        print("Parry ", context)
         return render(request, 'user/user_profile_stats.html', context=context)
     return render(request, 'user/user_profile_stats.html', context={})
 
@@ -979,16 +970,9 @@ def user_posts_page(request, user):
             posts = Post.objects.filter(author=user)
             profile = Profile.objects.filter(user=user)[0]
             image_list = ImageFiles.objects.all()
-            desired_gamer_profiles = GameProfile.objects.filter(user=user)
-            gamer_profiles = GameProfile.objects.filter(user=request.user)
-            try:
-                desired_main_gamer_profile = Main_Profile.objects.get(
-                    user=User.objects.get(username=user))
-                main_gamer_profile = Main_Profile.objects.get(
-                    user=User.objects.get(username=request.user))
-            except:
-                main_gamer_profile = None
-                desired_main_gamer_profile = None
+
+            gamer_profiles = Get_Gamer_Profiles_For_User_profiles_Page(request, user)[
+                'gamer_profiles']
 
             additional_info = []
             for g in gamer_profiles:
@@ -1007,17 +991,14 @@ def user_posts_page(request, user):
 
             context = {'posts': posts, 'profile_owner': user,
                        'profile': profile, 'image_list': image_list,
-                       'desired_gamer_profiles': desired_gamer_profiles,
-                       'gamer_profiles': gamer_profiles,
-                       'desired_main_gamer_profile': desired_main_gamer_profile,
-                       'main_game_profile': main_gamer_profile,
                        'additional_info': additional_info,
                        'game_logos': GameProfile.games_logo_list,
                        'vouch_count': user.profile.vouched_by.count(),
                        'vouched_for_user': vouched_for_user,
                        'page': 'user_profile',
                        }
-
+            context.update(
+                Get_Gamer_Profiles_For_User_profiles_Page(request, user))
             return render(request, 'user/user_posts_page.html', context)
         else:
             return redirect('home-page')
