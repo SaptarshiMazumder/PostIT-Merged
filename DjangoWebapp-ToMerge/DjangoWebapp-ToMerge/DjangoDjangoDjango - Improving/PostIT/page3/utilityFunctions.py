@@ -66,3 +66,21 @@ def Get_Gamer_Profiles_For_User_profiles_Page(request, user):
                'main_game_profile': main_gamer_profile}
 
     return context
+
+
+@login_required
+@csrf_exempt
+def get_user_vouch_information(request, user):
+    try:
+        if user.profile.vouched_by.filter(id=request.user.id).exists():
+            vouched_for_user = True
+        else:
+            vouched_for_user = False
+
+        context = {
+            'vouch_count': user.profile.vouched_by.count(),
+            'vouched_for_user': vouched_for_user,
+        }
+    except:
+        context = {}
+    return context

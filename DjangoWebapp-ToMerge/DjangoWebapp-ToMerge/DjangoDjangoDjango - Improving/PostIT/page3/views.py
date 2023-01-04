@@ -24,7 +24,7 @@ from rest_framework.decorators import api_view
 
 
 # Utility functions import
-from .utilityFunctions import get_featured_communities, Get_Gamer_Profiles_For_User_profiles_Page
+from .utilityFunctions import get_featured_communities, Get_Gamer_Profiles_For_User_profiles_Page, get_user_vouch_information
 
 
 def is_ajax(request):
@@ -939,10 +939,6 @@ def user_profile_stats(request, user):
                 dict_obj[i] = info_obj[i]
             additional_info.append({'game': g.game,
                                     'info': dict_obj})
-        if user.profile.vouched_by.filter(id=request.user.id).exists():
-            vouched_for_user = True
-        else:
-            vouched_for_user = False
 
         context = {'posts': posts, 'profile_owner': user,
                    'profile': profile, 'image_list': image_list,
@@ -950,12 +946,11 @@ def user_profile_stats(request, user):
                    'game_logos': GameProfile.games_logo_list,
                    'page': 'user_profile_page',
                    'user_to_view': user.username,
-                   'vouch_count': user.profile.vouched_by.count(),
-                   'vouched_for_user': vouched_for_user,
                    }
         context.update(
             Get_Gamer_Profiles_For_User_profiles_Page(request, user))
         context.update(get_featured_communities(request))
+        context.update(get_user_vouch_information(request, user))
         print("Parry ", context)
         return render(request, 'user/user_profile_stats.html', context=context)
     return render(request, 'user/user_profile_stats.html', context={})
@@ -982,22 +977,16 @@ def user_posts_page(request, user):
                 additional_info.append({'game': g.game,
                                         'info': dict_obj})
 
-                if user.profile.vouched_by.filter(id=request.user.id).exists():
-                    vouched_for_user = True
-                else:
-                    vouched_for_user = False
-
             context = {'posts': posts, 'profile_owner': user,
                        'profile': profile, 'image_list': image_list,
                        'additional_info': additional_info,
                        'game_logos': GameProfile.games_logo_list,
-                       'vouch_count': user.profile.vouched_by.count(),
-                       'vouched_for_user': vouched_for_user,
                        'page': 'user_posts_page',
                        }
             context.update(
                 Get_Gamer_Profiles_For_User_profiles_Page(request, user))
             context.update(get_featured_communities(request))
+            context.update(get_user_vouch_information(request, user))
             return render(request, 'user/user_posts_page.html', context)
         else:
             return redirect('home-page')
@@ -1731,24 +1720,28 @@ def join_community(request):
 
 
 def show_user_joined_communities(request, user_id):
-    print(user_id)
     try:
+        user = User.objects.get(id=user_id)
         profile = Profile.objects.get(user=user_id)
         user_joined_communities = profile.communities.all()
+        this_user_joined_communities = request.user.profile.communities.all()
 
         context = {
+            'profile': profile,
             'user_joined_communities': user_joined_communities,
-            'number_of_communities_joined': user_joined_communities.count()
+            'this_user_joined_communities': this_user_joined_communities,
+            'page': 'user_communities_page',
         }
-        print("ioio", user_joined_communities.count())
+        context.update(
+            Get_Gamer_Profiles_For_User_profiles_Page(request, user))
+        context.update(get_featured_communities(request))
+        context.update(get_user_vouch_information(request, user))
     except:
         profile = ""
-        print("jkkk")
-    context = {
-        'profile': profile,
 
-    }
-    return render(request, 'community/user_joined_communities.html', context)
+    context.update(get_featured_communities(request))
+    print(context)
+    return render(request, 'community/user_joined_communities.html', context=context)
 
 
 def add_post_community(request, community_id):

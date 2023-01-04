@@ -88,7 +88,16 @@
         {% endif %}
         <div class="item profile-info-following">Following</div>
         <div class="item profile-info-followers">Followers</div>
-        <a href="{% url 'user-communities' profile.user.id %}" class="item">Communities</a>
+
+        {% if user.is_authenticated %}
+        {% if page == 'user_communities_page' %}
+        <a class="item selected-tab" href="{% url 'user-communities' profile.user.id %}" class="item">Communities
+            ({{profile.communities.all.count}})</a>
+        {% else %}
+        <a class="item" href="{% url 'user-communities' profile.user.id %}" class="item">Communities
+            ({{profile.communities.all.count}})</a>
+        {% endif %}
+        {% endif %}
 
     </div>
 </div>
