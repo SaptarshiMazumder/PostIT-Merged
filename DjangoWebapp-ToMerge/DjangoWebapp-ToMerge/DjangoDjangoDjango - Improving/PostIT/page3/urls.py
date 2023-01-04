@@ -67,6 +67,8 @@ urlpatterns = [
     path('user/<str:user>', views.user_posts_page, name="user-posts-page"),
     path('user/profile/<str:user>', views.user_profile_stats,
          name="user-profile-stats"),
+    path('user/joined-communities/<int:user_id>', views.show_user_joined_communities,
+         name="user-communities"),
 
     path('create_gamer_profile/<str:user>',
          views.create_game_profile, name="create-gamer-profile"),

@@ -921,7 +921,7 @@ def deletePost(request, pk):
 
 
 def user_profile_stats(request, user):
-    if(user != 'favicon.png'):
+    if(user != 'favicon.png') or (user != 'favicon.png HTTP/1.1'):
         user = User.objects.get(username=user)
         posts = Post.objects.filter(author=user)
         profile = Profile.objects.filter(user=user)[0]
@@ -952,7 +952,6 @@ def user_profile_stats(request, user):
                    'user_to_view': user.username,
                    'vouch_count': user.profile.vouched_by.count(),
                    'vouched_for_user': vouched_for_user,
-                   'page': 'user_profile_page'
                    }
         context.update(
             Get_Gamer_Profiles_For_User_profiles_Page(request, user))
@@ -1729,6 +1728,27 @@ def join_community(request):
                   request.user.profile.communities.all())
             buttonText = "Joined"
         return JsonResponse({'result': "success", 'buttonText': buttonText})
+
+
+def show_user_joined_communities(request, user_id):
+    print(user_id)
+    try:
+        profile = Profile.objects.get(user=user_id)
+        user_joined_communities = profile.communities.all()
+
+        context = {
+            'user_joined_communities': user_joined_communities,
+            'number_of_communities_joined': user_joined_communities.count()
+        }
+        print("ioio", user_joined_communities.count())
+    except:
+        profile = ""
+        print("jkkk")
+    context = {
+        'profile': profile,
+
+    }
+    return render(request, 'community/user_joined_communities.html', context)
 
 
 def add_post_community(request, community_id):

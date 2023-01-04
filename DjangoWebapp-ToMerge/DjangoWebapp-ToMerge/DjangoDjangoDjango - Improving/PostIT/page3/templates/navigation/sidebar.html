@@ -5,9 +5,9 @@
     {%for logo, url in game_logos.items%}
     {%endfor%}
 
-    {%if page == 'user_profile' %}
+
     <div class="page" style="display:none ;">{{page}}</div>
-    {%endif%}
+
     <div class="sidebar-section">
         <div class="sidebar-section-title">
             Profile
@@ -54,7 +54,8 @@
 
     $(document).ready(function () {
         document.getElementById("gamer_profiles-btn").addEventListener("click", Toggle_Dropdown_Display);
-        if ($('.page').text().trim() == "user_profile")
+        if (($('.page').text().trim() == "user_posts_page") ||
+            ($('.page').text().trim() == "user_profile_page"))
             $('.sidebar').addClass("custom_margin_top");
     });
 
