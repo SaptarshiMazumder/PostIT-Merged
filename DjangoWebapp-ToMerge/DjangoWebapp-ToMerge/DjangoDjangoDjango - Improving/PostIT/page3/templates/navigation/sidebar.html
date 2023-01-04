@@ -55,7 +55,8 @@
     $(document).ready(function () {
         document.getElementById("gamer_profiles-btn").addEventListener("click", Toggle_Dropdown_Display);
         if (($('.page').text().trim() == "user_posts_page") ||
-            ($('.page').text().trim() == "user_profile_page"))
+            ($('.page').text().trim() == "user_profile_page") ||
+            ($('.page').text().trim() == "user_communities_page"))
             $('.sidebar').addClass("custom_margin_top");
     });
 

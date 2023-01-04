@@ -48,10 +48,10 @@
                     <div class="number">{{profile.following.count}}</div>
                     <div class="label">Following</div>
                 </div>
-                <div class="info">
+                <a href="{% url 'vouched-by' profile.id %}" class="info">
                     <div class="number vouch-count">{{vouch_count}}</div>
-                    <div class="label">Vouched</div>
-                </div>
+                    <div class="label">Vouches</div>
+                </a>
 
             </div>
         </div>
