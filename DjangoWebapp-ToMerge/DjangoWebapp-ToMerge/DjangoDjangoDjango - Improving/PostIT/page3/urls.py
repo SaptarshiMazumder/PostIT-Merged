@@ -29,6 +29,7 @@ urlpatterns = [
     path('vouched-by/<int:profile_id>', views.vouched_by, name='vouched-by'),
     path('vouch/', views.vouch, name='vouch'),
     path('vouch-user/', views.vouch_user, name='vouch-user'),
+    path('follow-user/', views.follow_user, name='follow-user'),
     path('updateSession/', views.update_session, name='update_session'),
     path('getSessionData/', views.get_session_data, name='get_session_data'),
 

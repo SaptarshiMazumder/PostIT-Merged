@@ -38,6 +38,7 @@ def get_featured_communities(request):
 
 
 def Get_Gamer_Profiles_For_User_profiles_Page(request, user):
+
     try:
         desired_gamer_profiles = GameProfile.objects.filter(user=user)
         gamer_profiles = GameProfile.objects.filter(user=request.user)
@@ -66,7 +67,8 @@ def Get_Gamer_Profiles_For_User_profiles_Page(request, user):
                    'desired_main_gamer_profile': desired_main_gamer_profile,
                    'main_game_profile': main_gamer_profile}
     except:
-        context = {'gamer_profile_exists': False}
+        context = {"result": False}
+
     return context
 
 
@@ -85,4 +87,14 @@ def get_user_vouch_information(request, user):
         }
     except:
         context = {}
+    return context
+
+
+@login_required
+@csrf_exempt
+def get_user_following_info(request):
+    users_currently_following = request.user.profile.following.all()
+    context = {
+        'users_currently_following': users_currently_following,
+    }
     return context

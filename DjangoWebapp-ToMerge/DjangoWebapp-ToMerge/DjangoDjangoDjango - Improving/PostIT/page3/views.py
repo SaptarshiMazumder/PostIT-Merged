@@ -24,7 +24,7 @@ from rest_framework.decorators import api_view
 
 
 # Utility functions import
-from .utilityFunctions import get_featured_communities, Get_Gamer_Profiles_For_User_profiles_Page, get_user_vouch_information
+from .utilityFunctions import get_featured_communities, Get_Gamer_Profiles_For_User_profiles_Page, get_user_vouch_information, get_user_following_info
 
 
 def is_ajax(request):
@@ -774,6 +774,8 @@ def vouched_by(request, profile_id):
         'vouched_by': vouched_by,
     }
     context.update(get_featured_communities(request))
+    context.update(get_user_following_info(request))
+
     return render(request, 'gamerProfile/vouched_by.html', context)
 
 
@@ -784,7 +786,7 @@ def vouch_user(request):
         result = ''
         print("HERE")
         id = int(request.POST.get('userid'))
-        profile = get_object_or_404(Profile, id=id)
+        profile = get_object_or_404(Profile, user_id=id)
         print("Vouching for: ", profile.user)
         print("My id:", request.user.id)
 
@@ -802,6 +804,36 @@ def vouch_user(request):
         # test = post.vouches.filter(id=request.user.id)
         # print(test)
         return JsonResponse({'result': profile.vouched_by.count(), 'vouched_for_user': vouched_for_user})
+
+
+@login_required
+@csrf_exempt
+def follow_user(request):
+    if request.POST.get('action') == 'post':
+        result = ''
+        id = int(request.POST.get('userid'))
+        profile_to_follow = get_object_or_404(Profile, user_id=id)
+        profile_following = get_object_or_404(Profile, user_id=request.user.id)
+        # print(id)
+    if profile_to_follow.followers.filter(id=request.user.id).exists():
+        profile_to_follow.followers.remove(request.user)
+        result = False
+        profile_to_follow.save()
+
+        unfollowed_user = get_object_or_404(User, id=id)
+        profile_following.following.remove(unfollowed_user)
+        profile_following.save()
+
+    else:
+        profile_to_follow.followers.add(request.user)
+        result = True
+        profile_to_follow.save()
+
+        followed_user = get_object_or_404(User, id=id)
+        profile_following.following.add(followed_user)
+        profile_following.save()
+
+    return JsonResponse({'result': result, })
 
 
 @login_required
@@ -926,6 +958,7 @@ def user_profile_stats(request, user):
         posts = Post.objects.filter(author=user)
         profile = Profile.objects.filter(user=user)[0]
         image_list = ImageFiles.objects.all()
+
         try:
             gamer_profiles = Get_Gamer_Profiles_For_User_profiles_Page(request, user)[
                 'gamer_profiles']
@@ -941,6 +974,7 @@ def user_profile_stats(request, user):
                                         'info': dict_obj})
         except:
             additional_info = []
+
         context = {'posts': posts, 'profile_owner': user,
                    'profile': profile, 'image_list': image_list,
                    'additional_info': additional_info,
@@ -948,6 +982,7 @@ def user_profile_stats(request, user):
                    'page': 'user_profile_page',
                    'user_to_view': user.username,
                    }
+
         context.update(
             Get_Gamer_Profiles_For_User_profiles_Page(request, user))
         context.update(get_featured_communities(request))

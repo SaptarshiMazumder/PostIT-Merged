@@ -39,10 +39,15 @@ Page3 - Vouched By
                         {{user.profile.bio}}
                     </div>
                 </div>
-                <div class="interact-button button-1" value="{{user.id}}">
+                {% if user in users_currently_following %}
+                <button class="interact-button button-1" value="{{user.id}}">
+                    Following
+                </button>
+                {% else %}
+                <button class="interact-button button-1" value="{{user.id}}">
                     Follow
-                </div>
-
+                </button>
+                {% endif %}
             </div>
             {% endfor %}
 
@@ -51,5 +56,49 @@ Page3 - Vouched By
         {% include 'navigation/sidebar.html' %}
     </div>
 </div>
+
+
+
+<script>
+    function updateInteractButtonText(btn) {
+        if (following_status) {
+
+            btn[0].innerHTML = "Following"
+        }
+        else {
+            btn[0].innerHTML = "Follow"
+        }
+
+        console.log(btn[0].innerHTML)
+    }
+
+
+    $(document).on('click', '.interact-button', function (e) {
+        e.preventDefault();
+
+        var this_ = $(this)
+        userid = this_.attr("value").valueOf()
+        console.log("Trying to follow: ", userid)
+        // var somevar = this_.attr()
+        $.ajax({
+            type: 'POST',
+            url: '{% url "follow-user" %}',
+            data: {
+                userid: userid,
+                action: 'post',
+            },
+            success: function (json) {
+                following_status = json['result'];
+                console.log(json)
+                updateInteractButtonText(this_, following_status)
+            },
+            error: function (xhr, errmsg, err) {
+
+            }
+        });
+    })
+</script>
+
+
 {% endblock content %}
 <!-- JS Scripts Here -->
