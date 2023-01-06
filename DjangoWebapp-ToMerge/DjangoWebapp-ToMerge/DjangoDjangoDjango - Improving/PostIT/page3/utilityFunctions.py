@@ -38,33 +38,35 @@ def get_featured_communities(request):
 
 
 def Get_Gamer_Profiles_For_User_profiles_Page(request, user):
-    desired_gamer_profiles = GameProfile.objects.filter(user=user)
-    gamer_profiles = GameProfile.objects.filter(user=request.user)
-
     try:
-        desired_main_gamer_profile = Main_Profile.objects.get(
-            user=User.objects.get(username=user))
-        main_gamer_profile = Main_Profile.objects.get(
-            user=User.objects.get(username=request.user))
-    except:
-        if Main_Profile.objects.filter(
-                user=User.objects.get(username=user)).exists():
-            desired_main_gamer_profile = None
-            main_gamer_profile = None
+        desired_gamer_profiles = GameProfile.objects.filter(user=user)
+        gamer_profiles = GameProfile.objects.filter(user=request.user)
 
-        else:
-            desired_main_gamer_profile = None
+        try:
+            desired_main_gamer_profile = Main_Profile.objects.get(
+                user=User.objects.get(username=user))
             main_gamer_profile = Main_Profile.objects.get(
                 user=User.objects.get(username=request.user))
+        except:
+            if Main_Profile.objects.filter(
+                    user=User.objects.get(username=user)).exists():
+                desired_main_gamer_profile = None
+                main_gamer_profile = None
 
-    print("Lautaro", Main_Profile.objects.get(
-        user=User.objects.get(username=request.user)), " Martizez ", main_gamer_profile)
+            else:
+                desired_main_gamer_profile = None
+                main_gamer_profile = Main_Profile.objects.get(
+                    user=User.objects.get(username=request.user))
 
-    context = {'desired_gamer_profiles': desired_gamer_profiles,
-               'gamer_profiles': gamer_profiles,
-               'desired_main_gamer_profile': desired_main_gamer_profile,
-               'main_game_profile': main_gamer_profile}
+        print("Lautaro", Main_Profile.objects.get(
+            user=User.objects.get(username=request.user)), " Martizez ", main_gamer_profile)
 
+        context = {'desired_gamer_profiles': desired_gamer_profiles,
+                   'gamer_profiles': gamer_profiles,
+                   'desired_main_gamer_profile': desired_main_gamer_profile,
+                   'main_game_profile': main_gamer_profile}
+    except:
+        context = {'gamer_profile_exists': False}
     return context
 
 

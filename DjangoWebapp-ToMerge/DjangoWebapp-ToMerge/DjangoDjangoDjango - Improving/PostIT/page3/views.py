@@ -926,20 +926,21 @@ def user_profile_stats(request, user):
         posts = Post.objects.filter(author=user)
         profile = Profile.objects.filter(user=user)[0]
         image_list = ImageFiles.objects.all()
+        try:
+            gamer_profiles = Get_Gamer_Profiles_For_User_profiles_Page(request, user)[
+                'gamer_profiles']
 
-        gamer_profiles = Get_Gamer_Profiles_For_User_profiles_Page(request, user)[
-            'gamer_profiles']
+            additional_info = []
+            for g in gamer_profiles:
+                info_obj = g.additional_info
 
-        additional_info = []
-        for g in gamer_profiles:
-            info_obj = g.additional_info
-
-            dict_obj = {}
-            for i in range(len(info_obj)):
-                dict_obj[i] = info_obj[i]
-            additional_info.append({'game': g.game,
-                                    'info': dict_obj})
-
+                dict_obj = {}
+                for i in range(len(info_obj)):
+                    dict_obj[i] = info_obj[i]
+                additional_info.append({'game': g.game,
+                                        'info': dict_obj})
+        except:
+            additional_info = []
         context = {'posts': posts, 'profile_owner': user,
                    'profile': profile, 'image_list': image_list,
                    'additional_info': additional_info,
@@ -956,26 +957,32 @@ def user_profile_stats(request, user):
     return render(request, 'user/user_profile_stats.html', context={})
 
 
+@login_required(login_url='/users/login_user')
+@csrf_exempt
 def user_posts_page(request, user):
     try:
         if(user != 'favicon.png'):
             user = User.objects.get(username=user)
             posts = Post.objects.filter(author=user)
             profile = Profile.objects.filter(user=user)[0]
+            print("Post Author Profile: ", profile)
             image_list = ImageFiles.objects.all()
 
-            gamer_profiles = Get_Gamer_Profiles_For_User_profiles_Page(request, user)[
-                'gamer_profiles']
-
             additional_info = []
-            for g in gamer_profiles:
-                info_obj = g.additional_info
+            try:
+                gamer_profiles = Get_Gamer_Profiles_For_User_profiles_Page(request, user)[
+                    'gamer_profiles']
 
-                dict_obj = {}
-                for i in range(len(info_obj)):
-                    dict_obj[i] = info_obj[i]
-                additional_info.append({'game': g.game,
-                                        'info': dict_obj})
+                for g in gamer_profiles:
+                    info_obj = g.additional_info
+
+                    dict_obj = {}
+                    for i in range(len(info_obj)):
+                        dict_obj[i] = info_obj[i]
+                    additional_info.append({'game': g.game,
+                                            'info': dict_obj})
+            except:
+                additional_info = []
 
             context = {'posts': posts, 'profile_owner': user,
                        'profile': profile, 'image_list': image_list,
@@ -983,10 +990,13 @@ def user_posts_page(request, user):
                        'game_logos': GameProfile.games_logo_list,
                        'page': 'user_posts_page',
                        }
-            context.update(
-                Get_Gamer_Profiles_For_User_profiles_Page(request, user))
+            if request.user.profile:
+                print("Logged in user profile: ", request.user.profile.id)
+                context.update(
+                    Get_Gamer_Profiles_For_User_profiles_Page(request, user))
             context.update(get_featured_communities(request))
             context.update(get_user_vouch_information(request, user))
+            print("Post Author page context: ", context)
             return render(request, 'user/user_posts_page.html', context)
         else:
             return redirect('home-page')
