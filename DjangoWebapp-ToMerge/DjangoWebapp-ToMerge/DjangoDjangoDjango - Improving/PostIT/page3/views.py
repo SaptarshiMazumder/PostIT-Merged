@@ -1723,6 +1723,7 @@ def community_members(request, community_id):
         'page': 'community_members_page',
         'user_joined_communities': user_joined_communities,
     }
+    context.update(get_user_following_info(request))
     return render(request, 'community/community_members.html', context)
 
 
