@@ -758,7 +758,7 @@ def liked_by(request, post_id):
     liked_by = post.likes.all()
     print("LIKEDBY: ", liked_by)
     context = {
-        'liked_by': liked_by,
+        'account_items_list': liked_by,
     }
     context.update(get_featured_communities(request))
     context.update(get_user_following_info(request))
@@ -772,7 +772,7 @@ def vouched_by(request, profile_id):
     vouched_by = profile.vouched_by.all()
     print("VOUCHED BY: ", vouched_by)
     context = {
-        'vouched_by': vouched_by,
+        'account_items_list': vouched_by,
     }
     context.update(get_featured_communities(request))
     context.update(get_user_following_info(request))
