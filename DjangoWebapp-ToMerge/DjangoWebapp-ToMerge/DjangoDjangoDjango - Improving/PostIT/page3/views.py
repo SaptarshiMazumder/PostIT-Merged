@@ -761,6 +761,7 @@ def liked_by(request, post_id):
         'liked_by': liked_by,
     }
     context.update(get_featured_communities(request))
+    context.update(get_user_following_info(request))
     return render(request, 'post/liked_by.html', context)
 
 
