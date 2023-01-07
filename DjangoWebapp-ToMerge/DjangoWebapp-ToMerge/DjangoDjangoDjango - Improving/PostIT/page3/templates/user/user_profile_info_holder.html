@@ -41,14 +41,20 @@
             </div>
             <div class="profile-info-menu-right">
 
-                <div class="info">
+                {% if profile.id %}
+                <a href="{% url 'followers' profile.id %}" class="info">
                     <div class="number followers_count">{{profile.followers.count}}</div>
                     <div class="label">Followers</div>
-                </div>
-                <div class="info">
+                </a>
+                {% endif %}
+
+                {% if profile.id %}
+                <a href="{% url 'following' profile.id %}" class="info">
                     <div class="number">{{profile.following.count}}</div>
                     <div class="label">Following</div>
-                </div>
+                </a>
+                {% endif %}
+
                 {% if profile.id %}
                 <a href="{% url 'vouched-by' profile.id %}" class="info">
                     <div class="number vouch-count">{{vouch_count}}</div>

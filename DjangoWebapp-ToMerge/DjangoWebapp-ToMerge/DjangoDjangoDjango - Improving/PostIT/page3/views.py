@@ -782,6 +782,36 @@ def vouched_by(request, profile_id):
 
 @login_required
 @csrf_exempt
+def followers(request, profile_id):
+    profile = Profile.objects.get(id=profile_id)
+    followers = profile.followers.all()
+    print("Followed By: ", followers)
+    context = {
+        'account_items_list': followers,
+    }
+    context.update(get_featured_communities(request))
+    context.update(get_user_following_info(request))
+
+    return render(request, 'user/followers_list.html', context)
+
+
+@login_required
+@csrf_exempt
+def following(request, profile_id):
+    profile = Profile.objects.get(id=profile_id)
+    following = profile.following.all()
+    print("Following: ", followers)
+    context = {
+        'account_items_list': following,
+    }
+    context.update(get_featured_communities(request))
+    context.update(get_user_following_info(request))
+
+    return render(request, 'user/following_list.html', context)
+
+
+@login_required
+@csrf_exempt
 def vouch_user(request):
     if request.POST.get('action') == 'post':
         result = ''
