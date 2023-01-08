@@ -56,6 +56,13 @@ Page3 Homepage
 
     </div>
 </div>
+{% if user.is_authenticated %}
+<div class="blocker"></div>
+<div class="sidebar-right-mobile">
+    {% include 'navigation/sidebar-right-mobile.html' %}
+</div>
+
+{% endif %}
 <script src="{% static 'PostIT/js/jquery.waypoints.min.js' %}"></script>
 <script src="{% static 'PostIT/js/infinite.min.js'%}"></script>
 
@@ -311,4 +318,36 @@ Page3 Homepage
     })
 </script>
 
+<script>
+    var is_right_sidebar_displayed = false;
+    window.onload = function () {
+        console.log("Southgate!!")
+        HideRightSidebar();
+        $('.profile-img-navbar').click(ToggleRightSidebar)
+        $('.blocker').click(ToggleRightSidebar);
+    }
+    function ToggleRightSidebar() {
+        if (is_right_sidebar_displayed) {
+            HideRightSidebar();
+            is_right_sidebar_displayed = false;
+        }
+        else {
+            ShowRightSidebar();
+            is_right_sidebar_displayed = true;
+        }
+        console.log("Sidbar toggle!!", is_right_sidebar_displayed)
+    }
+    function HideRightSidebar() {
+        $('.sidebar-right-mobile').hide();
+        $('.blocker').hide();
+        console.log(" HideRightSidebar!!", is_right_sidebar_displayed)
+
+    }
+    function ShowRightSidebar() {
+        $('.sidebar-right-mobile').show();
+        $('.blocker').show();
+        console.log(" ShowRightSidebar!!", is_right_sidebar_displayed)
+
+    }
+</script>
 {% endblock content %}
