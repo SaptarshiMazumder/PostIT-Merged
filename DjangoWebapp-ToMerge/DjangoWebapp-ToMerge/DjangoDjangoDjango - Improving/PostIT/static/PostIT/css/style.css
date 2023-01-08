@@ -788,6 +788,16 @@ p::-webkit-scrollbar {
     font-weight: bold;
 }
 
+.search-results-page-contents {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 50px;
+    position: relative;
+
+
+}
+
 .community-page-contents {
     margin: 0 auto;
 }

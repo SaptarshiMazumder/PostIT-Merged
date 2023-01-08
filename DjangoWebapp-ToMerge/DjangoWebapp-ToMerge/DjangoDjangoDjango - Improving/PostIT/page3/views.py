@@ -1565,6 +1565,7 @@ def search_results(request):
         search_query = request.POST['search_query'].lower().replace(' ', '')
         posts_list = []
         people_list = []
+        accounts_list = []
         all_posts = Post.objects.all().order_by('-post_datetime')
         all_profiles = Profile.objects.all()
         profiles = Profile.objects.all()
@@ -1587,12 +1588,19 @@ def search_results(request):
         for pr in all_profiles:
             if pr.user.username.find(search_query) != -1:
                 people_list.append(pr)
+                accounts_list.append(pr.user)
 
         print(posts_list)
-
-        return render(request, 'search/search_results.html', context={'posts_list': posts_list,
-                                                                      'search_query': og_search_query, 'profiles': profiles,
-                                                                      'people_list': people_list, 'image_list': image_list})
+        context = {'posts_list': posts_list,
+                   'search_query': og_search_query, 'profiles': profiles,
+                   'people_list': people_list, 'image_list': image_list,
+                   'account_items_list': accounts_list,
+                   }
+        context.update(get_user_following_info(request))
+        context.update(Get_Gamer_Profiles_For_User_profiles_Page(
+            request, request.user))
+        context.update(get_featured_communities(request))
+        return render(request, 'search/search_results.html', context=context)
     return render(request, 'search/search_results.html')
 
 

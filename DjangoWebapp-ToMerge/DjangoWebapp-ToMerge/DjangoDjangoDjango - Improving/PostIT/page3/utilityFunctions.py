@@ -65,7 +65,8 @@ def Get_Gamer_Profiles_For_User_profiles_Page(request, user):
         context = {'desired_gamer_profiles': desired_gamer_profiles,
                    'gamer_profiles': gamer_profiles,
                    'desired_main_gamer_profile': desired_main_gamer_profile,
-                   'main_game_profile': main_gamer_profile}
+                   'main_game_profile': main_gamer_profile,
+                   'game_logos': GameProfile.games_logo_list, }
     except:
         context = {"result": False}
 
