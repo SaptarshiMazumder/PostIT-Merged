@@ -24,7 +24,7 @@ from rest_framework.decorators import api_view
 
 
 # Utility functions import
-from .utilityFunctions import get_featured_communities, Get_Gamer_Profiles_For_User_profiles_Page, get_user_vouch_information, get_user_following_info
+from .utilityFunctions import get_featured_communities, Get_Gamer_Profiles_For_User_profiles_Page, get_user_vouch_information, get_user_following_info, Get_Logged_in_User_Gamer_Profiles
 
 
 def is_ajax(request):
@@ -991,7 +991,7 @@ def user_profile_stats(request, user):
         image_list = ImageFiles.objects.all()
 
         try:
-            gamer_profiles = Get_Gamer_Profiles_For_User_profiles_Page(request, user)[
+            gamer_profiles = Get_Logged_in_User_Gamer_Profiles(request, user)[
                 'gamer_profiles']
 
             additional_info = []
@@ -1016,6 +1016,9 @@ def user_profile_stats(request, user):
 
         context.update(
             Get_Gamer_Profiles_For_User_profiles_Page(request, user))
+        context.update(
+            Get_Logged_in_User_Gamer_Profiles(request, user))
+
         context.update(get_featured_communities(request))
         context.update(get_user_vouch_information(request, user))
         print("Parry ", context)
@@ -1036,7 +1039,7 @@ def user_posts_page(request, user):
 
             additional_info = []
             try:
-                gamer_profiles = Get_Gamer_Profiles_For_User_profiles_Page(request, user)[
+                gamer_profiles = Get_Logged_in_User_Gamer_Profiles(request, user)[
                     'gamer_profiles']
 
                 for g in gamer_profiles:
@@ -1060,6 +1063,9 @@ def user_posts_page(request, user):
                 print("Logged in user profile: ", request.user.profile.id)
                 context.update(
                     Get_Gamer_Profiles_For_User_profiles_Page(request, user))
+                context.update(
+                    Get_Logged_in_User_Gamer_Profiles(request, user))
+
             context.update(get_featured_communities(request))
             context.update(get_user_vouch_information(request, user))
             print("Post Author page context: ", context)
@@ -1643,6 +1649,8 @@ def search_results(request):
         context.update(get_user_following_info(request))
         context.update(Get_Gamer_Profiles_For_User_profiles_Page(
             request, request.user))
+        context.update(
+            Get_Logged_in_User_Gamer_Profiles(request, request.user))
         context.update(get_featured_communities(request))
         return render(request, 'search/search_results.html', context=context)
     return render(request, 'search/search_results.html')
@@ -1863,6 +1871,8 @@ def show_user_joined_communities(request, user_id):
         }
         context.update(
             Get_Gamer_Profiles_For_User_profiles_Page(request, user))
+        context.update(
+            Get_Logged_in_User_Gamer_Profiles(request, user))
         context.update(get_featured_communities(request))
         context.update(get_user_vouch_information(request, user))
     except:

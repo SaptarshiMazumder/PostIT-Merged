@@ -40,35 +40,33 @@ def get_featured_communities(request):
 def Get_Gamer_Profiles_For_User_profiles_Page(request, user):
 
     try:
-        desired_gamer_profiles = GameProfile.objects.filter(user=user)
-        gamer_profiles = GameProfile.objects.filter(user=request.user)
+        selected_user_gamer_profiles = GameProfile.objects.filter(user=user)
+        selected_user_main_gamer_profile = Main_Profile.objects.get(
+            user=User.objects.get(username=user))
 
-        try:
-            desired_main_gamer_profile = Main_Profile.objects.get(
-                user=User.objects.get(username=user))
-            main_gamer_profile = Main_Profile.objects.get(
-                user=User.objects.get(username=request.user))
-        except:
-            if Main_Profile.objects.filter(
-                    user=User.objects.get(username=user)).exists():
-                desired_main_gamer_profile = None
-                main_gamer_profile = None
-
-            else:
-                desired_main_gamer_profile = None
-                main_gamer_profile = Main_Profile.objects.get(
-                    user=User.objects.get(username=request.user))
-
-        print("Lautaro", Main_Profile.objects.get(
-            user=User.objects.get(username=request.user)), " Martizez ", main_gamer_profile)
-
-        context = {'desired_gamer_profiles': desired_gamer_profiles,
-                   'gamer_profiles': gamer_profiles,
-                   'desired_main_gamer_profile': desired_main_gamer_profile,
-                   'main_game_profile': main_gamer_profile,
-                   'game_logos': GameProfile.games_logo_list, }
     except:
-        context = {"result": False}
+        selected_user_gamer_profiles = None
+        selected_user_main_gamer_profile = None
+
+    context = {'selected_user_gamer_profiles': selected_user_gamer_profiles,
+               'selected_user_main_gamer_profile': selected_user_main_gamer_profile,
+               'game_logos': GameProfile.games_logo_list, }
+    print("Aimer: ", context)
+
+    return context
+
+
+def Get_Logged_in_User_Gamer_Profiles(request, user):
+    try:
+        gamer_profiles = GameProfile.objects.filter(user=request.user)
+        main_gamer_profile = Main_Profile.objects.get(
+            user=User.objects.get(username=request.user))
+    except:
+        gamer_profiles = None
+        main_gamer_profile = None
+
+    context = {'gamer_profiles': gamer_profiles,
+               'main_game_profile': main_gamer_profile, }
 
     return context
 
