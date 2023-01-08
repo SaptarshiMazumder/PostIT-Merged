@@ -1264,7 +1264,8 @@ h2::-webkit-scrollbar {
 .selected-tab {
     /* display: none; */
     color: #fff !important;
-    border-bottom: 5px solid var(--primary_color);
+    border: none;
+    border-bottom: 5px solid var(--primary_color) !important;
 }
 
 .profile-info-tabs>div {

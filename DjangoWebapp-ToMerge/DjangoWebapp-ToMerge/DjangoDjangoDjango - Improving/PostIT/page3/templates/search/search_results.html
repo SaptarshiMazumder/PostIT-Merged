@@ -66,13 +66,20 @@ Page3 Homepage
 
 <script>
     $('#people-list').hide();
+    $('#people_btn').removeClass('selected-tab')
+    $('#posts_btn').addClass('selected-tab')
+
     $('#people_btn').click(function () {
         $('#posts_list').hide();
         $('#people-list').show();
+        $('#people_btn').addClass('selected-tab')
+        $('#posts_btn').removeClass('selected-tab')
     });
     $('#posts_btn').click(function () {
         $('#people-list').hide();
         $('#posts_list').show();
+        $('#people_btn').removeClass('selected-tab')
+        $('#posts_btn').addClass('selected-tab')
     });
 </script>
 
