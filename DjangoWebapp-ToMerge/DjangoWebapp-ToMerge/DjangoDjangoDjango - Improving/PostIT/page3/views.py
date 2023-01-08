@@ -1572,9 +1572,8 @@ def search_results(request):
         image_list = ImageFiles.objects.all()
 
         for p in all_posts:
-            if p.body.lower().find(search_query) != -1:
+            if search_query in p.body.lower():
                 posts_list.append(p)
-
             elif len(p.tags) > 0 and p.get_Tag() != "":
 
                 for t in p.get_Tag():
@@ -1582,14 +1581,13 @@ def search_results(request):
                         posts_list.append(p)
             elif str(p.category).lower().replace(' ', '').find(search_query) != -1:
                 posts_list.append(p)
-            if p.author.username.find(search_query) != -1:
+
+            if search_query in p.author.username.lower():
                 posts_list.append(p)
 
         for pr in all_profiles:
-            if pr.user.username.find(search_query) != -1:
-                people_list.append(pr)
+            if search_query in pr.user.username.lower():
                 accounts_list.append(pr.user)
-
         print(posts_list)
         context = {'posts_list': posts_list,
                    'search_query': og_search_query, 'profiles': profiles,
