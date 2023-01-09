@@ -77,6 +77,8 @@ class Profile(models.Model):
         Community, default=None, blank=True, related_name='featuredCommunities')
     is_private = models.BooleanField(null=True, blank=True, default=False)
 
+    age = models.IntegerField(null=True)
+
     def __str__(self):
         return str(self.user)
 
@@ -290,7 +292,10 @@ class GameProfile(models.Model):
 
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     game = models.CharField(max_length=50, choices=games_list)
-    server = models.CharField(max_length=50, choices=servers_list)
+    region = models.CharField(max_length=50, choices=servers_list)
+    servers = ArrayField(models.CharField(
+        max_length=50, null=True, blank=True, default=""), blank=True, null=True, default=list)
+
     rank = models.CharField(max_length=50, choices=ranks_list, default="")
     user_status = models.CharField(
         max_length=50, choices=User_Status.choices, default='none')
@@ -317,8 +322,10 @@ class GameProfile(models.Model):
     remarks = models.CharField(
         max_length=400, default="", blank=True, null=True)
 
+    age = models.IntegerField(null=True)
+
     def __str__(self):
-        return str(self.user) + " | " + str(self.game) + " | " + str(self.server) + " | " + str(self.rank)
+        return str(self.user) + " | " + str(self.game) + " | " + str(self.region) + " | " + str(self.rank)
 
 
 class Main_Profile(models.Model):
