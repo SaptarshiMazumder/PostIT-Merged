@@ -198,25 +198,43 @@ class GameProfile(models.Model):
     games_list = [('Valorant', 'Valorant'), ('Call of Duty', 'Call of Duty'),
                   ('League of Legends', 'League of Legends'), ('Counter Strike: GO', 'Counter Strike: GO')]
 
-    class ValorantServers(models.TextChoices):
+    class ValorantRegions(models.TextChoices):
         APAC = 'APAC', 'Asia Pacific'
         EMEA = 'EMEA', 'Europe'
         NA = 'NA', 'North America'
         JA = 'JA', 'Japan'
 
-    class CODServers(models.TextChoices):
+    class CODRegions(models.TextChoices):
         APAC = 'APAC', 'Asia Pacific'
         EMEA = 'EMEA', 'Europe'
         NA = 'NA', 'North America'
 
-    class LOLServers(models.TextChoices):
+    class LOLRegions(models.TextChoices):
         APAC = 'APAC', 'Asia Pacific'
         EMEA = 'EMEA', 'Europe'
         NA = 'NA', 'North America'
 
-    class CSServers(models.TextChoices):
+    class CSRegions(models.TextChoices):
         EMEA = 'EMEA', 'Europe'
         NA = 'NA', 'North America'
+
+    Valorant_Servers = {'APAC': ['Tokyo', 'Singapore', 'Mumbai', 'Seoul'],
+                        'EMEA': ['London', 'Paris', 'Kyiv', 'Barcelona'],
+                        'NA': ['San Francisco', 'FLorida', 'Texas', 'Vancouver'],
+                        'LATAM': ['Buenos Aires', 'Rio de Janeiro', 'Mexico City', 'Havana'], }
+    COD_Servers = {'APAC': ['Tokyo', 'Singapore', 'Mumbai', 'Tehran'],
+                   'EMEA': ['London', 'Paris', 'Kyiv', 'Barcelona', 'Madrid', 'Rome'],
+                   'NA': ['San Francisco', 'FLorida', 'Texas', 'Vancouver', 'Washington'],
+                   'LATAM': ['Buenos Aires', 'Rio de Janeiro', 'Mexico City', 'Santiago'], }
+
+    LOL_Servers = {'APAC': ['Osaka', 'Kyoto', 'Fukouka', 'Singapore', 'Delhi', 'Jerusalem'],
+                   'EMEA': ['London', 'Paris', 'Kyiv', 'Barcelona', 'Madrid', 'Rome'],
+                   'NA': ['San Francisco', 'FLorida', 'Texas', 'Vancouver', 'Washington'],
+                   'LATAM': ['Buenos Aires', 'Rio de Janeiro', 'Mexico City', 'Montevideo'], }
+    CS_Servers = {'APAC': ['Seoul', 'Tokyo', 'Karachi', 'Singapore', 'Delhi', 'Mumbai'],
+                  'EMEA': ['London', 'Paris', 'Kyiv', 'Barcelona', 'Madrid', 'Brighton', 'Reading', 'Portsmouth'],
+                  'NA': ['San Francisco', 'Chicago',  'FLorida', 'Texas', 'Vancouver', 'Washington'],
+                  'LATAM': ['Buenos Aires', 'Rio de Janeiro', 'Amazon', 'Cairo',  'Mexico City', 'Montevideo'], }
 
     class ValorantRanks(models.TextChoices):
         Iron = 'IRON', 'Iron :((('
@@ -271,8 +289,8 @@ class GameProfile(models.Model):
                        'Call of Duty': '/media/images/logos/COD_icon.jpg',
                        'Counter Strike: GO': '/media/images/logos/CSGO_icon.png',
                        }
-    servers_list = [('Val', ValorantServers.choices), ('COD', CODServers.choices),
-                    ('LOL', LOLServers.choices), ('CS', CSServers.choices)]
+    regions_list = [('Val', ValorantRegions.choices), ('COD', CODRegions.choices),
+                    ('LOL', LOLRegions.choices), ('CS', CSRegions.choices)]
 
     ranks_list = [('Val', ValorantRanks.choices), ('COD', CODRanks.choices),
                   ('LOL', LOLRanks.choices), ('CS', CSRanks.choices)]
@@ -292,7 +310,7 @@ class GameProfile(models.Model):
 
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     game = models.CharField(max_length=50, choices=games_list)
-    region = models.CharField(max_length=50, choices=servers_list)
+    region = models.CharField(max_length=50, choices=regions_list)
     servers = ArrayField(models.CharField(
         max_length=50, null=True, blank=True, default=""), blank=True, null=True, default=list)
 
