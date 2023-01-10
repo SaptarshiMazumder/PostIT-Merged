@@ -1603,6 +1603,7 @@ def get_saved_game_rank_server(request, game):
                          })
 
 
+@login_required(login_url='/users/login_user')
 def search_results(request):
 
     if request.method == 'POST':
