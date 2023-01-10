@@ -24,7 +24,10 @@ from rest_framework.decorators import api_view
 
 
 # Utility functions import
-from .utilityFunctions import get_featured_communities, Get_Gamer_Profiles_For_User_profiles_Page, get_user_vouch_information, get_user_following_info, Get_Logged_in_User_Gamer_Profiles
+from .utilityFunctions import get_featured_communities, \
+    Get_Gamer_Profiles_For_User_profiles_Page, get_user_vouch_information, \
+    get_user_following_info, Get_Logged_in_User_Gamer_Profiles, \
+    get_gamer_profile_info_sidebar
 
 
 def is_ajax(request):
@@ -1795,30 +1798,33 @@ def community_members(request, community_id):
 @login_required
 @csrf_exempt
 def show_communities(request):
-    communities = Community.objects.all()
+    all_communities = Community.objects.all()
+    if request.method == 'POST':
+        og_search_query = request.POST['search_query']
+        search_query = request.POST['search_query'].lower().replace(' ', '')
+        print("Search query: ", search_query)
+        communities_list = []
+        for community in all_communities:
+            if search_query in community.name.lower():
+                communities_list.append(community)
+            elif search_query in community.bio.lower():
+                communities_list.append(community)
+        communities = communities_list
+        result = og_search_query
+    else:
+        communities = all_communities
+        result = "all_communities"
     user_joined_communities = request.user.profile.communities.all()
-    print("user_joined_communities: ", user_joined_communities)
-
-    # gamer_profiles = GameProfile.objects.filter(user=request.user)
-    # try:
-    #     main_gamer_profile = Main_Profile.objects.get(
-    #         user=User.objects.get(username=request.user))
-    # except:
-    #     main_gamer_profile = None
 
     context = {
         'communities': communities,
         'user_joined_communities': user_joined_communities,
-
-
-        # 'gamer_profiles': gamer_profiles,
-        # 'main_game_profile': main_gamer_profile,
-        # 'game_logos': GameProfile.games_logo_list,
+        'result': result,
     }
 
     context.update(get_featured_communities(
         request))
-    print(context)
+    context.update(get_gamer_profile_info_sidebar(request))
     return render(request, 'community/communities_list_all.html', context)
 
 

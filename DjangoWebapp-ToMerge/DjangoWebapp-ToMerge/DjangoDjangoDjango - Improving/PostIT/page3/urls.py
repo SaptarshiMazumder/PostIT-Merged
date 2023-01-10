@@ -89,6 +89,7 @@ urlpatterns = [
     path('start_following/<str:who_to_follow>',
          views.start_following, name="start-following"),
     path('search', views.search_results, name='search'),
+    path('search-communities', views.show_communities, name='search-communities'),
     path('get_gamer_profile_stats/<str:user>',
          views.Gamer_Profile_Data, name="get-gamer-profile-data"),
     path('get_user_profile_stats/<str:user>/<str:game>',

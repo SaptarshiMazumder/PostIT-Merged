@@ -382,6 +382,12 @@ i:hover {
     padding-left: 20px;
 }
 
+.page-specific-search-bar {
+    text-align: left !important;
+    padding: 20px;
+
+}
+
 
 /* add post navbar */
 
