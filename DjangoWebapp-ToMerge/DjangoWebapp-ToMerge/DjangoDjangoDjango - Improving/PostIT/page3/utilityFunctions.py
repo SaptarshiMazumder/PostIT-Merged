@@ -113,3 +113,37 @@ def get_user_following_info(request):
         'users_currently_following': users_currently_following,
     }
     return context
+
+
+@login_required(login_url='/users/login_user')
+@csrf_exempt
+def get_user_gamer_profile_data(request, game):
+
+    gamer_profiles = GameProfile.objects.filter(
+        user=User.objects.get(username=request.user), game=game)
+
+    # main_gamer_profile = Main_Profile.objects.get(
+    #     user=User.objects.get(username=request.user))
+    # additional_info = []
+    # for g in gamer_profiles:
+    #     info_obj = g.additional_info
+
+    #     dict_obj = {}
+    #     for i in range(len(info_obj)):
+    #         dict_obj[i] = info_obj[i]
+    #     additional_info.append({'game': g.game,
+    #                             'info': dict_obj})
+
+    context = {
+        'selected_gamer_profiles': gamer_profiles,
+        # 'main_gamer_profile': main_gamer_profile,
+        # 'additional_info': additional_info,
+        # 'game_logos': GameProfile.games_logo_list,
+    }
+    return gamer_profiles
+    html = render_to_string(
+        'gamerProfile/gamer_profile_stats.html', context, request=request)
+    print(context)
+    return JsonResponse({"gamer_profile_stats": html,
+                         'game_logo': GameProfile.games_logo_list[gamer_profiles[0].game],
+                         })

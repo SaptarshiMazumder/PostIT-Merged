@@ -12,6 +12,8 @@ urlpatterns = [
 
     #     path('post/<int:post_id>', views.post_details, name='post-page'),
     path('add_post', views.add_post, name='add-post'),
+    path('add_profile_post/<str:game>',
+         views.add_profile_post, name='add-profile-post'),
     path('add_image_post', views.add_image_post, name="add-image-post"),
     path('add_video_post', views.add_video_post, name="add-video-post"),
     path('post/edit/<int:post_id>', views.edit_post, name='edit-post'),

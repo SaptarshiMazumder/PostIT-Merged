@@ -127,6 +127,7 @@
             Career
         </div>
         <br><br>
+        {{g.experience}}
         {%for item in g.experience%}
         <div class="game_stat">
             <div class="label">
@@ -162,6 +163,11 @@
 <div class="full_width_section">
 
 </div>
+<center>
+    <a href="{% url 'add-profile-post' g.game %}">
+        <button class="button-5" value="{{g.game}}">Create post with your Profile</button>
+    </a>
+</center>
 {%endfor%}
 
 <script>

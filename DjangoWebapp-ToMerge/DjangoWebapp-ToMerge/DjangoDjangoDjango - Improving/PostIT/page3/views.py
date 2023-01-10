@@ -27,7 +27,9 @@ from rest_framework.decorators import api_view
 from .utilityFunctions import get_featured_communities, \
     Get_Gamer_Profiles_For_User_profiles_Page, get_user_vouch_information, \
     get_user_following_info, Get_Logged_in_User_Gamer_Profiles, \
-    get_gamer_profile_info_sidebar
+    get_gamer_profile_info_sidebar, get_user_gamer_profile_data
+
+from .organizeGameData import organizeGametData
 
 
 def is_ajax(request):
@@ -620,6 +622,63 @@ def add_video_post(request):
         form = PostVideoForm()
 
     return render(request, 'post/addPost/add_video_post.html', context)
+
+
+@login_required(login_url='/users/login_user')
+def add_profile_post(request, game):
+    profile_info = ""
+    try:
+        gamer_profile_data = get_user_gamer_profile_data(request, game)
+
+        if bool(gamer_profile_data):
+
+            profile_info = organizeGametData(request, gamer_profile_data)
+            print(profile_info)
+    except:
+        pass
+
+    form = PostForm()
+
+    if request.method == 'POST':
+        print(request.POST)
+        form = PostForm(request.POST, request.FILES)
+        tags = request.POST['tags']
+        if form.is_valid():
+            # form.save()
+            instance = form.save(commit=False)
+            instance.author = request.user
+            instance.user_profile = request.user.profile
+            print("PRINTING PROFILE: ", request.user.profile)
+            instance.save()
+            if len(tags) > 0:
+                tags_list = tags.replace(' ', '').split(",")
+
+                for t in tags_list:
+                    if not(Tags.objects.filter(tag_name=t).exists()):
+
+                        new_tag = Tags(tag_name=t)
+                        new_tag.save()
+                        Tags.objects.get(id=new_tag.id).post.add(
+                            Post.objects.get(id=instance.id))
+
+                    else:
+                        print("MATCHED: ", Tags.objects.filter(tag_name=t))
+                        Tags.objects.get(tag_name=t).post.add(
+                            Post.objects.get(id=instance.id))
+
+                post_obj = Post.objects.get(id=instance.id)
+                post_obj.set_Tag(tags_list)
+                post_obj.save()
+            return redirect('home-page')
+        else:
+            return render(request, 'post/addPost/add_post.html', context)
+    else:
+        form = PostForm(initial={'body': profile_info})
+    context = {
+        'form': form
+    }
+
+    return render(request, 'post/addPost/add_post.html', context)
 
 
 def get_parent_post(parent_id, arr):
@@ -1799,6 +1858,8 @@ def community_members(request, community_id):
 @csrf_exempt
 def show_communities(request):
     all_communities = Community.objects.all()
+    user_joined_communities = request.user.profile.communities.all()
+
     if request.method == 'POST':
         og_search_query = request.POST['search_query']
         search_query = request.POST['search_query'].lower().replace(' ', '')
@@ -1814,7 +1875,6 @@ def show_communities(request):
     else:
         communities = all_communities
         result = "all_communities"
-    user_joined_communities = request.user.profile.communities.all()
 
     context = {
         'communities': communities,
