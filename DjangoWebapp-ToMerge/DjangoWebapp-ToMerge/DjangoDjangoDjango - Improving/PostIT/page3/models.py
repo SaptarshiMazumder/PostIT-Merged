@@ -59,7 +59,10 @@ class Community(models.Model):
 
 class Profile(models.Model):
     # This is User profile
-    gender_choices = ['Male', 'Female', 'Transgender', 'Other']
+
+    gender_choices = [('Male', 'Male'), ('Female', 'Female'),
+                      ('Transgender', 'Transgender'), ('Other', 'Other')]
+
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     bio = models.TextField(blank=True, null=True)
     profile_pic = models.ImageField(
@@ -79,7 +82,7 @@ class Profile(models.Model):
     is_private = models.BooleanField(null=True, blank=True, default=False)
     age = models.IntegerField(null=True)
     gender = models.CharField(
-        max_length=255, null=True, blank=True, default=None)
+        max_length=255, null=True, choices=gender_choices, blank=True, default=None)
 
     def __str__(self):
         return str(self.user)
@@ -316,6 +319,7 @@ class GameProfile(models.Model):
                    'In Game Leader', 'Lurker', 'AWper']
 
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    age = models.IntegerField(null=True)
     game = models.CharField(max_length=50, choices=games_list)
     region = models.CharField(max_length=50, choices=regions_list, null=True)
 
@@ -323,7 +327,7 @@ class GameProfile(models.Model):
         max_length=50, null=True, blank=True, default=""), blank=True, null=True, default=list)
 
     rank = models.CharField(max_length=50, choices=ranks_list, default="")
-    peak_rank = models.CharField(max_length=50, choices=ranks_list, default="")
+    peak_rank = models.CharField(max_length=50, null=True, default="")
     user_status = models.CharField(
         max_length=50, choices=User_Status.choices, default='none')
 
