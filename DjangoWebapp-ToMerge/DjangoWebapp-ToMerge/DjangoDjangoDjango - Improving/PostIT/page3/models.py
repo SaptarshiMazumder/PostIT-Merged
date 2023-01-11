@@ -319,7 +319,8 @@ class GameProfile(models.Model):
                    'In Game Leader', 'Lurker', 'AWper']
 
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
-    age = models.IntegerField(null=True)
+    age = models.IntegerField(null=True, blank=True, default=None)
+
     game = models.CharField(max_length=50, choices=games_list)
     region = models.CharField(max_length=50, choices=regions_list, null=True)
 

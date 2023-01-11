@@ -1178,6 +1178,7 @@ def create_game_profile(request, user):
             experience = []
             teams = []
             positions = []
+            peak_rank = ""
             for i in request.POST.items():
                 if "field" in i[0]:
                     additional_info.append(i[1])
@@ -1202,6 +1203,15 @@ def create_game_profile(request, user):
                 is_looking_for_friends = True
 
             comm_rating = request.POST.get("comm_rating")
+            try:
+                peak_rank = request.POST.get("peak_rank")
+            except:
+                peak_rank = None
+
+            if user.profile.age:
+                age = user.profile.age
+            else:
+                age = None
 
             if(GameProfile.objects.filter(user=user.id, game=request.POST.get("game"))):
 
@@ -1209,7 +1219,8 @@ def create_game_profile(request, user):
                                                           game=request.POST.get("game"))
                 game_profile.update(
                     region=request.POST.get("regions"), rank=request.POST.get("rank"),
-                    servers=servers,
+                    servers=servers, peak_rank=peak_rank,
+                    age=age,
                     additional_info=additional_info, roles_rating=roles,
                     remarks=request.POST.get("remarks"), looking_for_friends=is_looking_for_friends,
                     time_available=request.POST.get('time_available'),
@@ -1238,7 +1249,8 @@ def create_game_profile(request, user):
 
                 new_gamer_profile = GameProfile(user=user, game=request.POST.get('game'),
                                                 region=request.POST.get('regions'), rank=request.POST.get('rank'),
-                                                servers=servers,
+                                                servers=servers, peak_rank=peak_rank,
+                                                age=age,
                                                 additional_info=additional_info, roles_rating=roles,
                                                 remarks=request.POST.get(
                                                     "remarks"),
@@ -1316,6 +1328,7 @@ def edit_gamer_profile(request, user):
             servers = []
             teams = []
             positions = []
+            peak_rank = ""
 
             # for additional fields---------------
             for i in request.POST.items():
@@ -1346,7 +1359,15 @@ def edit_gamer_profile(request, user):
                 is_looking_for_friends = True
 
             comm_rating = request.POST.get("comm_rating")
+            try:
+                peak_rank = request.POST.get("peak_rank")
+            except:
+                peak_rank = None
 
+            if user.profile.age:
+                age = user.profile.age
+            else:
+                age = None
             if(GameProfile.objects.filter(user=user.id, game=request.POST.get("game_to_edit"))):
 
                 game_profile = GameProfile.objects.filter(user=user.id,
@@ -1355,6 +1376,8 @@ def edit_gamer_profile(request, user):
                 game_profile.update(
                     region=request.POST.get("regions"), rank=request.POST.get("rank"),
                     servers=servers,
+                    peak_rank=peak_rank,
+                    age=age,
                     additional_info=additional_info, roles_rating=roles,
                     remarks=request.POST.get("remarks"), looking_for_friends=is_looking_for_friends,
                     time_available=request.POST.get('time_available'),
@@ -1671,7 +1694,9 @@ def get_saved_game_rank_server(request, game):
     saved_gamer_profile = GameProfile.objects.get(user=request.user,
                                                   game=game)
     print(additional_info_fields, "Itachi")
-    return JsonResponse({"ranks": ranks, "regions": regions,
+    return JsonResponse({"ranks": ranks,
+                         "peak_rank": saved_gamer_profile.peak_rank,
+                         "regions": regions,
                          "servers": default_servers,
                         "saved_servers": saved_gamer_profile.servers,
                          "saved_rank": saved_gamer_profile.rank,
