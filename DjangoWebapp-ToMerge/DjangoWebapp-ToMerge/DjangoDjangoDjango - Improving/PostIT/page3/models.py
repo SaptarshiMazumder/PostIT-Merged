@@ -80,7 +80,7 @@ class Profile(models.Model):
     featured_communities = models.ManyToManyField(
         Community, default=None, blank=True, related_name='featuredCommunities')
     is_private = models.BooleanField(null=True, blank=True, default=False)
-    age = models.IntegerField(null=True)
+    age = models.IntegerField(null=True, blank=True, default=None)
     gender = models.CharField(
         max_length=255, null=True, choices=gender_choices, blank=True, default=None)
 
