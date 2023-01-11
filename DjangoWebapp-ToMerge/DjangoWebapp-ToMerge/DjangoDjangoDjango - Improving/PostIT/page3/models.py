@@ -59,6 +59,7 @@ class Community(models.Model):
 
 class Profile(models.Model):
     # This is User profile
+    gender_choices = ['Male', 'Female', 'Transgender', 'Other']
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     bio = models.TextField(blank=True, null=True)
     profile_pic = models.ImageField(
@@ -77,6 +78,8 @@ class Profile(models.Model):
         Community, default=None, blank=True, related_name='featuredCommunities')
     is_private = models.BooleanField(null=True, blank=True, default=False)
     age = models.IntegerField(null=True)
+    gender = models.CharField(
+        max_length=255, null=True, blank=True, default=None)
 
     def __str__(self):
         return str(self.user)
@@ -300,7 +303,7 @@ class GameProfile(models.Model):
                   ('LOL', LOLRanks.choices), ('CS', CSRanks.choices)]
 
     Valorant_additional_fields = [
-        'Preferred Agents', 'Peak Rank', 'Tracker Link']
+        'Preferred Agents', 'Best Maps', 'Tracker Link']
     LOL_additional_fields = ['Agents', 'Abilities', 'Role', 'Hours Played']
     COD_additional_fields = ['Guns', 'Maps', 'Role']
     CS_GO_additional_fields = ['Guns', 'Maps', 'Role']
@@ -320,6 +323,7 @@ class GameProfile(models.Model):
         max_length=50, null=True, blank=True, default=""), blank=True, null=True, default=list)
 
     rank = models.CharField(max_length=50, choices=ranks_list, default="")
+    peak_rank = models.CharField(max_length=50, choices=ranks_list, default="")
     user_status = models.CharField(
         max_length=50, choices=User_Status.choices, default='none')
 

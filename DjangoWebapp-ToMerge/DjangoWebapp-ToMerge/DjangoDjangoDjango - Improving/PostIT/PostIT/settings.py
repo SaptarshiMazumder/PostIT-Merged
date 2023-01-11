@@ -92,27 +92,27 @@ WSGI_APPLICATION = 'PostIT.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postit',
-        'USER': 'postgres',
-        'PASSWORD': 'Madrid2018',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': 'postit',
-#         'USER': 'sapmazumder',
+#         'USER': 'postgres',
 #         'PASSWORD': 'Madrid2018',
-#         'HOST': 'database-1.ct5zpvdqwdor.us-east-1.rds.amazonaws.com',
+#         'HOST': 'localhost',
 #         'PORT': '5432',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postit',
+        'USER': 'sapmazumder',
+        'PASSWORD': 'Madrid2018',
+        'HOST': 'database-1.ct5zpvdqwdor.us-east-1.rds.amazonaws.com',
+        'PORT': '5432',
+    }
+}
 
 # DATABASES = {
 #     'default': {
