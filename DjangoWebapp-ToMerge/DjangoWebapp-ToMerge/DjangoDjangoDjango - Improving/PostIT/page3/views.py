@@ -629,9 +629,8 @@ def add_profile_post(request, game):
     profile_info = ""
     try:
         gamer_profile_data = get_user_gamer_profile_data(request, game)
-
+        print(gamer_profile_data)
         if bool(gamer_profile_data):
-
             profile_info = organizeGametData(request, gamer_profile_data)
             print(profile_info)
     except:
